@@ -1,0 +1,302 @@
+
+import React, { useState, useEffect } from 'react';
+import Card from '../components/Card';
+
+interface DrawerContent {
+  id: string;
+  title: string;
+  category: string;
+  body: React.ReactNode;
+}
+
+const VerbatimText = ({ text }: { text: string }) => (
+  <p className="text-brand-navy/80 text-[14px] leading-relaxed mb-4 font-medium italic">{parseGrowthData(text)}</p>
+);
+
+const SectionHeader = ({ title }: { title: string }) => (
+  <h4 className="text-[11px] font-black text-brand-navy uppercase tracking-[0.3em] mb-6 mt-10 border-b border-brand-navy/10 pb-2">
+    {title}
+  </h4>
+);
+
+const GrowthBullets = ({ items }: { items: string[] }) => (
+  <div className="space-y-5">
+    {items.map((item, idx) => (
+      <div key={idx} className="flex gap-4 items-start">
+        <div className="w-1.5 h-1.5 bg-[#00E676] mt-2.5 shrink-0 shadow-[0_0_8px_rgba(0,230,118,0.4)]" />
+        <p className="text-brand-navy/80 text-[14px] leading-relaxed font-medium">
+          {parseGrowthData(item)}
+        </p>
+      </div>
+    ))}
+  </div>
+);
+
+const parseGrowthData = (text: string) => {
+  // Targeting specific Power Facts: AED 32 Trillion, AED 25.6 Trillion, AED 650 Billion, AED 100 Billion, AED 1 Trillion
+  // Matches both Title Case and lowercase variations found in verbatim text
+  const parts = text.split(/(AED\s32\s[Tt]rillions?|AED\s25\.6\s[Tt]rillions?|AED\s650\s[Bb]illions?|AED\s100\s[Bb]illions?|AED\s1\s[Tt]rillions?|AED\s14\.2\s[Tt]rillions?|[\d.]+%|400\scities|80%)/g);
+  return parts.map((part, i) => {
+    if (/(AED\s32\s[Tt]rillions?|AED\s25\.6\s[Tt]rillions?|AED\s650\s[Bb]illions?|AED\s100\s[Bb]illions?|AED\s1\s[Tt]rillions?|AED\s14\.2\s[Tt]rillions?|[\d.]+%|400\scities|80%)/.test(part)) {
+      return <span key={i} className="text-[#00E676] font-bold">{part}</span>;
+    }
+    return part;
+  });
+};
+
+const D33Agenda: React.FC = () => {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerContent, setDrawerContent] = useState<DrawerContent | null>(null);
+
+  useEffect(() => {
+    if (drawerOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [drawerOpen]);
+
+  const openDrawer = (content: DrawerContent) => {
+    setDrawerContent(content);
+    setDrawerOpen(true);
+  };
+
+  const closeDrawer = () => setDrawerOpen(false);
+
+  const handleCopy = () => {
+    const text = document.getElementById('d33-drawer-body')?.innerText || '';
+    navigator.clipboard.writeText(text);
+    alert('Strategic intelligence copied to clipboard.');
+  };
+
+  return (
+    <div className="max-w-7xl mx-auto py-16 px-10 lg:px-16 animate-fadeIn pb-32">
+      <div className="w-full h-[300px] bg-brand-navy overflow-hidden mb-16 relative rounded-2xl border border-white/5">
+        <img 
+          src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2000" 
+          alt="Dubai Financial District" 
+          className="w-full h-full object-cover grayscale brightness-[0.5] contrast-[1.2]"
+        />
+        <div className="absolute inset-0 bg-brand-navy/60 mix-blend-multiply" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+          <span className="text-[10px] font-black uppercase tracking-[0.6em] text-[#00E676] mb-4">Economic Trajectory Protocol</span>
+          <h2 className="text-white text-4xl font-serif font-bold italic tracking-tight">The D33 Economic Agenda</h2>
+        </div>
+      </div>
+
+      <header className="mb-16 border-l-4 border-brand-gold pl-10">
+        <h1 className="text-5xl font-serif font-bold text-brand-navy mb-6 italic tracking-tight">Global Hub Tier-1 Strategy</h1>
+        <p className="text-xl text-slate-grey max-w-4xl leading-relaxed font-serif italic opacity-80">
+          A 10-year roadmap to position Dubai as one of the top three global economic cities. Targeting an aggregate economic output of <span className="text-[#00E676] font-bold">AED 32 Trillion</span>. [Source: D33_Analysis.pdf]
+        </p>
+      </header>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+        <Card
+          category="Trade Nexus"
+          title="Global Trade Expansion"
+          image="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800"
+          points={[
+            "Expanding the foreign trade network by adding 400 cities to Dubai's global map.",
+            "Targeting a surge in foreign trade from AED 14.2 trillion to AED 25.6 trillion.",
+            "Achieving an 80% increase in total trade volume over the next decade.",
+            "Positioning Dubai as the world's most connected trading gateway."
+          ]}
+          isPremium
+          onMore={() => openDrawer({
+            id: 'trade-expansion',
+            category: 'Economic Protocol',
+            title: 'Global Trade Expansion Deep Dive',
+            body: (
+              <div className="space-y-2">
+                <VerbatimText text="The D33 strategy focuses on exponentially expanding Dubai's trading footprint to maintain its status as the world's premier logistics gateway." />
+                
+                <SectionHeader title="STRATEGIC INITIATIVES" />
+                <GrowthBullets items={[
+                  "Addition of 400 cities to Dubai's foreign trade map to diversify market reach.",
+                  "Launch of 'Dubai Economic Corridors' project focusing on Africa, Latin America, and South East Asia.",
+                  "Modernization of customs processes and trade policies to support high-velocity movement.",
+                  "Development of advanced logistics infrastructure near major trade gateways."
+                ]} />
+
+                <SectionHeader title="INVESTOR IMPLICATIONS" />
+                <GrowthBullets items={[
+                  "Foreign trade set to expand from AED 14.2 trillion to AED 25.6 trillion (80% increase).",
+                  "Significant upward pressure on industrial and logistics asset values, particularly near Jebel Ali Port and Al Maktoum Airport.",
+                  "Increased demand for high-value warehousing and specialized fulfilment centers."
+                ]} />
+              </div>
+            )
+          })}
+        />
+
+        <Card
+          category="Tech Economy"
+          title="Digital Transformation"
+          image="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800"
+          points={[
+            "Generating AED 100 billion in annual economic value via digital innovation.",
+            "Launch of 'Sandbox Dubai' for the commercial testing of next-gen technologies.",
+            "Accelerating the adoption of smart-city infrastructure and smart building standards.",
+            "Integration of AI and digital ecosystems as a core pillar of economic output."
+          ]}
+          onMore={() => openDrawer({
+            id: 'digital-transform',
+            category: 'Future Economy',
+            title: 'Digital Economy & Sandbox Analysis',
+            body: (
+              <div className="space-y-2">
+                <VerbatimText text="Digital transformation is a major pillar of D33, expected to drive high-value economic output through technological integration." />
+                
+                <SectionHeader title="STRATEGIC INITIATIVES" />
+                <GrowthBullets items={[
+                  "Generation of AED 100 billion in annual economic value through digital innovation.",
+                  "Launch of 'Sandbox Dubai' for the commercial testing of next-gen technologies and disruptive business models.",
+                  "Implementation of technology adoption mandates for businesses and government entities.",
+                  "Support for a dedicated regulatory framework enabling the digital economy."
+                ]} />
+
+                <SectionHeader title="INVESTOR IMPLICATIONS" />
+                <GrowthBullets items={[
+                  "Increased demand for tech hubs, data centres, and smart, digitally enabled buildings.",
+                  "Smart buildings command higher valuations due to connectivity and infrastructure advantages.",
+                  "Attraction of tech talent seeking high-quality, smart-city integrated rental housing."
+                ]} />
+              </div>
+            )
+          })}
+        />
+
+        <Card
+          category="Unified Logistics"
+          title="Industrial & Unified Trade"
+          image="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&q=80&w=800"
+          points={[
+            "Establishing 'Dubai Economic Corridors' to streamline cross-border movement.",
+            "Targeting 50% growth in traditional trade sectors via regulatory efficiency.",
+            "Supporting the 'Make it in the Emirates' initiative for local manufacturing.",
+            "Developing specialized, purpose-built industrial parks and innovation districts."
+          ]}
+          onMore={() => openDrawer({
+            id: 'industrial-trade',
+            category: 'Production Strategy',
+            title: 'Unified Trade & Industrial Resilience',
+            body: (
+              <div className="space-y-2">
+                <VerbatimText text="Strengthening Dubai's innovation ecosystem and expanding high-value, knowledge-driven manufacturing sectors." />
+                
+                <SectionHeader title="STRATEGIC INITIATIVES" />
+                <GrowthBullets items={[
+                  "Support for the local manufacturing 'Make it in the Emirates' initiative to drive domestic production.",
+                  "Transition toward a sustainable, industrial economy focused on advanced manufacturing and AI.",
+                  "Incentives for Research and Development (R&D) within the knowledge-economy sectors.",
+                  "Expansion of free zones and dedicated industrial corridors to support trade expansion."
+                ]} />
+
+                <SectionHeader title="INVESTOR IMPLICATIONS" />
+                <GrowthBullets items={[
+                  "Development of advanced manufacturing parks catering to future-focused sectors.",
+                  "Requirement for specialized, purpose-built facilities to support emerging industries.",
+                  "Growth in free zone properties attractive to foreign companies seeking business-friendly environments."
+                ]} />
+              </div>
+            )
+          })}
+        />
+
+        <Card
+          category="Capital Flows"
+          title="Investment & FDI Inflow"
+          image="https://images.unsplash.com/photo-1454165833767-022090b282d8?auto=format&fit=crop&q=80&w=800"
+          points={[
+            "Targeting AED 650 billion in total FDI inflows over the next decade.",
+            "Increasing annual FDI from AED 32 billion to AED 60 billion per year.",
+            "Incentivizing AED 1 trillion in private sector investment by 2033.",
+            "Strategic focus on attracting multinational headquarters and prime capital."
+          ]}
+          isPremium
+          onMore={() => openDrawer({
+            id: 'fdi-inflow',
+            category: 'Capital Blueprint',
+            title: 'Financial Capital & Investment Targets',
+            body: (
+              <div className="space-y-2">
+                <VerbatimText text="D33 aims to nearly double FDI inflows and significantly increase private-sector participation to fuel massive development." />
+                
+                <SectionHeader title="STRATEGIC INITIATIVES" />
+                <GrowthBullets items={[
+                  "Targeting AED 32 trillion in total economic output over the decade.",
+                  "AED 700 billion government spending plan to support emerging and traditional industries.",
+                  "Streamlined foreign investment regulations and expanded incentives (Enhanced FDI Framework).",
+                  "Encouraging public-private partnerships (PPP) for infrastructure delivery."
+                ]} />
+
+                <SectionHeader title="INVESTOR IMPLICATIONS" />
+                <GrowthBullets items={[
+                  "Target of AED 650 billion in FDI across ten years supports large-scale developments across asset classes.",
+                  "AED 1 trillion in private-sector investment injects substantial capital into large-scale real estate projects.",
+                  "Doubling the economy correlates with broad real estate price appreciation cycles."
+                ]} />
+              </div>
+            )
+          })}
+        />
+      </div>
+
+      <div 
+        className={`fixed inset-0 z-[90] bg-brand-navy/60 backdrop-blur-sm transition-opacity duration-700 ${drawerOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        onClick={closeDrawer}
+      />
+      
+      <div 
+        className={`fixed top-0 right-0 h-full w-full sm:w-[650px] bg-white shadow-2xl z-[100] transform transition-transform duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${drawerOpen ? 'translate-x-0' : 'translate-x-full'}`}
+      >
+        {drawerContent && (
+          <div className="flex flex-col h-full bg-white">
+            <div className="bg-white p-10 flex justify-between items-start border-b border-slate-100">
+              <div className="flex-1">
+                <span className="text-[10px] font-bold text-brand-gold uppercase tracking-[0.4em] mb-3 block">DXB Edge Vault // {drawerContent.category}</span>
+                <h3 className="text-3xl font-serif font-bold text-brand-navy leading-tight italic inline-block pb-3 relative">
+                  {drawerContent.title}
+                  <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#00E676]" />
+                </h3>
+              </div>
+              
+              <div className="flex items-center gap-4 ml-4">
+                <button onClick={handleCopy} className="p-2 text-slate-grey/60 hover:text-brand-navy transition-colors" title="Copy Text">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                </button>
+                <button className="p-2 text-slate-grey/60 hover:text-brand-navy transition-colors" title="Export PDF">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                </button>
+                <button onClick={closeDrawer} className="p-2 text-slate-grey/40 hover:text-brand-navy transition-colors">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+              </div>
+            </div>
+
+            <div className="bg-soft-grey px-10 py-4 flex justify-between items-center border-b border-slate-200">
+              <span className="text-[8px] font-bold text-slate-grey/40 uppercase tracking-widest italic">Sovereign Data Stream: D33_RESEARCH_PROTO.PDF</span>
+            </div>
+
+            <div id="d33-drawer-body" className="flex-1 p-12 overflow-y-auto custom-scrollbar bg-white">
+               {drawerContent.body}
+            </div>
+
+            <div className="p-10 border-t border-slate-100 flex flex-col items-center gap-4 bg-soft-grey/30">
+              <p className="text-[9px] font-bold text-brand-navy/40 uppercase tracking-[0.2em] mb-2">[Source: D33 Economic Agenda Research]</p>
+              <button 
+                onClick={closeDrawer}
+                className="w-full bg-brand-navy text-white text-[11px] font-bold uppercase tracking-[0.3em] py-5 hover:bg-[#00E676] transition-all duration-500 shadow-xl"
+              >
+                Exit Institutional Analysis
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default D33Agenda;
