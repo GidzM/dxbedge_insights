@@ -208,7 +208,7 @@ const Dubai2040: React.FC = () => {
               <Card
                 category="Urban Hierarchy"
                 title="Urban Hierarchy & Centres"
-                image="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=800"
+                image="https://images.unsplash.com/photo-1607414851776-f2fcc379fb48?auto=format&fit=crop&q=80&w=800"
                 points={[
                   "Structural focus on 5 primary growth nodes: Deira/Bur Dubai, Downtown/Business Bay, Dubai Marina/JBR, Expo 2020 Centre, and Dubai Silicon Oasis .",
                   "Strategic integration of 2 emerging centres: Silicon Oasis and District 2020.",
@@ -239,7 +239,7 @@ const Dubai2040: React.FC = () => {
             <Card
               category="Liveability"
               title="The 20-Minute City"
-              image="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=800"
+              image="https://images.unsplash.com/photo-1550779864-6ccb28702fdb?auto=format&fit=crop&q=80&w=800"
               points={[
                 "Strategic goal: 55% of residents live within 800 meters of transit, with daily needs reachable in 20 minutes by foot or bike.",
                 "Structural focus on essential services proximity to residential clusters.",
@@ -297,7 +297,7 @@ const Dubai2040: React.FC = () => {
             <Card
               category="Coastal"
               title="Coastal Transformation"
-              image="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=800"
+              image="https://images.unsplash.com/photo-1688671525781-d9447cf1abd2?auto=format&fit=crop&q=80&w=800"
               points={[
                 "Target to increase public beach areas by 400% through the coastline expansion protocol.",
                 "Moratorium on offshore reclamation limits new coastal development, preserving scarcity.",
@@ -326,7 +326,7 @@ const Dubai2040: React.FC = () => {
             <Card
               category="Mobility"
               title="Sustainable Mobility (TOD)"
-              image="https://images.unsplash.com/photo-1582650625119-3a31f8fa2699?auto=format&fit=crop&q=80&w=2000"
+              image="https://images.unsplash.com/photo-1655309893829-407c54619f1f?auto=format&fit=crop&q=80&w=2000"
               points={[
                 "Focus on Transit-Oriented Development (TOD) focused on urban centres and high-density zones.",
                 "Metro and light-rail expansion to reach within 800 metres of major residential clusters.",

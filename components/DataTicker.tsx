@@ -25,7 +25,7 @@ const DataTicker: React.FC = () => {
             <span className="text-white text-[11px] font-bold uppercase tracking-[0.2em] whitespace-nowrap">
               {item.label}:
             </span>
-            <span className="text-[#00E676] text-[11px] font-black tracking-wide ml-2 uppercase whitespace-nowrap">
+            <span className="text-brand-gold text-[11px] font-black tracking-wide ml-2 uppercase whitespace-nowrap">
               {item.value}
             </span>
             <span className="text-white/20 ml-12 text-[11px]">•</span>

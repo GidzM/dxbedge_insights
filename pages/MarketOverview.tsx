@@ -67,7 +67,7 @@ return (
         <Card
           category="Global Benchmarking"
           title="Global Value Data"
-          image="https://images.unsplash.com/photo-1528702748617-c64d49f918af?auto=format&fit=crop&q=80&w=800"
+          image="https://images.unsplash.com/photo-1651467606797-e1c660cf3fda?auto=format&fit=crop&q=80&w=800"
           points={[
             <>Prime Residential: <Highlight>- $400–$650/sqft (AED 1,468–2,386/sqft)</Highlight> (<Highlight>50–75%</Highlight> pricing advantage vs. London, NY, HK).</>,
             <>Commercial Office: <Highlight>- $350–$700/sqft (AED 1,285–2,569/sqft)</Highlight> (materially cheaper than Singapore or Paris).</>,
@@ -80,7 +80,7 @@ return (
         <Card
           category="Supply & Demand"
           title="The Demand-Supply Gap"
-          image="https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&q=80&w=800"
+          image="https://images.unsplash.com/photo-1579525612525-053cd3e8cbd7?auto=format&fit=crop&q=80&w=800"
           points={[
             <>Growth: Population reached <Highlight>4.0M</Highlight> in 2025 (<Highlight>6.1%</Highlight> growth); projected <Highlight>4.2M</Highlight> by 2026.</>,
             <>The Gap: <Highlight>182,500</Highlight> new residents vs. only <Highlight>55,400</Highlight> units delivered in 2025.</>,
@@ -92,7 +92,7 @@ return (
         <Card
           category="Sovereign Strategy"
           title="Institutional Growth Targets"
-          image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800"
+          image="https://images.unsplash.com/photo-1462007895615-c8c073bebcd8?auto=format&fit=crop&q=80&w=800"
           points={[
             <>Economic Scale: D33 aims to double the economy to <Highlight>AED 32 Trillion</Highlight> by 2033.</>,
             <>FDI Attraction: Target of doubling annual FDI to <Highlight>AED 60 Billion</Highlight>.</>,
@@ -105,7 +105,7 @@ return (
         <Card
           category="Market Performance"
           title="Transaction & Yield Health"
-          image="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=800"
+          image="https://images.unsplash.com/photo-1688671525781-d9447cf1abd2?auto=format&fit=crop&q=80&w=800"
           points={[
             <>Volume: <Highlight>AED 917B</Highlight> in total transactions (2025) (<Highlight>20% YoY</Highlight> increase).</>,
             <>Yields: Apartment yields at <Highlight>7.0–7.3%</Highlight>; Villas at <Highlight>5%</Highlight>.</>,

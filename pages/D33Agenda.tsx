@@ -84,21 +84,20 @@ const D33Agenda: React.FC = () => {
     <div className="max-w-7xl mx-auto py-16 px-10 lg:px-16 animate-fadeIn pb-32">
       <div className="w-full h-[300px] bg-brand-navy overflow-hidden mb-16 relative rounded-2xl border border-white/5">
         <img 
-          src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2000" 
+          src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=2000" 
           alt="Dubai Financial District" 
           className="w-full h-full object-cover grayscale brightness-[0.5] contrast-[1.2]"
         />
         <div className="absolute inset-0 bg-brand-navy/60 mix-blend-multiply" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-          <span className="text-[10px] font-black uppercase tracking-[0.6em] text-[#00E676] mb-4">Economic Trajectory Protocol</span>
-          <h2 className="text-white text-4xl font-serif font-bold italic tracking-tight">The D33 Economic Agenda</h2>
+          <span className="text-[10px] font-bold uppercase tracking-[0.6em] text-white/40">The D33 Economic Agenda</span>
         </div>
       </div>
 
       <header className="mb-16 border-l-4 border-brand-gold pl-10">
         <h1 className="text-5xl font-serif font-bold text-brand-navy mb-6 italic tracking-tight">Global Hub Tier-1 Strategy</h1>
         <p className="text-xl text-slate-grey max-w-4xl leading-relaxed font-serif italic opacity-80">
-          A 10-year roadmap to position Dubai as one of the top three global economic cities. Targeting an aggregate economic output of <span className="text-[#00E676] font-bold">AED 32 Trillion</span>. [Source: D33_Analysis.pdf]
+          A 10-year roadmap to position Dubai as one of the top three global economic cities. Targeting an aggregate economic output of <span className="text-brand-navy font-bold">AED 32 Trillion</span>. [Source: D33 Analysis]
         </p>
       </header>
 

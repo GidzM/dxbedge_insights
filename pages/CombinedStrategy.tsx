@@ -85,7 +85,7 @@ const CombinedStrategy: React.FC = () => {
     <div className="max-w-7xl mx-auto py-16 px-10 lg:px-16 animate-fadeIn pb-32">
       <div className="w-full h-[300px] bg-brand-navy overflow-hidden mb-16 relative">
           <img 
-            src="https://images.unsplash.com/photo-1528702748617-c64d49f918af?auto=format&fit=crop&q=80&w=2000" 
+            src="https://images.unsplash.com/photo-1655309893829-407c54619f1f?auto=format&fit=crop&q=80&w=2000" 
             alt="Dubai Night Skyline" 
             className="w-full h-full object-cover grayscale brightness-[0.7] contrast-[1.2]"
           />
@@ -150,7 +150,7 @@ const CombinedStrategy: React.FC = () => {
             <Card
               category="Convergence"
               title="Key Synergies Map"
-              image="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=80&w=800"
+                image="https://images.unsplash.com/photo-1612873649383-edf91f1cf7fe?auto=format&fit=crop&q=80&w=800"
               points={[
                 "Full 10-Point Strategic Alignment Analysis.",
                 "Population targets supporting D33 economic goals.",
@@ -201,7 +201,7 @@ const CombinedStrategy: React.FC = () => {
             <Card
               category="Insights"
               title="Final Takeaways"
-              image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800"
+              image="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=800"
               points={[
                 "Unabridged list of 20 strategic takeaways.",
                 "Permanent scarcity premiums of 30-50%.",
@@ -249,7 +249,7 @@ const CombinedStrategy: React.FC = () => {
             <Card
               category="Analysis"
               title="Real Estate Impact"
-              image="https://images.unsplash.com/photo-1528702748617-c64d49f918af?auto=format&fit=crop&q=80&w=800"
+              image="https://images.unsplash.com/photo-1623725259601-b8c41ad6a532?auto=format&fit=crop&q=80&w=800"
               points={[
                 "Unabridged Demand Drivers and Supply Factors.",
                 "Analysis of Price Implications and Rental Effects.",
@@ -466,7 +466,7 @@ const CombinedStrategy: React.FC = () => {
             <Card
               category="Tiers"
               title="Investor Priority Tiers"
-              image="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=800"
+              image="https://images.unsplash.com/photo-1615747476205-991a14cd2358?auto=format&fit=crop&q=80&w=800"
               points={[
                 "Unabridged mapping of Tiers 1, 2, and 3.",
                 "Tier 1: TOD Mixed-Use and Southern Logistics.",
@@ -569,7 +569,7 @@ const CombinedStrategy: React.FC = () => {
             <Card
               category="Guidance"
               title="Final Investor Guidance"
-              image="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=800"
+              image="https://images.unsplash.com/photo-1650435331404-c1340a4c8f24?auto=format&fit=crop&q=80&w=800"
               points={[
                 "Unabridged Portfolio Allocation model (40/40/20).",
                 "Verbatim Entry, Risk, and Exit strategies.",

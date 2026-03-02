@@ -39,21 +39,21 @@ const InputField = ({ label, value, onChange, type = "number", min, max, placeho
         onChange(val);
       }}
       placeholder={placeholder}
-      className="w-full bg-soft-grey border border-slate-200 rounded-lg px-4 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-growth-green/20 transition-all"
+      className="w-full bg-soft-grey border border-slate-200 rounded-lg px-4 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-navy/20 transition-all"
     />
   </div>
 );
 
 const ResultCard = ({ title, results, advisory, cta, onCtaClick }: any) => (
   <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm animate-fadeIn sticky top-24">
-    <h3 className="text-[11px] font-black text-growth-green uppercase tracking-widest mb-4">{title}</h3>
+    <h3 className="text-[11px] font-black text-brand-navy uppercase tracking-widest mb-4">{title}</h3>
     
     {/* Primary Results Display */}
     <div className="grid grid-cols-2 gap-4 mb-8">
       {results.map((res: any, idx: number) => (
-        <div key={idx} className={`space-y-1 p-3 rounded-lg ${idx < 2 ? 'bg-growth-green/5' : ''}`}>
+        <div key={idx} className={`space-y-1 p-3 rounded-lg ${idx < 2 ? 'bg-brand-navy/5' : ''}`}>
           <p className="text-[9px] font-bold text-slate-grey/60 uppercase tracking-tighter">{res.label}</p>
-          <p className={`text-base sm:text-lg font-display font-bold ${idx < 2 ? 'text-growth-green' : 'text-deep-forest'}`}>
+          <p className={`text-base sm:text-lg font-display font-bold ${idx < 2 ? 'text-brand-navy' : 'text-deep-forest'}`}>
             {res.value}
           </p>
         </div>
@@ -64,7 +64,7 @@ const ResultCard = ({ title, results, advisory, cta, onCtaClick }: any) => (
     <div className="mb-6">
       <button
         onClick={onCtaClick}
-        className="w-full bg-growth-green text-white text-[10px] font-black uppercase tracking-widest py-4 rounded-lg active:scale-95 sm:hover:bg-growth-green/90 transition-all shadow-md flex items-center justify-center gap-2"
+        className="w-full bg-brand-navy text-white text-[10px] font-black uppercase tracking-widest py-4 rounded-lg active:scale-95 sm:hover:bg-brand-navy/90 transition-all shadow-md flex items-center justify-center gap-2"
       >
         <span>{cta}</span>
         <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
@@ -184,7 +184,7 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
     <div className="max-w-7xl mx-auto py-10 px-6 lg:px-12 animate-fadeIn pb-32">
       <div className="w-full h-[250px] bg-brand-navy overflow-hidden mb-16 relative rounded-2xl">
           <img 
-            src="https://images.unsplash.com/photo-1528702748617-c64d49f918af?auto=format&fit=crop&q=80&w=2000" 
+            src="https://images.unsplash.com/photo-1615747476205-991a14cd2358?auto=format&fit=crop&q=80&w=2000" 
             alt="Dubai Night Skyline" 
             className="w-full h-full object-cover grayscale brightness-[0.7] contrast-[1.2]"
           />
@@ -216,7 +216,7 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
                   onClick={() => setActiveTab(tab.id)}
                   className={`text-left px-4 sm:px-5 py-3 sm:py-4 rounded-lg text-[10px] sm:text-[11px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${
                     activeTab === tab.id
-                      ? 'bg-growth-green !text-white shadow-lg'
+                      ? 'bg-brand-navy !text-white shadow-lg'
                       : 'text-slate-grey/60 hover:bg-soft-grey hover:text-deep-forest'
                   }`}
                 >

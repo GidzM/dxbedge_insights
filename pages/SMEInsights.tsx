@@ -26,6 +26,15 @@ const SectionHeader = ({ title }: { title: string }) => (
   </h4>
 );
 
+const SourceNote = ({ sources }: { sources: string[] }) => (
+  <p
+    className="text-[10px] uppercase tracking-[0.18em] text-slate-grey/60 font-bold pt-2"
+    style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
+  >
+    Source: {sources.join(' | ')}
+  </p>
+);
+
 const GrowthBullets = ({ items }: { items: string[] }) => (
   <div className="space-y-5">
     {items.map((item, idx) => (
@@ -113,14 +122,21 @@ const SMEInsights: React.FC = () => {
           title: 'Global Real Estate Arbitrage',
           body: (
             <div className="space-y-8">
-              <VerbatimText text="Despite record-breaking growth, Dubai remains one of the most undervalued tier-1 global cities on a price-per-square-foot basis." />
-              <SectionHeader title="Comparative Analysis (USD/sq. ft.)" />
+              <VerbatimText text="Dubai continues to trade at a meaningful discount to global gateway cities on a price-per-square-foot basis, while offering developed-market infrastructure and institutional demand depth." />
+              <SectionHeader title="Global Price Positioning (USD/sq. ft.)" />
               <GrowthBullets items={[
-                "Hong Kong (Central): $2,200–$2,800+ [Source: World Financial Review].",
-                "London (Mayfair): $1,700–$3,000+.",
-                "Dubai (Prime): $400–$650 — offering 3x-4x more space for the same capital outlay.",
-                "The 'Zero Tax' environment significantly increases Net ROI."
+                "Dubai prime residential: $400–$650, versus London/New York often $1,500–$3,000+ and Hong Kong above $2,200 in core zones.",
+                "Ultra-prime Dubai (Palm/Jumeirah Bay): c.$1,200–$2,500, still below Monaco, Mayfair, and Billionaires’ Row benchmarks.",
+                "Commercial office pricing in Dubai (c.$350–$700) remains significantly below London/New York/Singapore ranges.",
+                "Capital efficiency remains high: similar capital can secure materially more area in Dubai than in mature Western hubs."
               ]} />
+              <SectionHeader title="Investor Implications" />
+              <GrowthBullets items={[
+                "Value entry plus strong rental fundamentals supports a favorable risk-adjusted return profile.",
+                "Lower basis pricing leaves room for medium-term yield compression and capital upside as market maturity advances.",
+                "Tax efficiency (no annual property tax, no typical capital gains tax) improves net, not just headline, returns."
+              ]} />
+              <SourceNote sources={["SME_Notes.pdf"]} />
             </div>
           )
         }
@@ -129,7 +145,7 @@ const SMEInsights: React.FC = () => {
         id: 'market-records',
         category: 'Performance',
         title: 'Market Performance Records',
-        image: 'https://images.unsplash.com/photo-1582653280643-e39991d70b0a?auto=format&fit=crop&q=80',
+        image: 'https://images.unsplash.com/photo-1651467606797-e1c660cf3fda?auto=format&fit=crop&q=80',
         points: [
           "AED 917 billion total transactions in 2024 (20% YoY increase).",
           "Transitioning to a 'Mature Market Cycle'.",
@@ -142,13 +158,56 @@ const SMEInsights: React.FC = () => {
           title: 'Transaction & Resilience Data',
           body: (
             <div className="space-y-8">
-              <VerbatimText text="Market resilience is reinforced by over 70% cash-buyer dominance, insulating the market from global interest rate hikes." />
-              <SectionHeader title="Key Resilience Factors" />
+              <VerbatimText text="Dubai recorded AED 917 billion in total real estate transactions, with growth anchored by off-plan absorption, luxury demand, and broad end-user participation rather than purely leveraged speculation." />
+              <SectionHeader title="Resilience Drivers" />
               <GrowthBullets items={[
-                "Yield Leadership: Dubai's 8-10% average outperforms London (3-4%).",
-                "D33 Economic Agenda: Strategic planning and infrastructure investment floor.",
-                "Escrow Protections: Stricter RERA rules preventing speculative bubbles."
+                "High cash-buyer share reduces refinancing stress and supports price stability through rate cycles.",
+                "Government-backed roadmaps (D33, Dubai 2040) provide unusually strong policy visibility for infrastructure and economic growth.",
+                "Transaction depth across primary and secondary segments improves market liquidity and exit optionality.",
+                "Dubai yield leadership versus mature markets supports continued cross-border capital inflows."
               ]} />
+              <SectionHeader title="Cycle Context" />
+              <GrowthBullets items={[
+                "Current phase is better characterized as market maturation/normalization than a structural downturn.",
+                "Expected supply growth appears more phased than abrupt, reducing near-term shock risk in core demand corridors."
+              ]} />
+              <SourceNote sources={["SME_Notes.pdf"]} />
+            </div>
+          )
+        }
+      },
+      {
+        id: 'bubble-reality-check',
+        category: 'Market Risk',
+        title: 'Bubble Risk Reality Check',
+        image: 'https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&q=80',
+        points: [
+          'A bubble is rapid price growth detached from fundamentals.',
+          'Dubai demand remains underpinned by migration and end users.',
+          'Rental yields and regulation suggest structural support.',
+          'Base case points to cooling/adjustment, not a broad crash.'
+        ],
+        drawerContent: {
+          id: 'bubble-reality-check-detail',
+          category: 'SME Insight // Cycle Risk',
+          title: 'What a Real Estate Bubble Is — And Is Dubai in One?',
+          body: (
+            <div className="space-y-8">
+              <VerbatimText text="A real estate bubble is an economic cycle of rapid price increases that exceeds fundamental value, often driven by speculation, easy credit, and investor psychology." />
+              <VerbatimText text="Prices rise far above what income or rental yields would justify and at some point the trend becomes unsustainable. Eventually reality catches up and the bubble pops, causing prices to decline sharply as demand evaporates or investors sell off assets." />
+              <SectionHeader title="Indicators Suggesting Dubai May Not Be in a Traditional Bubble" />
+              <GrowthBullets items={[
+                'Still strong demand: population growth, migration, economic diversification, and rental demand remain strong drivers, with many buyers being end users rather than purely speculative participants.',
+                'Moderate rental yields: Dubai still offers attractive rental yields compared with global cities, suggesting pricing remains linked to fundamentals and not only speculation.',
+                'Institutional safeguards and regulation: strengthened frameworks such as escrow protections and stricter lending practices help temper speculative excesses versus prior boom-bust conditions before 2008.',
+                'Expert views are mixed: some analyses classify Dubai as hot but not in bubble territory, citing structural demand and affordability advantages versus Hong Kong and New York.'
+              ]} />
+              <SectionHeader title="Current Forecast Positioning" />
+              <GrowthBullets items={[
+                'Current expert forecasts lean toward cooling or moderate price adjustments rather than a crash.',
+                'Emerging communities and developments, luxury and waterfront assets, larger apartments, villas/townhouses, and legacy/trophy properties are still viewed as capable of strong capital appreciation and double-digit ROI over medium to long-term horizons.'
+              ]} />
+              <SourceNote sources={["SME Insight Brief"]} />
             </div>
           )
         }
@@ -157,7 +216,7 @@ const SMEInsights: React.FC = () => {
         id: 'appreciation-forecast',
         category: 'Growth',
         title: '2025-2026 Appreciation',
-        image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80',
+        image: 'https://images.unsplash.com/photo-1607414851776-f2fcc379fb48?auto=format&fit=crop&q=80',
         points: [
           "6-8% citywide price growth forecast for 2025.",
           "8-12% projected momentum for 2026 handovers.",
@@ -170,13 +229,21 @@ const SMEInsights: React.FC = () => {
           title: 'Strategic Capital Growth',
           body: (
             <div className="space-y-8">
-              <VerbatimText text="Off-plan properties launch 10–20% below future handover values, creating natural equity gain for early investors." />
-              <SectionHeader title="Top Performance Nodes" />
+              <VerbatimText text="Off-plan pricing in Dubai frequently embeds handover arbitrage: early-stage entry can be 10–20% below completion value in projects with strong location and developer execution." />
+              <SectionHeader title="2025–2026 Appreciation Framework" />
               <GrowthBullets items={[
-                "Dubai South & JVC: 15–25%+ expected gain from contract to completion.",
-                "Prime/Branded Residences: 15–30%+ luxury demand premium.",
-                "Vite-calculated IRR is maximized by interest-free payment plans."
+                "Citywide expectations remain in high single digits, with selective nodes outperforming as handover momentum builds.",
+                "Core off-plan communities (e.g., Dubai South, JVC, MBR-adjacent areas) can generate stronger contract-to-handover uplift when launch basis is disciplined.",
+                "Prime/brand-led stock is typically more resilient in slower periods due to deeper international demand.",
+                "Payment-plan structures improve IRR by reducing upfront equity concentration and preserving optionality."
               ]} />
+              <SectionHeader title="Execution Conditions" />
+              <GrowthBullets items={[
+                "Prioritize proven delivery track record, escrow discipline, and realistic handover timelines.",
+                "Account for phased supply arrivals in 2027–2028 when underwriting exit values.",
+                "Treat off-plan upside as location + developer + payment-structure dependent, not automatic."
+              ]} />
+              <SourceNote sources={["SME_Notes.pdf"]} />
             </div>
           )
         }
@@ -186,7 +253,7 @@ const SMEInsights: React.FC = () => {
         category: 'Demographics',
         title: 'The Structural Supply Gap',
         isPremium: true,
-        image: 'https://images.unsplash.com/photo-1590644365607-1c5a519a7a37?auto=format&fit=crop&q=80',
+        image: 'https://images.unsplash.com/photo-1550779864-6ccb28702fdb?auto=format&fit=crop&q=80',
         points: [
           "182,500 new residents in 2025 (6.1% growth).",
           "3.46 residents arriving for every 1 new unit delivered.",
@@ -199,12 +266,21 @@ const SMEInsights: React.FC = () => {
           title: 'Demand vs. Delivery Analysis',
           body: (
             <div className="space-y-8">
-              <SectionHeader title="The Absorption Data" />
+              <VerbatimText text="Population growth has remained ahead of annual delivery, sustaining absorption and occupancy support despite a sizable medium-term development pipeline." />
+              <SectionHeader title="Absorption & Demographics" />
               <GrowthBullets items={[
-                "Dubai's population is projected to hit 4.2M by 2026.",
-                "Current 'Under-supply' limits downside risk in core segments.",
-                "Secondary market liquidity is rising as End-Users account for 40% of sales."
+                "2025 population growth exceeded 180k residents, with trajectory toward c.4.2M in 2026 and higher longer-term targets.",
+                "Recent delivery levels imply multiple new residents per new unit, indicating persistent demand pressure in rental-led segments.",
+                "Apartment-heavy supply means family-format and select villa/townhouse segments can stay relatively tighter.",
+                "Demand quality (professionals, families, long-stay visa holders, corporate relocations) supports stickier occupancy."
               ]} />
+              <SectionHeader title="Investor Read-Through" />
+              <GrowthBullets items={[
+                "Near-term rental resilience remains supported where demand outpaces completions.",
+                "Medium-term underwriting should model gradual supply normalization rather than immediate oversupply shock.",
+                "Policy-backed growth visibility (D33 + 2040) adds confidence to longer-duration holding theses."
+              ]} />
+              <SourceNote sources={["SME_Notes.pdf"]} />
             </div>
           )
         }
@@ -213,7 +289,7 @@ const SMEInsights: React.FC = () => {
         id: 'rental-benchmarks',
         category: 'Yields',
         title: 'Rental Yield Benchmarks',
-        image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80',
+        image: 'https://images.unsplash.com/photo-1579525612525-053cd3e8cbd7?auto=format&fit=crop&q=80',
         points: [
           "Apartments: 7.0–7.3% average gross yield.",
           "Villas/Townhouses: 5.0% average gross yield.",
@@ -226,12 +302,21 @@ const SMEInsights: React.FC = () => {
           title: 'Yield Optimization Strategy',
           body: (
             <div className="space-y-8">
-              <SectionHeader title="Community Performance" />
+              <VerbatimText text="Dubai’s income profile remains globally competitive, with citywide residential yields typically above mature-market peers and strong dispersion by micro-location and operating model." />
+              <SectionHeader title="Yield Bands by Strategy" />
               <GrowthBullets items={[
-                "JVC & International City: Leading yield nodes (8-10% gross).",
-                "Short-term strategy: Focus on Downtown & Marina for seasonal yields.",
-                "Net Yields: Deduct 1.5-2.0% for service charges and management."
+                "Long-term residential: commonly 6–8% gross, with stronger outcomes in mid-market, high-absorption communities.",
+                "Apartments generally outperform villas on gross yield, while villas can offer different appreciation/risk characteristics.",
+                "Short-term/holiday-led strategies can exceed long-term averages in high-demand tourism and business districts.",
+                "Commercial and logistics assets often extend gross yield potential into the 7–10%+ bracket with longer lease visibility."
               ]} />
+              <SectionHeader title="Net Yield Discipline" />
+              <GrowthBullets items={[
+                "Model service charges, leasing costs, management, vacancy, and periodic capex before claiming net yield targets.",
+                "Prioritize tenant-quality and renewal probability over headline rent alone to improve risk-adjusted income.",
+                "Match asset class to objective: income stability (office/logistics) vs liquidity/flexible exit (residential)."
+              ]} />
+              <SourceNote sources={["SME_Notes.pdf", "Investor project 5 - commerical information.pdf"]} />
             </div>
           )
         }
@@ -256,13 +341,21 @@ const SMEInsights: React.FC = () => {
           title: 'Acquisition & Leverage Costs',
           body: (
             <div className="space-y-8">
-              <SectionHeader title="Transaction Fee Breakdown" />
+              <VerbatimText text="Debt is accessible to both residents and non-residents, but leverage efficiency depends on borrower profile, asset type, and whether the purchase is ready or off-plan." />
+              <SectionHeader title="LTV & Access Framework" />
               <GrowthBullets items={[
-                "DLD Fee: 4% (Mandatory).",
-                "Agent Commission: 2% + VAT.",
-                "Trustee Office Fees: AED 4,000.",
-                "Mortgage Valuation: AED 2,500–3,500."
+                "Residents typically access higher ready-asset LTV bands than non-residents; off-plan financing is more conservative.",
+                "Non-residents usually require materially higher equity and may face slightly higher rates/stricter underwriting.",
+                "Ready assets are generally easier to mortgage immediately versus under-construction stock.",
+                "Use leverage to improve cash-on-cash returns, but stress-test for rate and vacancy scenarios."
               ]} />
+              <SectionHeader title="True Acquisition Cost Stack" />
+              <GrowthBullets items={[
+                "DLD transfer fee, brokerage, trustee/registration, and admin items should be modeled upfront.",
+                "Mortgage users should include valuation, arrangement fees, and mortgage registration costs.",
+                "Secondary purchases often underwrite at c.7–8% all-in transaction friction before mortgage extras."
+              ]} />
+              <SourceNote sources={["SME_Notes.pdf"]} />
             </div>
           )
         }
@@ -284,13 +377,21 @@ const SMEInsights: React.FC = () => {
           title: 'Landlord Obligations & Rights',
           body: (
             <div className="space-y-8">
-              <SectionHeader title="The Rent Increase Formula" />
+              <VerbatimText text="RERA compliance is central to income stability: rent resets, renewal timing, eviction pathways, and dispute outcomes are all framework-driven rather than discretionary." />
+              <SectionHeader title="Core Rent Adjustment Rules" />
               <GrowthBullets items={[
-                "Rent 11-20% below market: 5% max increase.",
-                "Rent 21-30% below market: 10% max increase.",
-                "Rent 31-40% below market: 15% max increase.",
-                "Maintenance: Landlords handle major/structural repairs."
+                "Lease amendments at renewal require compliant notice timing (commonly 90 days) and index-based support.",
+                "RERA calculator bands govern allowable increases; out-of-framework increases are challengeable.",
+                "Ejari registration is essential for enforceability and dispute protection.",
+                "Landlord responsibility includes major/structural maintenance beyond normal tenant wear-and-tear."
               ]} />
+              <SectionHeader title="Possession & Enforcement" />
+              <GrowthBullets items={[
+                "Owner-use/sale/major works pathways typically require formal 12-month notarized notice.",
+                "Documentation quality (contracts, notices, inspection records) materially improves enforceability.",
+                "Treat legal compliance as an operational alpha lever, not an admin afterthought."
+              ]} />
+              <SourceNote sources={["SME_Notes.pdf"]} />
             </div>
           )
         }
@@ -299,7 +400,7 @@ const SMEInsights: React.FC = () => {
         id: 'developer-selection',
         category: 'Risk Management',
         title: 'Developer Tier Strategy',
-        image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80',
+        image: 'https://images.unsplash.com/photo-1688671525781-d9447cf1abd2?auto=format&fit=crop&q=80',
         points: [
           "Tier 1 (Emaar, Nakheel): Best resale liquidity.",
           "Boutique (Ellington, Select): Design focus.",
@@ -312,12 +413,21 @@ const SMEInsights: React.FC = () => {
           title: 'Due Diligence on Delivery',
           body: (
             <div className="space-y-8">
-              <SectionHeader title="Strategic Segmentation" />
+              <VerbatimText text="Developer selection is the primary execution risk filter in Dubai off-plan and a major liquidity determinant in secondary resale." />
+              <SectionHeader title="Due Diligence Priorities" />
               <GrowthBullets items={[
-                "Prestige: Emaar, Nakheel, Meraas.",
-                "Value: Azizi, Danube, DAMAC.",
-                "Design: Sobha, Ellington, Select Group."
+                "Confirm delivery track record (timeline reliability, handover quality, defect remediation history).",
+                "Verify project registration and escrow mechanics under RERA oversight.",
+                "Assess community-level demand durability, not just launch marketing velocity.",
+                "Underwrite handover-era competition from nearby pipeline stock."
               ]} />
+              <SectionHeader title="Tiering Lens for Portfolio Construction" />
+              <GrowthBullets items={[
+                "Large master developers often optimize liquidity and financing familiarity.",
+                "Boutique/design-led names may offer brand premium but require stricter exit/tenant-depth checks.",
+                "Blend core-delivery certainty with selective upside exposure rather than concentrating in one developer profile."
+              ]} />
+              <SourceNote sources={["SME_Notes.pdf"]} />
             </div>
           )
         }
@@ -326,7 +436,7 @@ const SMEInsights: React.FC = () => {
         id: 'secondary-vs-offplan',
         category: 'Strategy',
         title: 'Secondary vs Off-Plan Strategy',
-        image: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80',
+        image: 'https://images.unsplash.com/photo-1462007895615-c8c073bebcd8?auto=format&fit=crop&q=80',
         points: [
           "Off-plan: Maximize IRR via payment plans.",
           "Secondary: Immediate cash flow & liquidity.",
@@ -339,11 +449,21 @@ const SMEInsights: React.FC = () => {
           title: 'Capital Horizons',
           body: (
             <div className="space-y-8">
-              <SectionHeader title="When to Choose" />
+              <VerbatimText text="Off-plan and secondary serve different objectives: one optimizes capital growth and IRR through staged entry, the other optimizes immediate income, liquidity, and lower execution risk." />
+              <SectionHeader title="Off-Plan vs Secondary — Strategic Fit" />
               <GrowthBullets items={[
-                "Off-Plan: Best for 2–4 year capital growth targets.",
-                "Secondary: Best for immediate income and bank financing."
+                "Off-plan: stronger for appreciation-seeking investors with 2–4 year horizons and tolerance for delivery timing risk.",
+                "Secondary: stronger for yield-now mandates, immediate leasing, and straightforward mortgage deployment.",
+                "Off-plan is usually more capital-efficient at entry; secondary is typically more transparent on current market value.",
+                "Assignment/refinance options can recycle equity, subject to developer and financing conditions."
               ]} />
+              <SectionHeader title="Hybrid Allocation Playbook" />
+              <GrowthBullets items={[
+                "Use off-plan for growth sleeves and secondary assets for stable income sleeves.",
+                "Rebalance on handover milestones, refinancing windows, and rent-reset cycles.",
+                "Align hold periods with transaction-cost drag: shorter flips require stricter spread discipline."
+              ]} />
+              <SourceNote sources={["SME_Notes.pdf"]} />
             </div>
           )
         }
@@ -381,12 +501,21 @@ const SMEInsights: React.FC = () => {
           title: 'Industrial Yield Advantage',
           body: (
             <div className="space-y-8">
-              <SectionHeader title="High-Yield Hubs" />
+              <VerbatimText text="Dubai’s logistics and industrial assets remain one of the market’s strongest income categories, supported by structural tailwinds from trade, re-export, and e-commerce expansion." />
+              <SectionHeader title="Income Fundamentals" />
               <GrowthBullets items={[
-                "JAFZA & Dubai South: 8–10% industrial yields.",
-                "Al Quoz: 6–8% accessibility demand.",
-                "Corporate tenants reduce vacancy and operational risk."
+                "Prime logistics nodes (JAFZA, Dubai South) are commonly cited in the upper yield bands versus standard residential.",
+                "Lease terms are often longer than residential, supporting visibility of forward cash flow.",
+                "Corporate occupiers with fit-out commitments can reduce turnover and vacancy friction.",
+                "Operational structures may shift cost burden to tenants (NNN-style terms in select formats), improving net income quality."
               ]} />
+              <SectionHeader title="Execution Priorities" />
+              <GrowthBullets items={[
+                "Prioritize access to major transport corridors, ports, and airport-linked logistics networks.",
+                "Assess covenant strength, lease rollover clustering, and escalation clauses before underwriting terminal values.",
+                "Treat logistics as an income anchor within a diversified portfolio mix."
+              ]} />
+              <SourceNote sources={["Investor project 5 - commerical information.pdf", "SME_Notes.pdf"]} />
             </div>
           )
         }
@@ -408,11 +537,21 @@ const SMEInsights: React.FC = () => {
           title: 'Office Market Fundamentals',
           body: (
             <div className="space-y-8">
-              <SectionHeader title="Target Districts" />
+              <VerbatimText text="Office demand is increasingly quality-selective: Grade A and core business-district stock captures the strongest pricing power, renewal profile, and institutional tenant demand." />
+              <SectionHeader title="Demand Nodes & Yield Pattern" />
               <GrowthBullets items={[
-                "DIFC: Highest rental premiums.",
-                "Business Bay & DMCC: Consistent cash flow hedges."
+                "DIFC commands premium positioning due to deep financial-services concentration and global tenant profile.",
+                "Business Bay and DMCC/JLT corridors offer broader tenant depth and stable office leasing velocity.",
+                "Grade and building specification materially influence occupancy resilience and rent trajectory.",
+                "Longer commercial lease terms can improve planning certainty versus one-year residential cycles."
               ]} />
+              <SectionHeader title="Underwriting Checklist" />
+              <GrowthBullets items={[
+                "Focus on micro-location, parking/access, fit-out quality, and tenant covenant mix.",
+                "Model re-leasing downtime and incentive packages explicitly in net yield assumptions.",
+                "Prefer assets with defensible relevance in evolving occupier requirements (quality, connectivity, flexibility)."
+              ]} />
+              <SourceNote sources={["Investor project 5 - commerical information.pdf", "SME_Notes.pdf"]} />
             </div>
           )
         }
@@ -421,7 +560,7 @@ const SMEInsights: React.FC = () => {
         id: 'retail-opportunities',
         category: 'Commercial',
         title: 'Prime Retail & High-Street',
-        image: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&q=80',
+        image: 'https://images.unsplash.com/photo-1650435331404-c1340a4c8f24?auto=format&fit=crop&q=80',
         points: [
           "Tourism growth driving demand.",
           "Community centers offering stable 7-8% yields.",
