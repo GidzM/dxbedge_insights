@@ -1,6 +1,5 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { GoogleGenAI } from "@google/genai";
 
 interface Message {
   role: 'user' | 'model';
@@ -234,37 +233,22 @@ const AIAssistant: React.FC = () => {
     setIsLoading(true);
 
     try {
-        const apiKey = import.meta.env.VITE_GEMINI_API_KEY || import.meta.env.VITE_API_KEY;
-        if (!apiKey) {
-          console.error("Missing VITE_GEMINI_API_KEY (or VITE_API_KEY). Check .env.local and restart the dev server.");
-          setMessages(prev => [...prev, { role: 'model', text: "Strategic data stream interrupted. Connection protocols failing." }]);
-          return;
-        }
-        const ai = new GoogleGenAI({ apiKey });
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: userMessage,
-        config: {
-          systemInstruction: `You are the DxB Edge Insight AI. 
-MISSION: Transform SME knowledge and strategy into high-density educational guidance. 
-PRIMARY KNOWLEDGE: DXB Edge SME Insight, D33 Analysis, 2040 Analysis, Strategic Outlook.
-TONE: Professional, unbiased, guide-not-salesperson. 
-
-FORMATTING RULES:
-1. STRICT: DO NOT use italics (* or _ symbols for emphasis).
-2. STRICT: DO NOT use markdown headers like ### or ##. Use UPPERCASE BOLD text for headers.
-3. STRICT: DO NOT use markdown symbols (*, **, ###) in visible text. Use simple bolding for emphasis on figures.
-4. BULLETS: Use only the simple dot symbol • for lists.
-5. DATA FIRST: Bold statistics and major figures (e.g., AED 32T).
-6. CITATION: Place [Source: Source Name] at the end of relevant paragraphs. Use: 'DXB Edge SME Insight', 'D33 Analysis', '2040 Analysis', or 'Strategic Outlook'.
-7. TABLES: Use standard markdown table syntax for comparisons, which the UI will render into a premium table.
-8. STYLE: Responses must be clean, executive, and high-density.`,
-        }
+      const response = await fetch('/api/gemini', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: userMessage }),
       });
-      setMessages(prev => [...prev, { role: 'model', text: response.text || "Communication timeout. Please re-verify strategic intent." }]);
+
+      if (!response.ok) {
+        throw new Error(`Proxy request failed with status ${response.status}`);
+      }
+
+      const data = await response.json() as { text?: string };
+      setMessages(prev => [...prev, { role: 'model', text: data.text || "Communication timeout. Please re-verify strategic intent." }]);
     } catch (error) {
-      // Surface the SDK error in the console to aid local debugging.
-      console.error("Gemini API request failed", error);
+      console.error("Gemini proxy request failed", error);
       setMessages(prev => [...prev, { role: 'model', text: "Strategic data stream interrupted. Connection protocols failing." }]);
     } finally {
       setIsLoading(false);

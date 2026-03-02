@@ -27,6 +27,7 @@ const App: React.FC = () => {
     isOpen: false,
     type: 'Expert'
   });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const openModal = (type: 'Expert' | 'Developer' | 'Mortgage Advisor') => {
     setModalState({ isOpen: true, type });
@@ -40,7 +41,42 @@ const App: React.FC = () => {
           <Sidebar />
         </div>
 
+        {mobileMenuOpen && (
+          <div className="lg:hidden fixed inset-0 z-[70] flex">
+            <button
+              type="button"
+              aria-label="Close navigation"
+              onClick={() => setMobileMenuOpen(false)}
+              className="absolute inset-0 bg-black/50"
+            />
+            <div className="relative z-10 h-full">
+              <Sidebar
+                isMobile
+                onNavigate={() => setMobileMenuOpen(false)}
+                onClose={() => setMobileMenuOpen(false)}
+              />
+            </div>
+          </div>
+        )}
+
         <main className="flex-1 lg:ml-64 min-h-screen flex flex-col overflow-y-auto overflow-x-hidden">
+          <div className="lg:hidden sticky top-0 z-50 bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between">
+            <div>
+              <h1 className="text-sm font-serif font-bold text-brand-navy tracking-tight">DXB EDGE</h1>
+              <p className="text-[8px] text-brand-gold font-bold tracking-[0.25em] uppercase">Investor Intelligence</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              className="inline-flex items-center justify-center w-10 h-10 border border-slate-200 rounded-md text-brand-navy"
+              aria-label="Open navigation"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+
           {/* Header standard desktop */}
           <Routes>
             <Route path="/ai-assistant" element={null} />
