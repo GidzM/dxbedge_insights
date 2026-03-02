@@ -3,11 +3,16 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 const NAV_ITEMS = [
-  { name: 'Market Overview', path: '/' },
-  { name: 'SME Insights', path: '/sme-insights' },
-  { name: 'Strategic Outlook', path: '/combined' },
-  { name: 'Dubai 2040 Plan', path: '/dubai-2040' },
-  { name: 'D33 Agenda', path: '/d33-agenda' },
+  { name: 'Home', path: '/' },
+  { name: 'Expert Insights', path: '/expert-insights' },
+  {
+    name: 'Strategic Outlook',
+    path: '/combined',
+    children: [
+      { name: 'Dubai 2040 Plan', path: '/dubai-2040' },
+      { name: 'D33 Agenda', path: '/d33-agenda' }
+    ]
+  },
   { name: 'Calculators', path: '/calculators' },
   { name: 'AI Assistant', path: '/ai-assistant' },
 ];
@@ -38,6 +43,27 @@ const Sidebar: React.FC = () => {
               >
                 {item.name}
               </NavLink>
+
+              {item.children && (
+                <ul className="mt-3 ml-4 space-y-3 border-l border-white/10 pl-4">
+                  {item.children.map((child) => (
+                    <li key={child.path}>
+                      <NavLink
+                        to={child.path}
+                        className={({ isActive }) =>
+                          `block text-[10px] font-bold uppercase tracking-[0.18em] transition-all duration-300 ${
+                            isActive
+                              ? 'text-brand-gold'
+                              : 'text-white/50 hover:text-white'
+                          }`
+                        }
+                      >
+                        {child.name}
+                      </NavLink>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           ))}
         </ul>

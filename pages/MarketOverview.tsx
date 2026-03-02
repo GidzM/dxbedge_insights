@@ -6,8 +6,41 @@ const Highlight = ({ children }: { children: React.ReactNode }) => (
   <strong className="text-brand-navy font-black">{children}</strong>
 );
 
-const MarketOverview: React.FC = () => {
-  return (
+interface MarketOverviewProps {
+  openModal: (type: 'Expert' | 'Developer' | 'Mortgage Advisor') => void;
+}
+
+const MarketOverview: React.FC<MarketOverviewProps> = ({ openModal }) => {
+return (
+  <>
+    <div>
+      <section className="h-screen w-full">
+        <div className="relative h-full w-full overflow-hidden">
+          <video
+            className="w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+          >
+            <source src="/media/landing-cta.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-brand-navy/60" />
+          <div className="absolute inset-0 flex flex-col items-start justify-center text-left px-10 md:px-16 lg:px-24">
+            <h2 className="text-brand-gold font-serif italic text-[32px] sm:text-[40px] lg:text-[50px] mb-6">
+              Insight by DXB Edge
+            </h2>
+            <p className="text-white/90 text-sm md:text-base max-w-3xl leading-relaxed">
+              Unbiased Market intelligence and data driven guidance enabling investors to confidently capitalise on high growth real estate opportunities in Dubai.
+              <br />
+              <br />
+              Human strategy with AI precision.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
     <div className="max-w-7xl mx-auto py-16 px-10 lg:px-16 animate-fadeIn pb-32">
       <div className="w-full h-[400px] bg-brand-navy overflow-hidden mb-16 relative">
           <img 
@@ -24,20 +57,21 @@ const MarketOverview: React.FC = () => {
       <header className="mb-16 border-l border-brand-gold pl-10">
         <h1 className="text-5xl font-serif font-bold text-brand-navy mb-6 italic">Market Overview</h1>
         <p className="text-xl text-slate-grey max-w-4xl leading-relaxed font-serif italic">
-          Grounding Dubai's property landscape in verified sovereign data. Analyzing economic resilience and structural forces shaping long-term performance.
+          Grounding Dubai's property investment landscape in verified sovereign data. Analysing economic resilience and structural forces shaping long-term performance.
         </p>
       </header>
+
 
       {/* Professional 2x2 Grid Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
         <Card
           category="Global Benchmarking"
-          title="Global Value Delta"
+          title="Global Value Data"
           image="https://images.unsplash.com/photo-1528702748617-c64d49f918af?auto=format&fit=crop&q=80&w=800"
           points={[
-            <>Prime Residential: <Highlight>$400–$650/sqft</Highlight> (<Highlight>50–75%</Highlight> discount vs. London, NY, HK).</>,
-            <>Commercial Office: <Highlight>$350–$700/sqft</Highlight> (materially cheaper than Singapore or Paris).</>,
-            <>Ultra-Luxury: <Highlight>$1,200–$2,500/sqft</Highlight> (far below Monaco or Hong Kong Peak).</>,
+            <>Prime Residential: <Highlight>- $400–$650/sqft (AED 1,468–2,386/sqft)</Highlight> (<Highlight>50–75%</Highlight> pricing advantage vs. London, NY, HK).</>,
+            <>Commercial Office: <Highlight>- $350–$700/sqft (AED 1,285–2,569/sqft)</Highlight> (materially cheaper than Singapore or Paris).</>,
+            <>Ultra-Luxury: <Highlight>- $1,200–$2,500/sqft (AED 4,404–9,175/sqft)</Highlight> (far below Monaco or Hong Kong Peak).</>,
             <span className="text-[10px] opacity-60 uppercase font-black tracking-widest">[Source: SME Strategic Insights]</span>
           ]}
           isPremium
@@ -73,28 +107,17 @@ const MarketOverview: React.FC = () => {
           title="Transaction & Yield Health"
           image="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=800"
           points={[
-            <>Volume: <Highlight>AED 917B</Highlight> in total transactions (<Highlight>20% YoY</Highlight> increase).</>,
-            <>Yields: Apartment yields at <Highlight>7.0–7.3%</Highlight>; Villas at <Highlight>~5%</Highlight>.</>,
+            <>Volume: <Highlight>AED 917B</Highlight> in total transactions (2025) (<Highlight>20% YoY</Highlight> increase).</>,
+            <>Yields: Apartment yields at <Highlight>7.0–7.3%</Highlight>; Villas at <Highlight>5%</Highlight>.</>,
             <>Stability: Transitioning into a stable, mature phase supported by a high share of <Highlight>cash buyers</Highlight>.</>,
             <span className="text-[10px] opacity-60 uppercase font-black tracking-widest">[Source: SME Strategic Insights]</span>
           ]}
         />
       </div>
 
-      <div className="mt-24 bg-brand-navy p-16 text-white text-center relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <img src="https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&q=80&w=1000" className="w-full h-full object-cover grayscale" alt="Background" />
-        </div>
-        <div className="relative z-10">
-          <h2 className="text-3xl font-serif font-bold mb-6 italic">Strategic Advisory</h2>
-          <p className="text-brand-gold/70 text-sm uppercase tracking-[0.2em] mb-10 max-w-2xl mx-auto">Connect with a specialized strategist to receive a tailored portfolio analysis.</p>
-          <button className="border border-brand-gold text-brand-gold px-12 py-5 text-[11px] font-bold uppercase tracking-[0.3em] hover:bg-brand-gold hover:text-brand-navy transition-all duration-500">
-              Initialize Connection
-          </button>
-        </div>
-      </div>
     </div>
-  );
+  </>
+);
 };
 
 export default MarketOverview;

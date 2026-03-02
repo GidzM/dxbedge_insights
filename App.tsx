@@ -23,12 +23,12 @@ const ScrollToTop = () => {
 };
 
 const App: React.FC = () => {
-  const [modalState, setModalState] = useState<{isOpen: boolean, type: 'Broker' | 'Developer' | 'Mortgage Advisor'}>({
+  const [modalState, setModalState] = useState<{isOpen: boolean, type: 'Expert' | 'Developer' | 'Mortgage Advisor'}>({
     isOpen: false,
-    type: 'Broker'
+    type: 'Expert'
   });
 
-  const openModal = (type: 'Broker' | 'Developer' | 'Mortgage Advisor') => {
+  const openModal = (type: 'Expert' | 'Developer' | 'Mortgage Advisor') => {
     setModalState({ isOpen: true, type });
   };
 
@@ -46,14 +46,9 @@ const App: React.FC = () => {
             <Route path="/ai-assistant" element={null} />
             <Route path="*" element={
               <div className="bg-white border-b border-slate-200 px-10 py-4 flex items-center justify-end gap-10 hidden lg:flex sticky top-0 z-40 shrink-0">
-                 <button onClick={() => openModal('Broker')} className="text-[9px] font-bold text-brand-navy hover:text-brand-gold transition-colors uppercase tracking-[0.2em]">Connect Advisor</button>
-                 <button onClick={() => openModal('Developer')} className="text-[9px] font-bold text-brand-navy hover:text-brand-gold transition-colors uppercase tracking-[0.2em]">Developer Access</button>
-                 <button onClick={() => openModal('Mortgage Advisor')} className="text-[9px] font-bold text-brand-navy hover:text-brand-gold transition-colors uppercase tracking-[0.2em]">Sovereign Finance</button>
+                 <button onClick={() => openModal('Expert')} className="text-[9px] font-bold text-brand-navy hover:text-brand-gold transition-colors uppercase tracking-[0.2em]">Connect to Investment Strategist</button>
+                 <button onClick={() => openModal('Mortgage Advisor')} className="text-[9px] font-bold text-brand-navy hover:text-brand-gold transition-colors uppercase tracking-[0.2em]">Connect to Finance Expert</button>
                  <div className="w-px h-3 bg-slate-200 mx-2" />
-                 <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 bg-brand-gold rounded-full" />
-                    <span className="text-[9px] font-bold text-slate-grey/60 uppercase tracking-widest">Live Pulse</span>
-                 </div>
               </div>
             } />
           </Routes>
@@ -63,8 +58,8 @@ const App: React.FC = () => {
 
           <div className="flex-1">
             <Routes>
-              <Route path="/" element={<MarketOverview />} />
-              <Route path="/sme-insights" element={<SMEInsights />} />
+              <Route path="/" element={<MarketOverview openModal={openModal} />} />
+              <Route path="/expert-insights" element={<SMEInsights />} />
               <Route path="/combined" element={<CombinedStrategy />} />
               <Route path="/dubai-2040" element={<Dubai2040 />} />
               <Route path="/d33-agenda" element={<D33Agenda />} />
@@ -76,49 +71,80 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/ai-assistant" element={null} />
             <Route path="*" element={
-              <footer className="bg-brand-navy py-24 px-16 text-white">
-                <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start gap-20">
-                    <div className="max-w-md w-full">
+              <footer className="bg-brand-navy py-12 px-10 text-white">
+                <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start gap-12">
+                    <div className="w-full lg:max-w-2xl">
                         <h3 className="font-sans font-bold text-white text-2xl mb-4">DxB Edge Insight</h3>
-                        <p className="text-[13px] leading-relaxed mb-10 text-white/70 font-medium">
-                            The definitive, unbiased intelligence guide for the Dubai property market. We transform raw SME data and strategic sovereign agendas into executable investor insight.
+                        <p className="text-[13px] leading-relaxed mb-6 text-white/70 font-medium">
+                            The definitive, unbiased intelligence guide for the Dubai property market. We transform raw data from our Subject Matter Experts and strategic sovereign agendas into executable investor insight.
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-4">
-                            <button onClick={() => openModal('Broker')} className="bg-[#10B981] text-white text-[10px] font-bold uppercase tracking-[0.1em] px-8 py-4 shadow-sm hover:bg-[#059669] transition-all">
-                                JOIN ADVISOR NETWORK
-                            </button>
-                            <div className="border border-white/10 px-8 py-4 flex items-center justify-center bg-white/5">
-                                <span className="text-white/40 text-[10px] font-bold uppercase tracking-[0.15em]">AUTHORIZED INTELLIGENCE</span>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-white/5 border border-white/10 rounded-xl overflow-hidden">
+                            <div className="p-5 sm:p-6 border-b border-white/10 sm:border-b-0 sm:border-r border-white/10 flex flex-col">
+                              <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-gold mb-3">Strategic Advisory</h3>
+                              <p className="text-white/70 text-[12px] leading-relaxed flex-1">
+                                Connect with a specialised strategist to receive a tailored portfolio analysis.
+                              </p>
+                              <button
+                                onClick={() => openModal('Expert')}
+                                className="mt-4 border border-brand-gold text-brand-gold px-6 py-3 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-brand-gold hover:text-brand-navy transition-all duration-500"
+                              >
+                                Initialise Connection
+                              </button>
+                            </div>
+                            <div className="p-5 sm:p-6 border-b border-white/10 sm:border-b-0 sm:border-r border-white/10 flex flex-col">
+                              <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-gold mb-3">Investment Strategist</h3>
+                              <p className="text-white/70 text-[12px] leading-relaxed flex-1">
+                                Engage a senior strategist to map opportunity windows, risk profiles, and capital allocation priorities.
+                              </p>
+                              <button
+                                onClick={() => openModal('Expert')}
+                                className="mt-4 border border-brand-gold text-brand-gold px-6 py-3 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-brand-gold hover:text-brand-navy transition-all duration-500"
+                              >
+                                Connect to Investment Strategist
+                              </button>
+                            </div>
+                            <div className="p-5 sm:p-6 flex flex-col">
+                              <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-gold mb-3">Finance Expert</h3>
+                              <p className="text-white/70 text-[12px] leading-relaxed flex-1">
+                                Secure financing guidance tailored to acquisition timelines, leverage thresholds, and cash-flow targets.
+                              </p>
+                              <button
+                                onClick={() => openModal('Mortgage Advisor')}
+                                className="mt-4 border border-brand-gold text-brand-gold px-6 py-3 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-brand-gold hover:text-brand-navy transition-all duration-500"
+                              >
+                                Connect to Finance Expert
+                              </button>
                             </div>
                         </div>
                     </div>
                     
-                    <div className="grid grid-cols-2 lg:grid-cols-2 gap-x-20 gap-y-12 w-full lg:w-auto">
+                    <div className="grid grid-cols-2 lg:grid-cols-2 gap-x-16 gap-y-10 w-full lg:w-auto">
                         <div>
                             <h4 className="text-[11px] font-black text-brand-gold uppercase tracking-[0.15em] mb-8">THE PLATFORM</h4>
                             <ul className="text-[12px] space-y-4 font-medium text-white/60">
-                                <li><a href="/" className="hover:text-brand-gold transition-colors">Market Pulse</a></li>
+                                <li><a href="/" className="hover:text-brand-gold transition-colors">Home/Market Overview</a></li>
+                                <li><a href="#/expert-insights" className="hover:text-brand-gold transition-colors">Expert Insights</a></li>
+                                <li><a href="#/combined" className="hover:text-brand-gold transition-colors">Strategic Outlook</a></li>
                                 <li><a href="#/dubai-2040" className="hover:text-brand-gold transition-colors">2040 Vision</a></li>
                                 <li><a href="#/d33-agenda" className="hover:text-brand-gold transition-colors">D33 Growth</a></li>
-                                <li><a href="#/sme-insights" className="hover:text-brand-gold transition-colors">SME Ground Truth</a></li>
                             </ul>
                         </div>
                         <div>
                             <h4 className="text-[11px] font-black text-brand-gold uppercase tracking-[0.15em] mb-8">EXPERTISE</h4>
                             <ul className="text-[12px] space-y-4 font-medium text-white/60">
-                                <li><button onClick={() => openModal('Broker')} className="hover:text-brand-gold transition-colors text-left">Broker Connect</button></li>
+                                <li><button onClick={() => openModal('Expert')} className="hover:text-brand-gold transition-colors text-left">Expert Connect</button></li>
                                 <li><button onClick={() => openModal('Developer')} className="hover:text-brand-gold transition-colors text-left">Developer Access</button></li>
                                 <li><button onClick={() => openModal('Mortgage Advisor')} className="hover:text-brand-gold transition-colors text-left">Mortgage Support</button></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div className="max-w-7xl mx-auto mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
                     <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/30">© 2026 DXB EDGE INSIGHT | UNBIASED STRATEGIC INTELLIGENCE</p>
-                    <div className="flex gap-8">
+                    {/* <div className="flex gap-8">
                         <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/30">GROWTH GREEN FRAMEWORK</span>
                         <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/30">VERIFIED SOVEREIGN DATA</span>
-                    </div>
+                    </div> */}
                 </div>
               </footer>
             } />

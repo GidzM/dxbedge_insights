@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 
 interface CalculatorsProps {
-  openModal: (type: 'Broker' | 'Developer' | 'Mortgage Advisor') => void;
+  openModal: (type: 'Expert' | 'Developer' | 'Mortgage Advisor') => void;
 }
 
 const formatCurrency = (val: number) => {
@@ -294,7 +294,7 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
 
           <div className="relative">
             {activeTab === 'roi' && <ResultCard title="ROI Analysis" results={roiResults} advisory="Estimates based on current SME market data and sovereign growth trajectories." cta="Secure Priority Advisor Access" onCtaClick={() => openModal('Mortgage Advisor')} />}
-            {activeTab === 'dld' && <ResultCard title="Acquisition Costs" results={dldResults} advisory="Calculated based on standard DLD fees (4%) and registration trustee charges." cta="Connect with a Strategic Broker" onCtaClick={() => openModal('Broker')} />}
+            {activeTab === 'dld' && <ResultCard title="Acquisition Costs" results={dldResults} advisory="Calculated based on standard DLD fees (4%) and registration trustee charges." cta="Connect with a Strategic Expert" onCtaClick={() => openModal('Expert')} />}
             {activeTab === 'mortgage' && <ResultCard title="Mortgage breakdown" results={mortgageResults} advisory="Based on standard UAE banking tenure and prevailing interest rates." cta="Consult a Mortgage Specialist" onCtaClick={() => openModal('Mortgage Advisor')} />}
             {activeTab === 'offplan' && <ResultCard title="Payment Schedule" results={offPlanResults} advisory="Projected payment flow based on typical developer milestone structures." cta="Verify Developer Track Records" onCtaClick={() => openModal('Developer')} />}
           </div>

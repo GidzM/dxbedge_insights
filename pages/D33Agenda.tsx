@@ -10,11 +10,19 @@ interface DrawerContent {
 }
 
 const VerbatimText = ({ text }: { text: string }) => (
-  <p className="text-brand-navy/80 text-[14px] leading-relaxed mb-4 font-medium italic">{parseGrowthData(text)}</p>
+  <p
+    className="text-brand-navy/80 text-[14px] leading-relaxed mb-4 font-medium"
+    style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
+  >
+    {parseGrowthData(text)}
+  </p>
 );
 
 const SectionHeader = ({ title }: { title: string }) => (
-  <h4 className="text-[11px] font-black text-brand-navy uppercase tracking-[0.3em] mb-6 mt-10 border-b border-brand-navy/10 pb-2">
+  <h4
+    className="text-[11px] font-black text-brand-navy uppercase tracking-[0.3em] mb-6 mt-10 border-b border-brand-navy/10 pb-2 font-sans"
+    style={{ fontFamily: 'Univers, Inter, sans-serif' }}
+  >
     {title}
   </h4>
 );
@@ -23,8 +31,11 @@ const GrowthBullets = ({ items }: { items: string[] }) => (
   <div className="space-y-5">
     {items.map((item, idx) => (
       <div key={idx} className="flex gap-4 items-start">
-        <div className="w-1.5 h-1.5 bg-[#00E676] mt-2.5 shrink-0 shadow-[0_0_8px_rgba(0,230,118,0.4)]" />
-        <p className="text-brand-navy/80 text-[14px] leading-relaxed font-medium">
+  <div className="w-1.5 h-1.5 bg-brand-gold mt-2.5 shrink-0 shadow-[0_0_8px_rgba(201,168,106,0.4)]" />
+        <p
+          className="text-brand-navy/80 text-[14px] leading-relaxed font-medium"
+          style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
+        >
           {parseGrowthData(item)}
         </p>
       </div>
@@ -38,7 +49,7 @@ const parseGrowthData = (text: string) => {
   const parts = text.split(/(AED\s32\s[Tt]rillions?|AED\s25\.6\s[Tt]rillions?|AED\s650\s[Bb]illions?|AED\s100\s[Bb]illions?|AED\s1\s[Tt]rillions?|AED\s14\.2\s[Tt]rillions?|[\d.]+%|400\scities|80%)/g);
   return parts.map((part, i) => {
     if (/(AED\s32\s[Tt]rillions?|AED\s25\.6\s[Tt]rillions?|AED\s650\s[Bb]illions?|AED\s100\s[Bb]illions?|AED\s1\s[Tt]rillions?|AED\s14\.2\s[Tt]rillions?|[\d.]+%|400\scities|80%)/.test(part)) {
-      return <span key={i} className="text-[#00E676] font-bold">{part}</span>;
+  return <span key={i} className="text-brand-gold font-bold">{part}</span>;
     }
     return part;
   });
@@ -123,7 +134,7 @@ const D33Agenda: React.FC = () => {
                 <GrowthBullets items={[
                   "Foreign trade set to expand from AED 14.2 trillion to AED 25.6 trillion (80% increase).",
                   "Significant upward pressure on industrial and logistics asset values, particularly near Jebel Ali Port and Al Maktoum Airport.",
-                  "Increased demand for high-value warehousing and specialized fulfilment centers."
+                  "Increased demand for high-value warehousing and specialised fulfilment centers."
                 ]} />
               </div>
             )
@@ -175,7 +186,7 @@ const D33Agenda: React.FC = () => {
             "Establishing 'Dubai Economic Corridors' to streamline cross-border movement.",
             "Targeting 50% growth in traditional trade sectors via regulatory efficiency.",
             "Supporting the 'Make it in the Emirates' initiative for local manufacturing.",
-            "Developing specialized, purpose-built industrial parks and innovation districts."
+            "Developing specialised, purpose-built industrial parks and innovation districts."
           ]}
           onMore={() => openDrawer({
             id: 'industrial-trade',
@@ -196,7 +207,7 @@ const D33Agenda: React.FC = () => {
                 <SectionHeader title="INVESTOR IMPLICATIONS" />
                 <GrowthBullets items={[
                   "Development of advanced manufacturing parks catering to future-focused sectors.",
-                  "Requirement for specialized, purpose-built facilities to support emerging industries.",
+                  "Requirement for specialised, purpose-built facilities to support emerging industries.",
                   "Growth in free zone properties attractive to foreign companies seeking business-friendly environments."
                 ]} />
               </div>
@@ -207,7 +218,7 @@ const D33Agenda: React.FC = () => {
         <Card
           category="Capital Flows"
           title="Investment & FDI Inflow"
-          image="https://images.unsplash.com/photo-1454165833767-022090b282d8?auto=format&fit=crop&q=80&w=800"
+          image="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800"
           points={[
             "Targeting AED 650 billion in total FDI inflows over the next decade.",
             "Increasing annual FDI from AED 32 billion to AED 60 billion per year.",
@@ -252,44 +263,47 @@ const D33Agenda: React.FC = () => {
         className={`fixed top-0 right-0 h-full w-full sm:w-[650px] bg-white shadow-2xl z-[100] transform transition-transform duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${drawerOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         {drawerContent && (
-          <div className="flex flex-col h-full bg-white">
-            <div className="bg-white p-10 flex justify-between items-start border-b border-slate-100">
-              <div className="flex-1">
+          <div className="flex flex-col h-full">
+            <div className="bg-[#0A192F] p-10 flex justify-between items-start border-b border-brand-gold/20">
+              <div>
                 <span className="text-[10px] font-bold text-brand-gold uppercase tracking-[0.4em] mb-3 block">DXB Edge Vault // {drawerContent.category}</span>
-                <h3 className="text-3xl font-serif font-bold text-brand-navy leading-tight italic inline-block pb-3 relative">
+                <h3
+                  className="text-3xl font-sans font-bold text-white leading-tight"
+                  style={{ fontFamily: 'Univers, Inter, sans-serif' }}
+                >
                   {drawerContent.title}
-                  <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#00E676]" />
                 </h3>
               </div>
-              
-              <div className="flex items-center gap-4 ml-4">
-                <button onClick={handleCopy} className="p-2 text-slate-grey/60 hover:text-brand-navy transition-colors" title="Copy Text">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
-                </button>
-                <button className="p-2 text-slate-grey/60 hover:text-brand-navy transition-colors" title="Export PDF">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                </button>
-                <button onClick={closeDrawer} className="p-2 text-slate-grey/40 hover:text-brand-navy transition-colors">
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
-              </div>
+              <button onClick={closeDrawer} className="p-2 text-white/40 hover:text-brand-gold transition-colors">
+                <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
             </div>
 
             <div className="bg-soft-grey px-10 py-4 flex justify-between items-center border-b border-slate-200">
-              <span className="text-[8px] font-bold text-slate-grey/40 uppercase tracking-widest italic">Sovereign Data Stream: D33_RESEARCH_PROTO.PDF</span>
+              <button 
+                onClick={handleCopy}
+                className="text-[9px] font-bold text-brand-navy hover:text-brand-gold transition-colors flex items-center gap-2 uppercase tracking-widest px-2 py-1 -my-1"
+              >
+                <svg className="w-4 h-4 flex-none overflow-visible" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                Copy Strategic Intelligence
+              </button>
+              <span className="text-[8px] font-bold text-slate-grey/40 uppercase tracking-widest">Data Stream: D33_RESEARCH</span>
             </div>
 
-            <div id="d33-drawer-body" className="flex-1 p-12 overflow-y-auto custom-scrollbar bg-white">
+            <div
+              id="d33-drawer-body"
+              className={`flex-1 p-12 overflow-y-auto custom-scrollbar bg-white transition-opacity duration-700 delay-200 ${drawerOpen ? 'opacity-100' : 'opacity-0'}`}
+              style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
+            >
                {drawerContent.body}
             </div>
 
-            <div className="p-10 border-t border-slate-100 flex flex-col items-center gap-4 bg-soft-grey/30">
-              <p className="text-[9px] font-bold text-brand-navy/40 uppercase tracking-[0.2em] mb-2">[Source: D33 Economic Agenda Research]</p>
+            <div className="p-10 border-t border-slate-100 flex gap-4 bg-soft-grey/30">
               <button 
                 onClick={closeDrawer}
-                className="w-full bg-brand-navy text-white text-[11px] font-bold uppercase tracking-[0.3em] py-5 hover:bg-[#00E676] transition-all duration-500 shadow-xl"
+                className="flex-1 bg-brand-navy text-white text-[11px] font-bold uppercase tracking-[0.3em] py-5 hover:bg-brand-gold transition-all duration-500 shadow-xl"
               >
-                Exit Institutional Analysis
+                Exit Analysis
               </button>
             </div>
           </div>

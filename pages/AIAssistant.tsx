@@ -172,7 +172,7 @@ const DataTransparencyFooter: React.FC = () => {
   const docTooltips: Record<string, string> = {
     "Dubai 2040 Urban Master Plan": "The structural roadmap for Dubai's spatial development and liveability until 2040.",
     "D33 Economic Agenda": "The economic roadmap to double the size of Dubai's economy and make it a top-3 global city by 2033.",
-    "DxB Edge SME Strategic Insights": "Ground-truth tactical intelligence and yield projections distilled from specialized market experts."
+    "DxB Edge SME Strategic Insights": "Ground-truth tactical intelligence and yield projections distilled from specialised market experts."
   };
 
   const renderDoc = (name: string) => (
@@ -234,7 +234,13 @@ const AIAssistant: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+        const apiKey = import.meta.env.VITE_GEMINI_API_KEY || import.meta.env.VITE_API_KEY;
+        if (!apiKey) {
+          console.error("Missing VITE_GEMINI_API_KEY (or VITE_API_KEY). Check .env.local and restart the dev server.");
+          setMessages(prev => [...prev, { role: 'model', text: "Strategic data stream interrupted. Connection protocols failing." }]);
+          return;
+        }
+        const ai = new GoogleGenAI({ apiKey });
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: userMessage,
@@ -257,6 +263,8 @@ FORMATTING RULES:
       });
       setMessages(prev => [...prev, { role: 'model', text: response.text || "Communication timeout. Please re-verify strategic intent." }]);
     } catch (error) {
+      // Surface the SDK error in the console to aid local debugging.
+      console.error("Gemini API request failed", error);
       setMessages(prev => [...prev, { role: 'model', text: "Strategic data stream interrupted. Connection protocols failing." }]);
     } finally {
       setIsLoading(false);
@@ -270,7 +278,7 @@ FORMATTING RULES:
         <div className="flex items-center gap-6">
           <div className="flex flex-col">
             <h1 className="font-serif font-bold text-xl text-brand-navy italic leading-none">Premium Consultation Suite</h1>
-            <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.4em] mt-1">Sovereign Intelligence Hub</span>
+            <span className="text-[9px] font-black text-brand-gold uppercase tracking-[0.4em] mt-1">Intelligence Hub</span>
           </div>
         </div>
         <div className="flex items-center gap-8">

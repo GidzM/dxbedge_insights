@@ -4,76 +4,49 @@ import { useLocation } from 'react-router-dom';
 
 interface CardProps {
   title: string;
-  subtitle?: string;
-  points: (string | React.ReactNode)[];
+  category: string;
+  points: string[];
+  image: string;
   isPremium?: boolean;
-  category?: string;
-  image?: string;
-  onMore?: () => void;
+  onMore?: () => void; // This is now optional
 }
 
-const Card: React.FC<CardProps> = ({ title, subtitle, points, isPremium, category, image, onMore }) => {
-  const location = useLocation();
-  // Identify if we are on the Market Overview (root) page
-  const isMarketOverview = location.pathname === '/';
-
+const Card: React.FC<CardProps> = ({ title, category, points, image, isPremium, onMore }) => {
   return (
-    <div className={`group bg-white border border-slate-200 p-8 hover:border-brand-navy transition-all duration-500 flex flex-col h-full relative overflow-hidden ${isPremium ? 'border-brand-gold/40' : ''}`}>
-      {isPremium && (
-        <div className="absolute top-0 right-0 z-10">
-          <div className="bg-brand-gold text-white text-[8px] font-bold px-3 py-1 uppercase tracking-[0.2em] shadow-sm">
-            Edge Insight
-          </div>
+    <div className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col h-full border border-slate-100">
+      <div className="relative h-48 overflow-hidden">
+        <img src={image} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/80 to-transparent" />
+          {isPremium && (
+            <span className="absolute top-4 right-4 bg-brand-gold text-brand-navy text-[9px] font-black px-2 py-1 rounded tracking-tighter uppercase">
+              Premium Insight
+            </span>
+          )}
+        <div className="absolute bottom-4 left-6">
+            <span className="text-[10px] font-bold text-brand-gold uppercase tracking-[0.2em]">{category}</span>
+          <h3 className="text-xl font-serif font-bold text-white italic">{title}</h3>
         </div>
-      )}
-
-      {image && (
-        <div className="relative h-32 mb-8 overflow-hidden -mx-8 -mt-8 grayscale brightness-[0.8] contrast-[1.1] hover:grayscale-0 transition-all duration-700">
-          <img 
-            src={image} 
-            alt={title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-brand-navy/30 mix-blend-multiply" />
-        </div>
-      )}
-      
-      <div className="flex flex-col mb-8">
-        {category && (
-          <span className="text-[9px] font-bold text-brand-gold uppercase tracking-[0.25em] mb-2 block">
-            {category}
-          </span>
-        )}
-        <h3 className="text-xl font-serif font-bold text-brand-navy mb-2 leading-tight">
-          {title}
-        </h3>
-        {subtitle && <p className="text-[11px] text-slate-grey/60 font-medium italic leading-relaxed">{subtitle}</p>}
       </div>
       
-      <ul className="space-y-4 flex-1">
-        {points.map((point, index) => (
-          <li key={index} className="flex items-start gap-4">
-            <div className="w-1 h-1 bg-brand-gold mt-2 flex-shrink-0" />
-            <p className="text-[13px] text-brand-navy/80 leading-relaxed font-medium">
-              {point}
-            </p>
-          </li>
-        ))}
-      </ul>
+      <div className="p-8 flex-1 flex flex-col">
+        <div className="space-y-4 mb-8 flex-1">
+          {points.map((point, idx) => (
+            <div key={idx} className="flex gap-3 items-start">
+              <div className="w-1 h-1 bg-brand-gold mt-2 shrink-0 rounded-full" />
+              <p className="text-slate-grey text-[13px] leading-relaxed font-medium">{point}</p>
+            </div>
+          ))}
+        </div>
 
-      <div className="mt-10 pt-6 border-t border-slate-100 flex items-center justify-between">
-        {/* Only display the button if we are NOT on Market Overview and have a callback defined */}
-        {!isMarketOverview && onMore ? (
+        {/* FIX: Only render the button if onMore is provided */}
+        {onMore && (
           <button 
             onClick={onMore}
-            className="text-[10px] font-bold text-brand-navy hover:text-brand-gold uppercase tracking-[0.2em] transition-colors border-b border-transparent hover:border-brand-gold pb-0.5"
+            className="w-full py-3 border border-brand-navy/10 text-brand-navy text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-brand-navy hover:text-white transition-all duration-300 rounded-lg"
           >
             View Full Analysis
           </button>
-        ) : (
-          <div className="flex-1" />
         )}
-        <span className="text-[8px] font-bold text-slate-grey/30 uppercase tracking-[0.1em]">Verified Strategic Data</span>
       </div>
     </div>
   );

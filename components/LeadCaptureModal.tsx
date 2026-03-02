@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 interface LeadCaptureModalProps {
   isOpen: boolean;
   onClose: () => void;
-  type: 'Broker' | 'Developer' | 'Mortgage Advisor';
+  type: 'Expert' | 'Developer' | 'Mortgage Advisor';
 }
 
 const CURRENCIES = [
@@ -52,7 +52,7 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({ isOpen, onClose, ty
             </div>
 
             <p className="text-xs sm:text-sm text-slate-grey leading-relaxed mb-8">
-              Based on your interest, we will connect you with a vetted, high-reputation {type.toLowerCase()} specialized in the current market cycle.
+              Based on your interest, we will connect you with a vetted, high-reputation {type.toLowerCase()} specialised in the current market cycle.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -106,7 +106,7 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({ isOpen, onClose, ty
             </div>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-deep-forest mb-3">Request Received</h2>
             <p className="text-sm sm:text-base text-slate-grey leading-relaxed">
-              A specialized {type.toLowerCase()} will reach out shortly to provide tailored guidance.
+              A specialised {type.toLowerCase()} will reach out shortly to provide tailored guidance.
             </p>
           </div>
         )}

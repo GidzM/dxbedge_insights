@@ -10,7 +10,12 @@ interface DrawerContent {
 }
 
 const VerbatimText = ({ text }: { text: string }) => (
-  <p className="text-brand-navy/80 text-[14px] leading-relaxed mb-4 font-medium">{text}</p>
+  <p
+    className="text-brand-navy/80 text-[14px] leading-relaxed mb-4 font-medium"
+    style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
+  >
+    {text}
+  </p>
 );
 
 const GoldBullets = ({ items }: { items: string[] }) => (
@@ -18,7 +23,10 @@ const GoldBullets = ({ items }: { items: string[] }) => (
     {items.map((item, idx) => (
       <div key={idx} className="flex gap-4 items-start">
         <div className="w-1.5 h-1.5 bg-brand-gold mt-2.5 shrink-0" />
-        <p className="text-brand-navy/80 text-[14px] leading-relaxed font-medium">
+        <p
+          className="text-brand-navy/80 text-[14px] leading-relaxed font-medium"
+          style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
+        >
           {parseBoldData(item)}
         </p>
       </div>
@@ -170,6 +178,13 @@ const Dubai2040: React.FC = () => {
 
   const closeDrawer = () => setDrawerOpen(false);
 
+  const copyDrawerText = () => {
+    if (!drawerContent) return;
+    const text = document.getElementById('dubai2040-drawer-body')?.innerText || '';
+    navigator.clipboard.writeText(text);
+    alert('Strategic intelligence copied to clipboard.');
+  };
+
   return (
     <div className="max-w-7xl mx-auto py-16 px-10 lg:px-16 animate-fadeIn pb-32">
       {/* Header Section */}
@@ -195,7 +210,7 @@ const Dubai2040: React.FC = () => {
                 title="Urban Hierarchy & Centres"
                 image="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=800"
                 points={[
-                  "Structural focus on 5 primary growth nodes: Deira/Bur Dubai, Downtown/Business Bay, Dubai Marina/JBR.",
+                  "Structural focus on 5 primary growth nodes: Deira/Bur Dubai, Downtown/Business Bay, Dubai Marina/JBR, Expo 2020 Centre, and Dubai Silicon Oasis .",
                   "Strategic integration of 2 emerging centres: Silicon Oasis and District 2020.",
                   "Density targeted at 4,200 people per km² within these urban boundaries.",
                   "13 multi-sector centres and 40 specialised hubs to distribute economic activity."
@@ -226,7 +241,7 @@ const Dubai2040: React.FC = () => {
               title="The 20-Minute City"
               image="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=800"
               points={[
-                "Strategic goal: 80% of residents' daily needs accessible within 20 minutes by walking or cycling.",
+                "Strategic goal: 55% of residents live within 800 meters of transit, with daily needs reachable in 20 minutes by foot or bike.",
                 "Structural focus on essential services proximity to residential clusters.",
                 "Soft mobility networks with shaded pedestrian and cycling routes throughout core zones.",
                 "Increases rental appeal for properties with walkable access to services."
@@ -395,7 +410,12 @@ const Dubai2040: React.FC = () => {
             <div className="bg-[#0A192F] p-10 flex justify-between items-start border-b border-brand-gold/20">
               <div>
                 <span className="text-[10px] font-bold text-brand-gold uppercase tracking-[0.4em] mb-3 block">DXB Edge Vault // {drawerContent.category}</span>
-                <h3 className="text-3xl font-serif font-bold text-white leading-tight italic">{drawerContent.title}</h3>
+                <h3
+                  className="text-3xl font-sans font-bold text-white leading-tight"
+                  style={{ fontFamily: 'Univers, Inter, sans-serif' }}
+                >
+                  {drawerContent.title}
+                </h3>
               </div>
               <button 
                 onClick={closeDrawer}
@@ -406,10 +426,21 @@ const Dubai2040: React.FC = () => {
             </div>
 
             <div className="bg-soft-grey px-10 py-4 flex justify-between items-center border-b border-slate-200">
-              <span className="text-[8px] font-bold text-slate-grey/40 uppercase tracking-widest italic">Sovereign Data Stream: RESTORED 2040 MASTER PLAN</span>
+              <button 
+                onClick={copyDrawerText}
+                className="text-[9px] font-bold text-brand-navy hover:text-brand-gold transition-colors flex items-center gap-2 uppercase tracking-widest px-2 py-1 -my-1"
+              >
+                <svg className="w-4 h-4 flex-none overflow-visible" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                Copy Strategic Intelligence
+              </button>
+              <span className="text-[8px] font-bold text-slate-grey/40 uppercase tracking-widest">Data Stream: Sovereign 2040 MASTER PLAN</span>
             </div>
 
-            <div className="flex-1 p-12 overflow-y-auto custom-scrollbar bg-white">
+            <div
+              id="dubai2040-drawer-body"
+              className={`flex-1 p-12 overflow-y-auto custom-scrollbar bg-white transition-opacity duration-700 delay-200 ${drawerOpen ? 'opacity-100' : 'opacity-0'}`}
+              style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
+            >
                {drawerContent.body}
             </div>
 
@@ -418,7 +449,7 @@ const Dubai2040: React.FC = () => {
                 onClick={closeDrawer}
                 className="flex-1 bg-brand-navy text-white text-[11px] font-bold uppercase tracking-[0.3em] py-5 hover:bg-brand-gold transition-all duration-500 shadow-xl"
               >
-                Exit Technical Analysis
+                Exit Analysis
               </button>
             </div>
           </div>
