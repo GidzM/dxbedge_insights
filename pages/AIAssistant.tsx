@@ -2,12 +2,24 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { CANONICAL_SOURCE_LABELS, SOURCE_TOOLTIPS } from '../sourceLabels.js';
 
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (container: HTMLElement, options: Record<string, unknown>) => string;
+      reset: (widgetId?: string) => void;
+      remove?: (widgetId?: string) => void;
+    };
+  }
+}
+
 interface Message {
   role: 'user' | 'model';
   text: string;
 }
 
 const DISPLAY_SOURCES = CANONICAL_SOURCE_LABELS;
+const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY;
+const CAPTCHA_ENFORCED = import.meta.env.VITE_CAPTCHA_ENFORCED === 'true';
 
 const STRATEGIC_SHORTCUTS = [
   {
@@ -212,8 +224,81 @@ const AIAssistant: React.FC = () => {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [clientId, setClientId] = useState('');
+  const [captchaToken, setCaptchaToken] = useState('');
+  const [captchaReady, setCaptchaReady] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const latestMessageRef = useRef<HTMLDivElement>(null);
+  const turnstileRef = useRef<HTMLDivElement>(null);
+  const turnstileWidgetIdRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const existingClientId = localStorage.getItem('dxb_client_id');
+      if (existingClientId) {
+        setClientId(existingClientId);
+        return;
+      }
+
+      const generatedClientId = typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+        ? crypto.randomUUID()
+        : `client-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+
+      localStorage.setItem('dxb_client_id', generatedClientId);
+      setClientId(generatedClientId);
+    } catch {
+      setClientId(`client-${Date.now()}`);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY || !turnstileRef.current) {
+      return;
+    }
+
+    const renderTurnstile = () => {
+      if (!window.turnstile || !turnstileRef.current || turnstileWidgetIdRef.current) {
+        return;
+      }
+
+      const widgetId = window.turnstile.render(turnstileRef.current, {
+        sitekey: TURNSTILE_SITE_KEY,
+        callback: (token: string) => {
+          setCaptchaToken(token);
+          setCaptchaReady(true);
+        },
+        'expired-callback': () => {
+          setCaptchaToken('');
+          setCaptchaReady(false);
+        },
+        'error-callback': () => {
+          setCaptchaToken('');
+          setCaptchaReady(false);
+        },
+      });
+
+      turnstileWidgetIdRef.current = widgetId;
+    };
+
+    if (window.turnstile) {
+      renderTurnstile();
+      return;
+    }
+
+    const existingScript = document.querySelector('script[data-turnstile="true"]') as HTMLScriptElement | null;
+    if (existingScript) {
+      existingScript.addEventListener('load', renderTurnstile, { once: true });
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    script.async = true;
+    script.defer = true;
+    script.dataset.turnstile = 'true';
+    script.addEventListener('load', renderTurnstile, { once: true });
+    document.head.appendChild(script);
+  }, []);
 
   useEffect(() => {
     if (latestMessageRef.current) {
@@ -225,6 +310,11 @@ const AIAssistant: React.FC = () => {
     const userMessage = textToSend || input.trim();
     if (!userMessage || isLoading) return;
 
+    if (CAPTCHA_ENFORCED && TURNSTILE_SITE_KEY && !captchaToken) {
+      setMessages(prev => [...prev, { role: 'model', text: 'Verification required. Please complete CAPTCHA before sending your query.' }]);
+      return;
+    }
+
     setInput('');
     setMessages(prev => [...prev, { role: 'user', text: userMessage }]);
     setIsLoading(true);
@@ -234,8 +324,9 @@ const AIAssistant: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-Client-Id': clientId,
         },
-        body: JSON.stringify({ message: userMessage }),
+        body: JSON.stringify({ message: userMessage, captchaToken }),
       });
 
       if (!response.ok) {
@@ -253,6 +344,11 @@ const AIAssistant: React.FC = () => {
 
       const data = await response.json() as { text?: string };
       setMessages(prev => [...prev, { role: 'model', text: data.text || "Communication timeout. Please re-verify strategic intent." }]);
+      if (TURNSTILE_SITE_KEY && window.turnstile && turnstileWidgetIdRef.current) {
+        window.turnstile.reset(turnstileWidgetIdRef.current);
+        setCaptchaToken('');
+        setCaptchaReady(false);
+      }
     } catch (error) {
       console.error("Gemini proxy request failed", error);
       const errorMessage = error instanceof Error
@@ -402,13 +498,22 @@ const AIAssistant: React.FC = () => {
                 />
                 <button
                   onClick={() => handleSend()}
-                  disabled={isLoading}
+                  disabled={isLoading || (CAPTCHA_ENFORCED && TURNSTILE_SITE_KEY && !captchaToken)}
                   style={{ WebkitTapHighlightColor: 'transparent' }}
                   className="w-full sm:w-auto box-border appearance-none touch-manipulation select-none bg-brand-gold text-brand-navy px-6 sm:px-8 py-3 text-[10px] font-bold uppercase tracking-[0.2em] rounded-xl sm:rounded-full hover:bg-white transition-all disabled:opacity-50 focus:outline-none active:scale-100"
                 >
                   Analyse
                 </button>
               </div>
+
+              {TURNSTILE_SITE_KEY && (
+                <div className="w-full flex flex-col gap-2 items-start">
+                  <div ref={turnstileRef} className="min-h-[64px]" />
+                  <p className="text-[9px] font-medium uppercase tracking-[0.12em] text-white/40">
+                    {captchaReady ? 'Verification complete' : 'Complete verification to enable AI query submission'}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 

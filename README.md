@@ -36,6 +36,36 @@ Quick verification after deploy:
 
 - `GET /api/health` returns service status and `keyConfigured` (true/false).
 
+### AI assistant safeguards (cost control)
+
+Phase 1 safeguards are enabled in `server.mjs` for `/api/gemini`:
+
+- Kill switch (`AI_ASSISTANT_ENABLED`, default `true`)
+- Message size cap (`GEMINI_MAX_MESSAGE_CHARS`, default `2000`)
+- Per-IP rate limit (`GEMINI_RATE_LIMIT_WINDOW_MS`, default `300000`; `GEMINI_RATE_LIMIT_MAX_REQUESTS`, default `10`)
+- Per-IP daily cap (`GEMINI_DAILY_LIMIT_PER_IP`, default `120`)
+- Upstream timeout (`GEMINI_TIMEOUT_MS`, default `20000`)
+- Response cache (`GEMINI_CACHE_ENABLED`, default `true`; `GEMINI_CACHE_TTL_MS`, default `300000`; `GEMINI_CACHE_MAX_ENTRIES`, default `300`; `GEMINI_CACHE_MIN_MESSAGE_CHARS`, default `20`; `GEMINI_CACHE_MAX_MESSAGE_CHARS`, default `1200`)
+
+Phase 2 controls:
+
+- Per-user quota guards (client ID based):
+   - `GEMINI_USER_RATE_LIMIT_WINDOW_MS` (default `300000`)
+   - `GEMINI_USER_RATE_LIMIT_MAX_REQUESTS` (default `20`)
+   - `GEMINI_USER_DAILY_LIMIT` (default `200`)
+- CAPTCHA verification:
+   - `CAPTCHA_ENFORCED` (`true|false`, default `false`)
+   - `CAPTCHA_PROVIDER` (`turnstile` or `hcaptcha`, default `none`)
+   - `CAPTCHA_SECRET_KEY` (server secret)
+   - `CAPTCHA_SITE_KEY` (server visibility/config check)
+
+Frontend CAPTCHA configuration (for Turnstile widget in AI Assistant):
+
+- `VITE_TURNSTILE_SITE_KEY`
+- `VITE_CAPTCHA_ENFORCED` (`true|false`)
+
+Set these as Cloud Run environment variables to tune usage and cost. `GET /api/health` now returns active guard values under `geminiGuards`.
+
 ## AI knowledge base (outside AI Studio)
 
 The chatbot is grounded from local text files in `server.mjs` via the `KNOWLEDGE_DOCS` list.
