@@ -339,7 +339,7 @@ const SMEInsights: React.FC = () => {
         ],
         drawerContent: {
           id: 'global-value-detail',
-          category: 'SME Insight // Price Benchmarking',
+          category: 'Expert Insight // Price Benchmarking',
           title: 'Global Real Estate Arbitrage',
           body: (
             <div className="space-y-8">
@@ -375,7 +375,7 @@ const SMEInsights: React.FC = () => {
         ],
         drawerContent: {
           id: 'records-detail',
-          category: 'SME Insight // Performance Metrics',
+          category: 'Expert Insight // Performance Metrics',
           title: 'Transaction & Resilience Data',
           body: (
             <div className="space-y-8">
@@ -410,7 +410,7 @@ const SMEInsights: React.FC = () => {
         ],
         drawerContent: {
           id: 'bubble-reality-check-detail',
-          category: 'SME Insight // Cycle Risk',
+          category: 'Expert Insight // Cycle Risk',
           title: 'What a Real Estate Bubble Is — And Is Dubai in One?',
           body: (
             <div className="space-y-8">
@@ -428,7 +428,7 @@ const SMEInsights: React.FC = () => {
                 'Current expert forecasts lean toward cooling or moderate price adjustments rather than a crash.',
                 'Emerging communities and developments, luxury and waterfront assets, larger apartments, villas/townhouses, and legacy/trophy properties are still viewed as capable of strong capital appreciation and double-digit ROI over medium to long-term horizons.'
               ]} />
-              <SourceNote sources={["DXB Edge Expert Insight Brief"]} />
+              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -442,11 +442,13 @@ const SMEInsights: React.FC = () => {
           "6-8% citywide price growth forecast for 2025.",
           "8-12% projected momentum for 2026 handovers.",
           "15-25% 'Handover Arbitrage' in emerging nodes.",
-          "Capital gains reinforced by high HNWI migration."
+          "Capital gains reinforced by high HNWI migration.",
+          "Luxury growth nodes include Palm Jumeirah, Downtown, Business Bay, and Creek Harbour.",
+          "Early-cycle upside is building in Palm Jebel Ali and select branded waterfront stock."
         ],
         drawerContent: {
           id: 'appreciation-detail',
-          category: 'SME Insight // Growth Forecast',
+          category: 'Expert Insight // Growth Forecast',
           title: 'Strategic Capital Growth',
           body: (
             <div className="space-y-8">
@@ -463,6 +465,34 @@ const SMEInsights: React.FC = () => {
                 "Prioritize proven delivery track record, escrow discipline, and realistic handover timelines.",
                 "Account for phased supply arrivals in 2027–2028 when underwriting exit values.",
                 "Treat off-plan upside as location + developer + payment-structure dependent, not automatic."
+              ]} />
+              <SectionHeader title="Luxury Growth Nodes (2025–2026)" />
+              <VerbatimText text="Here are the top luxury real estate locations in Dubai for investment in 2025–2026, focusing on high-end, premium, and ultra-luxury segments with strong capital growth or solid rental demand." />
+              <GrowthBullets items={[
+                "Palm Jumeirah — Signature Waterfront Luxury: Dubai’s most iconic luxury district with beachfront villas, penthouses, private beaches, proven global demand, and historically strong price-per-square-foot performance driven by limited supply. Investor Suitability: ultra-wealthy buyers, branded residences, trophy assets, and capital-preservation mandates.",
+                "Downtown Dubai — Urban Luxury Hub: anchored by Burj Khalifa, Dubai Mall, and Opera District, with high footfall, tourism demand, prestige positioning, and consistent corporate-relocation demand supporting visibility and liquidity. Investor Suitability: high-end apartments, penthouses, and icon addresses requiring strong resale depth.",
+                "Business Bay — Branded & Premium Residences: central location near Downtown with Dubai Canal views; branded luxury towers can command pricing premiums, while rental demand remains strong among professionals and corporate tenants. Investor Suitability: serviced luxury condos, premium-yield strategies, and branded-luxury allocations.",
+                "Dubai Creek Harbour — Waterfront Future Icon: positioned as a growth-oriented waterfront core with larger master-plan upside, mixed-use lifestyle offerings, parks, and retail that broaden buyer depth as infrastructure scales. Investor Suitability: modern waterfront condos and long-term appreciation-focused portfolios.",
+                "Mohammed Bin Rashid City (MBR City) — Luxe, Low-Density: expansive integrated district with luxury villas, townhouses, and high-end apartments near Downtown, combining greenery, exclusivity, and family-driven end-user demand. Investor Suitability: premium villas and family-oriented luxury homes with lifestyle-led resilience.",
+                "Palm Jebel Ali — Next-Generation Waterfront Luxury: planned as a significantly larger beachfront ecosystem, still early in development and therefore more speculative, but with notable early-entrant pricing optionality as infrastructure rolls out. Investor Suitability: long-horizon capital-growth investors and ultra-luxury beachfront exposure.",
+                "Dubai Marina / Bluewaters — Waterfront & Lifestyle Luxury: marina views, yacht-centric positioning, and strong international appeal support both occupier depth and liquidity; tourism and corporate rental channels continue to underpin occupancy. Investor Suitability: high-yield waterfront condos, branded residences, and global-renter-focused income sleeves."
+              ]} />
+              <SectionHeader title="Demand Drivers & Investor Fit Matrix" />
+              <GrowthBullets items={[
+                "Palm Jumeirah: ultra-luxury beachfront scarcity → Trophy assets and capital preservation.",
+                "Downtown: city prestige + tourism flow + business-hub demand → High-end apartments and penthouses with liquidity.",
+                "Business Bay: branded and serviced luxury + corporate tenant depth → Rental plus short-term demand strategies.",
+                "Creek Harbour: waterfront growth corridor with maturing infrastructure → Long-term appreciation allocations.",
+                "MBR City: family luxury and green-space appeal → Premium villas and end-user-oriented holdings.",
+                "Palm Jebel Ali: early-stage mega-waterfront project → Speculative capital-growth mandates.",
+                "Marina/Bluewaters: waterfront lifestyle and global tourism relevance → Rental-yield and international appeal strategies."
+              ]} />
+              <SectionHeader title="Additional Allocation Signals" />
+              <VerbatimText text="Investor takeaway from the DXB Expert Insights: luxury allocation should focus on scarcity-led beachfront and waterfront stock, evaluate branded residences where service and design can command premium pricing, and balance yield-stable urban cores with growth-oriented waterfront districts." />
+              <GrowthBullets items={[
+                "Focus on scarcity: limited-supply beach or waterfront locations tend to preserve and grow value.",
+                "Consider branded residences: these can command pricing premiums and attract premium renters.",
+                "Analyze yield vs growth: urban cores (Downtown/Business Bay) can deliver stable rents, while developing waterfront districts can offer stronger appreciation."
               ]} />
               <SourceNote sources={["DXB Expert Insights"]} />
             </div>
@@ -483,7 +513,7 @@ const SMEInsights: React.FC = () => {
         ],
         drawerContent: {
           id: 'gap-detail',
-          category: 'SME Insight // Supply/Demand',
+          category: 'Expert Insight // Supply/Demand',
           title: 'Demand vs. Delivery Analysis',
           body: (
             <div className="space-y-8">
@@ -519,7 +549,7 @@ const SMEInsights: React.FC = () => {
         ],
         drawerContent: {
           id: 'yield-detail',
-          category: 'SME Insight // ROI Analysis',
+          category: 'Expert Insight // ROI Analysis',
           title: 'Yield Optimization Strategy',
           body: (
             <div className="space-y-8">
@@ -558,7 +588,7 @@ const SMEInsights: React.FC = () => {
         ],
         drawerContent: {
           id: 'mortgage-detail',
-          category: 'SME Insight // Investor Mechanics',
+          category: 'Expert Insight // Investor Mechanics',
           title: 'Acquisition & Leverage Costs',
           body: (
             <div className="space-y-8">
@@ -594,7 +624,7 @@ const SMEInsights: React.FC = () => {
         ],
         drawerContent: {
           id: 'rera-detail',
-          category: 'SME Insight // Tenancy Law',
+          category: 'Expert Insight // Tenancy Law',
           title: 'Landlord Obligations & Rights',
           body: (
             <div className="space-y-8">
@@ -630,7 +660,7 @@ const SMEInsights: React.FC = () => {
         ],
         drawerContent: {
           id: 'developer-detail',
-          category: 'SME Insight // Risk Analysis',
+          category: 'Expert Insight // Risk Analysis',
           title: 'Due Diligence on Delivery',
           body: (
             <div className="space-y-8">
@@ -666,7 +696,7 @@ const SMEInsights: React.FC = () => {
         ],
         drawerContent: {
           id: 'strategy-detail',
-          category: 'SME Insight // Portfolio Strategy',
+          category: 'Expert Insight // Portfolio Strategy',
           title: 'Capital Horizons',
           body: (
             <div className="space-y-8">
@@ -718,7 +748,7 @@ const SMEInsights: React.FC = () => {
         ],
         drawerContent: {
           id: 'logistics-detail',
-          category: 'SME Insight // Commercial Yields',
+          category: 'Expert Insight // Commercial Yields',
           title: 'Industrial Yield Advantage',
           body: (
             <div className="space-y-8">
@@ -754,7 +784,7 @@ const SMEInsights: React.FC = () => {
         ],
         drawerContent: {
           id: 'office-detail',
-          category: 'SME Insight // Commercial Strategy',
+          category: 'Expert Insight // Commercial Strategy',
           title: 'Office Market Fundamentals',
           body: (
             <div className="space-y-8">
@@ -910,7 +940,7 @@ const SMEInsights: React.FC = () => {
                 ]}
               />
 
-              <SourceNote sources={["DXB Expert Insights", "Global Value Gap references already used in Expert Insights"]} />
+              <SourceNote sources={["DXB Expert Insights", "Global Value Gap Benchmark Set"]} />
             </div>
           )
         }

@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 
 interface CalculatorsProps {
-  openModal: (type: 'Expert' | 'Developer' | 'Mortgage Advisor') => void;
+  openModal: (type: 'Expert' | 'Investment Strategist' | 'Strategic Advisory' | 'Developer' | 'Mortgage Advisor' | 'Services') => void;
 }
 
 const formatCurrency = (val: number) => {

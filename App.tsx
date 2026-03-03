@@ -23,13 +23,13 @@ const ScrollToTop = () => {
 };
 
 const App: React.FC = () => {
-  const [modalState, setModalState] = useState<{isOpen: boolean, type: 'Expert' | 'Developer' | 'Mortgage Advisor'}>({
+  const [modalState, setModalState] = useState<{isOpen: boolean, type: 'Expert' | 'Investment Strategist' | 'Strategic Advisory' | 'Developer' | 'Mortgage Advisor' | 'Services'}>({
     isOpen: false,
     type: 'Expert'
   });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const openModal = (type: 'Expert' | 'Developer' | 'Mortgage Advisor') => {
+  const openModal = (type: 'Expert' | 'Investment Strategist' | 'Strategic Advisory' | 'Developer' | 'Mortgage Advisor' | 'Services') => {
     setModalState({ isOpen: true, type });
   };
 
@@ -109,46 +109,58 @@ const App: React.FC = () => {
             <Route path="*" element={
               <footer className="bg-brand-navy py-12 px-10 text-white">
                 <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start gap-12">
-                    <div className="w-full lg:max-w-2xl">
+                    <div className="w-full lg:max-w-4xl xl:max-w-5xl">
                         <h3 className="font-sans font-bold text-white text-2xl mb-4">DxB Edge Insight</h3>
                         <p className="text-[13px] leading-relaxed mb-6 text-white/70 font-medium">
                             The definitive, unbiased intelligence guide for the Dubai property market. We transform raw data from our Subject Matter Experts and strategic sovereign agendas into executable investor insight.
                         </p>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-white/5 border border-white/10 rounded-xl overflow-hidden">
-                            <div className="p-5 sm:p-6 border-b border-white/10 sm:border-b-0 sm:border-r border-white/10 flex flex-col">
-                              <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-gold mb-3">Strategic Advisory</h3>
-                              <p className="text-white/70 text-[12px] leading-relaxed flex-1">
-                                Connect with a specialised strategist to receive a tailored portfolio analysis.
-                              </p>
-                              <button
-                                onClick={() => openModal('Expert')}
-                                className="mt-4 border border-brand-gold text-brand-gold px-6 py-3 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-brand-gold hover:text-brand-navy transition-all duration-500"
-                              >
-                                Initialise Connection
-                              </button>
-                            </div>
-                            <div className="p-5 sm:p-6 border-b border-white/10 sm:border-b-0 sm:border-r border-white/10 flex flex-col">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                            <div className="p-5 sm:p-6 bg-white/5 border border-white/10 rounded-xl flex flex-col">
                               <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-gold mb-3">Investment Strategist</h3>
                               <p className="text-white/70 text-[12px] leading-relaxed flex-1">
                                 Engage a senior strategist to map opportunity windows, risk profiles, and capital allocation priorities.
                               </p>
                               <button
-                                onClick={() => openModal('Expert')}
-                                className="mt-4 border border-brand-gold text-brand-gold px-6 py-3 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-brand-gold hover:text-brand-navy transition-all duration-500"
+                                onClick={() => openModal('Investment Strategist')}
+                                className="mt-4 border border-brand-gold text-brand-gold px-4 py-3 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-brand-gold hover:text-brand-navy transition-all duration-500 w-full min-h-[72px] flex items-center justify-center text-center"
                               >
                                 Connect to Investment Strategist
                               </button>
                             </div>
-                            <div className="p-5 sm:p-6 flex flex-col">
+                            <div className="p-5 sm:p-6 bg-white/5 border border-white/10 rounded-xl flex flex-col">
+                              <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-gold mb-3">Strategic Advisory</h3>
+                              <p className="text-white/70 text-[12px] leading-relaxed flex-1">
+                                Receive strategic guidance based on your current portfolio, risk posture, and near-term investment priorities.
+                              </p>
+                              <button
+                                onClick={() => openModal('Strategic Advisory')}
+                                className="mt-4 border border-brand-gold text-brand-gold px-4 py-3 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-brand-gold hover:text-brand-navy transition-all duration-500 w-full min-h-[72px] flex items-center justify-center text-center"
+                              >
+                                Initialise Connection
+                              </button>
+                            </div>
+                            <div className="p-5 sm:p-6 bg-white/5 border border-white/10 rounded-xl flex flex-col">
                               <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-gold mb-3">Finance Expert</h3>
                               <p className="text-white/70 text-[12px] leading-relaxed flex-1">
-                                Secure financing guidance tailored to acquisition timelines, leverage thresholds, and cash-flow targets.
+                                Secure mortgage and financing guidance tailored to acquisition timelines, leverage thresholds, and cash-flow targets.
                               </p>
                               <button
                                 onClick={() => openModal('Mortgage Advisor')}
-                                className="mt-4 border border-brand-gold text-brand-gold px-6 py-3 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-brand-gold hover:text-brand-navy transition-all duration-500"
+                                className="mt-4 border border-brand-gold text-brand-gold px-4 py-3 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-brand-gold hover:text-brand-navy transition-all duration-500 w-full min-h-[72px] flex items-center justify-center text-center"
                               >
                                 Connect to Finance Expert
+                              </button>
+                            </div>
+                            <div className="p-5 sm:p-6 bg-white/5 border border-white/10 rounded-xl flex flex-col">
+                              <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-gold mb-3">Services</h3>
+                              <p className="text-white/70 text-[12px] leading-relaxed flex-1">
+                                Access specialist support teams for post-acquisition execution, legal coordination, and operational setup.
+                              </p>
+                              <button
+                                onClick={() => openModal('Services')}
+                                className="mt-4 border border-brand-gold text-brand-gold px-4 py-3 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-brand-gold hover:text-brand-navy transition-all duration-500 w-full min-h-[72px] flex items-center justify-center text-center"
+                              >
+                                Connect to Services
                               </button>
                             </div>
                         </div>
@@ -171,6 +183,7 @@ const App: React.FC = () => {
                                 <li><button onClick={() => openModal('Expert')} className="hover:text-brand-gold transition-colors text-left">Expert Connect</button></li>
                                 <li><button onClick={() => openModal('Developer')} className="hover:text-brand-gold transition-colors text-left">Developer Access</button></li>
                                 <li><button onClick={() => openModal('Mortgage Advisor')} className="hover:text-brand-gold transition-colors text-left">Mortgage Support</button></li>
+                                <li><button onClick={() => openModal('Services')} className="hover:text-brand-gold transition-colors text-left">Additional Services</button></li>
                             </ul>
                         </div>
                     </div>

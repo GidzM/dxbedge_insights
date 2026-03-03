@@ -7,7 +7,7 @@ const Highlight = ({ children }: { children: React.ReactNode }) => (
 );
 
 interface MarketOverviewProps {
-  openModal: (type: 'Expert' | 'Developer' | 'Mortgage Advisor') => void;
+  openModal: (type: 'Expert' | 'Investment Strategist' | 'Strategic Advisory' | 'Developer' | 'Mortgage Advisor' | 'Services') => void;
 }
 
 const MarketOverview: React.FC<MarketOverviewProps> = ({ openModal }) => {

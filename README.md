@@ -36,6 +36,46 @@ Quick verification after deploy:
 
 - `GET /api/health` returns service status and `keyConfigured` (true/false).
 
+## AI knowledge base (outside AI Studio)
+
+The chatbot is grounded from local text files in `server.mjs` via the `KNOWLEDGE_DOCS` list.
+
+For best user performance (lowest latency), keep documents local and indexed in-memory on server startup.
+
+Current sources include:
+
+- `SME_Notes.txt` (`DXB Expert Insights`)
+- `Investor_project_5_-_commerical_information.txt` (`DXB Expert Insights`)
+- `knowledge/2040 doc analysis.txt` (`2040 Analysis`)
+- `knowledge/D33 doc analysis.txt` (`D33 Analysis`)
+- `knowledge/Combined d33 2040 doc analysis.txt` (`D33 and 2040 Strategic Outlook`)
+
+To add or replace a source document:
+
+1. Convert to `.txt` or `.md` if needed.
+2. Place files in `knowledge/` at project root (or add controlled core docs in `server.mjs`).
+3. Restart the server (`npm run dev` or `npm run start`) so the knowledge index reloads.
+
+Fast-path for adding original AI Studio docs:
+
+1. Export/download the original source docs from AI Studio.
+2. Convert to `.txt` or `.md` if needed.
+3. Place them in `knowledge/` at project root.
+4. Restart the server; files in `knowledge/` are auto-discovered and indexed.
+
+Notes:
+
+- Core docs in project root remain explicitly named for stable citation labels.
+- Auto-discovered docs in `knowledge/` use a source label derived from the file name.
+- Excluded/disallowed files are blocked in `server.mjs` and are not indexed even if present.
+
+At runtime, the backend retrieves relevant chunks from these documents per user query and sends them to Gemini with explicit source labels for citation.
+
+Runtime verification:
+
+- `GET /api/knowledge/sources` returns source labels, file names, and chunk counts loaded in memory.
+- `GET /api/health` now also includes `knowledgeConfigured`, `knowledgeSourceCount`, and `knowledgeChunkCount`.
+
 ## Calculator API (compliant data foundation)
 
 This app now includes a minimal backend scoring foundation for global city comparison.
