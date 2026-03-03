@@ -104,14 +104,14 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({ isOpen, onClose, ty
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-deep-forest/60 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg md:max-w-2xl overflow-hidden relative border border-slate-200">
-        <button onClick={onClose} className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-deep-forest transition-colors z-10">
+    <div className="fixed inset-0 z-[100] flex items-start sm:items-center justify-center p-3 sm:p-4 bg-deep-forest/60 backdrop-blur-sm animate-fadeIn overflow-y-auto">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg md:max-w-2xl max-h-[92vh] overflow-hidden relative border border-slate-200 flex flex-col my-2 sm:my-0">
+        <button onClick={onClose} className="absolute top-3 right-3 sm:top-6 sm:right-6 text-slate-500 hover:text-deep-forest transition-colors z-20 bg-white/90 rounded-md p-1">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
 
         {!submitted ? (
-          <div className="p-6 sm:p-10">
+          <div className="p-6 sm:p-10 overflow-y-auto">
             <div className="flex items-center gap-3 mb-6">
               <div className="bg-growth-green/10 p-2.5 sm:p-3 rounded-xl text-growth-green">
                 <svg className="w-5 h-5 sm:w-6 sm:text-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 005.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
@@ -128,10 +128,10 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({ isOpen, onClose, ty
                 : `Based on your interest, we will connect you with a vetted, high-reputation ${type.toLowerCase()} specialised in the current market cycle.`}
             </p>
 
-            <div className="mb-8 border border-slate-200 rounded-xl p-4 bg-soft-grey/40">
+            <div className="mb-6 sm:mb-8 border border-slate-200 rounded-xl p-4 bg-soft-grey/40">
               <p className="text-[10px] sm:text-[11px] font-bold text-deep-forest uppercase tracking-[0.2em] mb-2">Direct Expert Contact</p>
               <p className="text-sm sm:text-base font-semibold text-deep-forest mb-4">{DIRECT_EXPERT_PHONE}</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2">
                 <a
                   href={`tel:${DIRECT_EXPERT_PHONE}`}
                   className="inline-flex items-center justify-center gap-2 border border-slate-300 bg-white text-deep-forest px-3 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-[0.18em] hover:border-growth-green hover:text-growth-green transition-colors"
@@ -224,7 +224,7 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({ isOpen, onClose, ty
                       }
                     }}
                     className="w-full bg-soft-grey border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-growth-green/20"
-                    size={6}
+                    size={4}
                   >
                     {ADDITIONAL_SERVICES.map((service) => (
                       <option key={service} value={service}>{service}</option>
