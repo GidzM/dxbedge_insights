@@ -1,19 +1,35 @@
+# -----------------------------
 # Build stage
-FROM node:20-alpine AS build
+# -----------------------------
+FROM node:20-slim AS build
 WORKDIR /app
+
+# Install dependencies
 COPY package*.json ./
 RUN npm ci
+
+# Copy source and build
 COPY . .
 RUN npm run build
 
+
+# -----------------------------
 # Runtime stage
-FROM node:20-alpine
+# -----------------------------
+FROM node:20-slim AS runtime
 WORKDIR /app
+
+ENV NODE_ENV=production
 ENV PORT=8080
+
+# Install only production dependencies
 COPY package*.json ./
 RUN npm ci --omit=dev
+
+# Copy built frontend + backend server
 COPY --from=build /app/dist ./dist
 COPY server.mjs ./server.mjs
 COPY server ./server
+
 EXPOSE 8080
 CMD ["npm", "run", "start"]
