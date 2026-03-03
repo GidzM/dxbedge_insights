@@ -98,7 +98,7 @@ const CombinedStrategy: React.FC = () => {
       <header className="mb-16 border-l border-brand-gold pl-10">
         <h1 className="text-5xl font-serif font-bold text-brand-navy mb-6 italic">Strategic Outlook</h1>
         <p className="text-xl text-slate-grey max-w-4xl leading-relaxed font-serif italic">
-          High-density restoration of the Dubai 2040 Urban Plan and D33 Economic Agenda. No truncation, full fidelity strategic guidance.
+          AI-generated combined analysis of the Dubai 2040 Urban Plan and D33 Economic Agenda, translated into clear strategic guidance for investors.
         </p>
       </header>
 
