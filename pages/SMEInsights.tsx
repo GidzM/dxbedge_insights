@@ -932,7 +932,7 @@ const SMEInsights: React.FC = () => {
           title: 'Cross-City Living Cost Comparison',
           body: (
             <div className="space-y-8">
-              <VerbatimText text="This panel adds fixed living-cost snapshots to complement pricing/yield and bubble-risk data, helping compare affordability and relocation friction across major markets." />
+              <VerbatimText text="This panel adds fixed living-cost snapshots to complement pricing/yield and macro data, helping compare affordability and relocation friction across major markets." />
 
               <ComparativeBars
                 title="Monthly Cost of Living — Total With Rent (USD)"
@@ -982,52 +982,6 @@ const SMEInsights: React.FC = () => {
         }
       },
       {
-        id: 'ubs-bubble-comparator',
-        category: 'Bubble Index',
-        title: 'UBS Bubble Risk Comparator (2025)',
-        image: 'https://images.unsplash.com/photo-1655309893829-407c54619f1f?auto=format&fit=crop&q=80',
-        points: [
-          'UBS score snapshot now integrated for Dubai, Singapore, Hong Kong, London, and New York.',
-          'Dubai score: 1.09 (elevated risk band), above Singapore 0.55 and Hong Kong 0.44.',
-          'London (0.34) and New York (0.26) sit in lower risk territory in this cycle.',
-          'Visual bars replace narrative-heavy interpretation for faster market ranking reads.'
-        ],
-        drawerContent: {
-          id: 'ubs-bubble-comparator-detail',
-          category: 'Comparative // UBS Bubble Index',
-          title: 'UBS Global Real Estate Bubble Index — Selected Markets',
-          body: (
-            <div className="space-y-8">
-              <VerbatimText text="UBS 2025 selected-market scores are now embedded directly in Expert Insights to support cycle-risk comparison across Dubai/UAE, Singapore, Hong Kong, London, and New York." />
-
-              <ComparativeBars
-                title="UBS Bubble Risk Score (2025)"
-                unit=""
-                freshnessLabel="UBS GREBI • 2025"
-                items={[
-                  { label: 'Dubai', value: 1.09, display: '1.09 (elevated)', highlight: true },
-                  { label: 'Singapore', value: 0.55, display: '0.55 (moderate)' },
-                  { label: 'Hong Kong', value: 0.44, display: '0.44 (low/moderate)' },
-                  { label: 'London', value: 0.34, display: '0.34 (low)' },
-                  { label: 'New York', value: 0.26, display: '0.26 (low)' },
-                ]}
-              />
-
-              <SectionHeader title="Cycle Read-Through" />
-              <GrowthBullets
-                items={[
-                  'UBS text indicates Miami had the highest bubble risk among covered markets, while Dubai registered one of the largest score increases since 2022.',
-                  'Dubai appears in the elevated-risk band in the 2025 score table, while Singapore is shown as moderate and London/New York as lower risk in this cycle.',
-                  'The index should be interpreted as a risk thermometer, not a market-timing trigger; trajectory and local demand/funding conditions remain critical.'
-                ]}
-              />
-
-              <SourceNote sources={["UBS Global Real Estate Bubble Index 2025"]} />
-            </div>
-          )
-        }
-      },
-      {
         id: 'city-comparator-flow',
         category: 'Decision Flow',
         title: 'City Comparator (Top 5 Markets)',
@@ -1052,13 +1006,13 @@ const SMEInsights: React.FC = () => {
               <GrowthBullets
                 items={[
                   'Living cost snapshots (monthly total with rent) for affordability fit.',
-                  'UBS 2025 bubble scores for cycle-risk weighting.',
+                  'Budget-fit and affordability weighting for risk sensitivity.',
                   'World Bank GDP growth and FDI inflows for macro momentum and capital-flow context.',
                   'Outputs are directional and should be paired with asset-level underwriting before execution.'
                 ]}
               />
 
-              <SourceNote sources={["World Bank API", "UBS Global Real Estate Bubble Index 2025", "Livingcost.org"]} />
+              <SourceNote sources={["World Bank API", "Livingcost.org"]} />
             </div>
           )
         }
