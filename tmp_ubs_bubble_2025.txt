@@ -1,0 +1,965 @@
+ 
+ 
+  
+ 
+  
+ 
+ 
+ 
+ 
+
+ 
+ 
+Contents 
+3 Editorial  
+4 Bubble risks  
+7  Valuations 
+10  City profiles  
+22 Appendix  
+Editorial 
+Dear Readers, 
+Exceptionally large government transfers 
+boosted household incomes, contributing 
+to the inflation surge three years ago. 
+Subsequent monetary tightening cooled 
+housing markets and deflated bubbles. 
+Paradoxically, the continued and 
+ultimately unsustainable rise in public 
+debt is likely to give housing markets fresh 
+tailwinds in the coming years. 
+With public debt nearing 100% of global GDP 
+by decade’s end (according to the IMF 
+forecast), policymakers face three long-run 
+paths to keep the debt dynamics under control: 
+austerity, inflation, or financial repression. 
+Austerity—raising taxes and cutting spending—
+is widely unpopular amid an aging population 
+and growing polarization. Allowing inflation to 
+rise is an easier path to nominal economic 
+growth, which can help keep public debt under 
+control. Financial repression—holding nominal 
+borrowing costs down via regulation or central 
+bank action—will likely be needed to manage 
+debt service. 
+ 
+  
+ 
+  
+ 
+
+ 
+ 
+Real estate stands to benefit. Higher inflation erodes fixed-rate mortgage debt, 
+aiding homeowners. Under financial repression, demand for assets with 
+positive real returns, like property investments, rises. Housing markets in 
+fiscally sound countries may also benefit, as capital inflows strengthen 
+currencies and enable lower nominal interest rates without stoking inflation. 
+In the short run, affordability remains severely strained, holding housing markets 
+back. In this issue of the UBS Global Real Estate Bubble Index, find out which 
+cities face low downside risk, where corrections are likely, and where price 
+increases are set to pick up again.  
+We wish you an engaging read. 
+ 
+Claudio Saputelli Matthias Holzhey 
+Head Swiss & Global Real Estate Senior Real Estate Economist 
+Chief Investment Office GWM Chief Investment Office GWM 
+UBS Global Real Estate Bubble Index 2025 3 
+
+
+ 
+  
+ 
+
+
+ 
+ 
+Shifting risks  
+Miami shows the highest bubble risk among the cities in 
+this study. High bubble risk also appears in Tokyo and 
+Zurich. An elevated risk is evident in Los Angeles, Dubai, 
+Amsterdam, and Geneva. 
+Risks are moderate in Singapore, Sydney, Vancouver, and 
+Toronto. In Europe, Madrid, Frankfurt, and Munich fall into 
+the moderate-risk group as well. According to the index, 
+London, Paris, and Milan face low bubble risk. Outside 
+Europe, Hong Kong, San Francisco, New York, and São Paulo 
+are in the same category, with São Paulo showing the lowest 
+risk among all cities analyzed. 
+Over the last four quarters, global housing markets continued 
+to cool on average. Price-to-rent ratios declined across 
+European and Asian cities, excluding Tokyo. Subdued 
+mortgage lending reflects still-elevated financing costs in 
+most regions. Even though mortgage rates have eased since 
+2023, they remain roughly twice the level seen from 2020 to 
+2022. New residential construction has trended lower, 
+worsening housing shortages in growing urban areas. Overall, 
+broad exuberance has faded, with average bubble risk in 
+major cities falling for a third straight year. 
+Toronto and Hong Kong posted the largest declines in bubble-
+risk scores. And despite topping the index this year, 
+imbalances in Miami and Tokyo eased from the prior edition. 
+By contrast, Dubai and Madrid saw the biggest increases. 
+Dubai’s bubble risk has surged since 2022 amid an economic 
+boom, leaving the market looking increasingly overheated. 
+UBS Global Real Estate Bubble Index 2025 
+Cities with elevated or high bubble risk continued to  UBS Global Real Estate Bubble Index decouple from 
+fundamentals: over the last five years,  
+inflation-adjusted home prices increased nearly 25% on  Bubble risk scores for selected housing markets, 2025 
+average, while rents rose about 10% and incomes about  Miami 1.73 5%. By contrast, prices in cities with 
+moderate or low risk  Tokyo 1.59  
+fell roughly 5%, while rents and incomes were broadly  Zurich 1.55 flat. Historically, worsening affordability and widening  
+ Los Angeles 1.11  
+gaps between prices and rents have served as forerunners  
+Dubai 1.09 of housing crises. 
+ Amsterdam 1.06  
+ Geneva 1.05  
+ Toronto 0.80  
+ Sydney 0.80  
+ Identifying a bubble Madrid 0.77  
+Price bubbles are a recurring phenomenon in  Frankfurt 0.76 property markets. The term “bubble” 
+refers to a  Vancouver 0.76 substantial and sustained mispricing of an asset,  Munich
+ 0.64 the existence of which cannot be proved unless  Singapore 0.55 it bursts. 
+But historical data reveals patterns of  Hong Kong 0.44 property market excesses. Typical 
+signs include  London 0.34 a decoupling of prices from local incomes and  San Francisco 0.28 
+rents, and imbalances in the real economy, such  New York 0.26 as excessive lending and 
+construction activity.  Paris 0.25 The UBS Global Real Estate Bubble Index gauges  Milan
+ 0.01  
+the risk of a property bubble on the basis of such  
+ São Paulo –0.10  
+patterns. The index does not predict whether  
+ and when a correction will set in. A change in     
+macroeconomic momentum, a shift in investor  High Elevated Moderate Low Bubble risk score sentiment, or a major 
+supply increase could trig- (> 1.5) (1.0 to 1.5) (0.5 to 1.0) (< 0.5) change vs. 2024 
+ ger a decline in house prices. Source: UBS   
+For an explanation, see the section on Methodology & data pages 24 and 25. 
+ 
+  
+ 
+ 
+  
+
+ 
+ 
+5 
+Outlook hinges on inflation  
+Over the last four quarters, global home prices remained 
+virtually unchanged in inflation-adjusted terms. Eurozone 
+cities were largely flat, showing little to no growth. Price 
+growth in all analyzed North American cities slowed down 
+significantly, as poor affordability has taken its toll.  
+Some cities bucked the trend. Madrid recorded the strongest 
+real price growth among all cities analyzed, with a 14% 
+increase. Dubai also saw strong growth of about 11%, while 
+Tokyo completed the top three with price growth of over 5%. 
+A return to zero interest rates buoyed prices in Swiss cities 
+Zurich and Geneva. 
+Over the last five years, Dubai and Miami were the front 
+runners with average real price growth of roughly 50%. Tokyo 
+and Zurich followed, with growth of 35% and nearly 25%, 
+respectively. By contrast, former high-flyers, such as Hong 
+Kong and Paris, saw their housing values decline by more 
+than 20% over the same period. In London, Munich, and 
+Frankfurt, prices fell by double-digit rates as well. 
+From 2010 to 2020, home prices in all selected urban centers 
+rose faster than in their respective markets. But over the last 
+five years, the trend reversed: Most city housing markets 
+underperformed their national averages. Two forces have 
+been at work: First, demand shifted to the suburbs following 
+the pandemic and the rise of flexible work. Second, higher 
+interest rates squeezed affordability in many cities, pushing 
+more buyers toward cheaper suburbs and satellites. 
+That pattern could reverse again as many countries, including 
+much of Europe, face aging—and soon shrinking—
+populations. As rural areas lose residents and economic 
+activity, urban centers may attract more growth, with Tokyo a 
+leading example. 
+Overseas demand has also amplified housing booms, 
+boosting urban outperformance. In recent years, Tokyo, 
+Madrid, Miami, and Dubai drew strong foreign investor 
+interest. By contrast, tougher rules—from new taxes to 
+outright purchase bans—have dimmed the appeal of once 
+sought-after markets such as Vancouver, Sydney, Paris, 
+Singapore, and London. 
+From a macroeconomic perspective, the outlook for housing 
+as an investment appears solid. Central banks are expected to 
+lower policy rates by 2026, gradually reducing real financing 
+costs. In an over-indebted world facing inflation and looming 
+financial repression, housing can serve as a financial shelter. 
+In most urban centers, limited supply also supports further 
+price gains. However, this scenario depends on inflation 
+staying contained and growth remaining resilient across 
+major economies—both of which remain uncertain. 
+ 
+Home price growth 
+Inflation-adjusted year-over-year change, annualized in % 
+ –10 –5 0 5 10 15 
+Madrid 
+Dubai 
+Tokyo 
+Zurich 
+Geneva 
+Singapore 
+Miami 
+Munich 
+Amsterdam 
+Los Angeles 
+Paris 
+São Paulo 
+Sydney 
+Frankfurt 
+New York 
+London 
+San Francisco 
+Milan 
+Vancouver 
+Toronto 
+Hong Kong 
+Last four quarters Last five years Source: See the section on 
+Methodology & data on pages 24 and 25. 
+ 
+  
+ 
+ 
+  
+
+ 
+ 
+UBS Global Real Estate Bubble Index 2025  6 
+
+ 
+   
+ 
+
+
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+
+ 
+ 
+ 
+
+
+ Editorial Bubble risks Valuations City profiles  Appendix 
+UBS Global Real Estate Bubble Index 2025 11 
+ 
+
+ 
+  
+
+
+ 
+Prices Rents Source: UBS 
+UBS Global Real Estate Bubble Index 2025 13 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+ Appendix 
+  
+ 
+
+
+ 
+  
+
+
+ 
+Prices Rents Source: UBS 
+UBS Global Real Estate Bubble Index 2025 15 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+ Appendix 
+  
+
+
+ 
+Prices Rents Source: UBS 
+UBS Global Real Estate Bubble Index 2025 16 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+ Appendix 
+  
+
+
+ 
+Prices Rents Source: UBS 
+UBS Global Real Estate Bubble Index 2025 17 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+ Appendix 
+  
+
+
+ 
+Prices Rents Source: UBS 
+UBS Global Real Estate Bubble Index 2025 18 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+ Appendix 
+ 
+
+
+ 
+Prices Rents 
+UBS Global Real Estate Bubble Index 2025 19 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+ Appendix 
+ 
+
+
+ 
+ Prices Rents 
+ UBS Global Real Estate Bubble Index 2025 20 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+ Appendix 
+Los Angeles Score +1.11 
+ 
+Real home prices have been trending higher, driven by a 
+strong luxury segment and tight supply for single -family 
+houses. However, rents have not kept up with inflation due to 
+suboptimal regulatory policies and ongoing quality -oflife 
+challenges. In addition, absorption of new supply has been 
+weak, and vacancies are on the rise. Los Angeles is among the 
+least affordable cities in the US, contributing to a shrinking 
+population. Prices are likely to trend downward if mortgage 
+rates do not drop.  
+Amsterdam Score +1.06 
+ 
+Real estate investors have sold properties en masse as stricter 
+rental rules, higher transfer taxes, and outright bans on buy -
+to-let have eroded profitability. As a result, the supply of 
+lower-quality units on the market is elevated. Despite strong 
+income growth and immigration, inflationadjusted prices have 
+risen only modestly, with elevated mortgage rates curbing 
+demand. Construction is already insufficient and is set to fall 
+
+
+ 
+ –20 –20 –20 
+ 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
+Source: UBS 
+ UBS Global Real Estate Bubble Index 2025 21 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+ Appendix 
+further under the new rules, creating medium -term upward 
+pressure on home prices. 
+Geneva Score +1.05 
+ 
+Housing demand is anchored by high incomes, international 
+organizations, and international migration. Since 2023, strong 
+inflows have revived population growth, partly as available 
+housing in cheaper neighboring areas has become scarce. Real 
+home prices ha ve risen 4% since mid -2024, matching the 
+national pace for the first time since 2021. Attractive 
+financing, fewer listings, and a manageable project pipeline 
+support current prices. New supply remains low and is largely 
+concentrated in major development zones.  
+
+ 
+ –20 –20 –20 
+ 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
+Source: UBS 
+ UBS Global Real Estate Bubble Index 2025 22 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+ Appendix 
+Toronto Score +0.80 
+ 
+A multi-year housing boom ended in 2022 as a foreignbuyer 
+ban, vacant home tax, tighter short -term rental rules, and 
+higher borrowing costs took hold. Real prices have returned to 
+five-year levels, trailing national gains and local income 
+growth. Population growth is driving firm rental demand, but 
+first-time buyer affordability remains severely strained. 
+Elevated and rising listings, muted sales, and softer job 
+security amid US trade tensions are expected to weigh on 
+prices in the coming quarters. 
+Sydney Score +0.80 
+ 
+Home prices have largely tracked elevated inflation since 
+2022. Recent rate cuts have revived buyer confidence, lifting 
+demand in premium suburbs. However, borrowing costs 
+remain high, keeping ownership out of reach for most: the 
+user cost of a 60 sqm (650 sqft) apartment near the city center 
+now exceeds 60% of household income. Strong in -migration 
+in recent years has kept the rental market tight. A new 
+planning law to boost lower -cost construction and a 
+temporary ban on foreign purchases may offer only li mited 
+relief. 
+Madrid Score +0.77 
+ 
+Inflation-adjusted rents rose about 10% over the past year 
+amid strong household formation and limited new 
+
+
+ 
+ –20 –20 –20 
+ 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
+Source: UBS 
+ UBS Global Real Estate Bubble Index 2025 23 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+ Appendix 
+construction. Home prices climbed even faster—nearly 15% in 
+real terms—bolstered by foreign investor demand. To address 
+worsening affordability, Spain scrapped the real estate option 
+in its golden visa program and is tightening rent controls. 
+Falling mortgage rates should support local demand, but price 
+growth is likely to slow in the coming quarters.  
+
+ 
+ –20 –20 –20 
+ 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
+Source: UBS 
+ UBS Global Real Estate Bubble Index 2025 24 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+ Appendix 
+Vancouver Score +0.76 
+ 
+Since mid -2022, inflation -adjusted home prices have fallen 
+more than 10% even as incomes and rents edged higher. 
+Active listings hit a 10-year high in mid-2025, adding nearterm 
+pressure on prices. High mortgage rates and strict stress tests 
+are keeping man y would -be buyers in the rental market. 
+Regulatory headwinds —such as a foreign -buyer ban and a 
+speculation tax and vacancy tax —are weighing on new 
+developments. Tighter rent caps and a new homeflipping tax 
+have further discouraged investor activity. 
+Munich Score +0.64 
+ 
+Real home prices fell about 20% from 2022 to 2024, easing 
+bubble risks. Over the past four quarters, they have stabilized 
+and edged up roughly 1%. The region remains Germany’s 
+growth engine and continues to attract new residents, despite 
+heavy reliance on US exports and a nationwide recession. The 
+vacancy rate is among the lowest in the country, as new supply 
+lags demand, keeping rents on an upward path. Elevated 
+financing costs and low rental yields dim the odds of a strong 
+near-term price rebound. 
+Singapore Score +0.55 
+ 
+Real home prices have risen about 3% a year since 2021, while 
+rents have climbed roughly twice as fast. Fundamentals are 
+solid: The population grew about 10% over the period, and 
+
+
+ 
+ –20 –20 –20 
+ 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
+Source: UBS 
+ UBS Global Real Estate Bubble Index 2025 25 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+ Appendix 
+vacancies fell amid construction delays. Authorities curbed 
+speculative buying and foreign demand through additional 
+buyer stamp duties, keeping bubble risk moderate to low. 
+Transaction volumes should pick up as mortgage rates decline 
+and new supply comes online, but price gains should stay 
+modest and track economic fundamentals over the long term.  
+
+ 
+ –20 –20 –20 
+ 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
+Source: UBS 
+ UBS Global Real Estate Bubble Index 2025 26 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+ Appendix 
+Hong Kong Score +0.44 
+ 
+Sales activity has picked up, supported by changes to 
+mortgage insurance, property stamp duty easing, lower rates 
+and most importantly lower home prices. Real home prices 
+started to stabilize after falling nearly 28% below 2021 
+levels—matching those last seen in 2011 in inflation-adjusted 
+terms. While financing costs are expected to ease further – 
+following the trend of US rates, prices are likely to be flat to 
+slightly negative as high inventories weigh on the outlook. The 
+lower prices have improved the re lative affordability 
+compared to the last peak. 
+San Francisco Score +0.28 
+ 
+Home prices are still lagging inflation. On an inflationadjusted 
+basis, they are about 10% below their 2022 peak. Affordability 
+remains a major hurdle, even though incomes have outpaced 
+home prices over the past seven years. Meanwhile, rental 
+growth is accelerating as return-tooffice mandates and strong 
+AI hiring draw higher -income tenants back to the city. These 
+trends will likely increase demand for owner -occupied 
+housing as well. Lower mortgage rates would boost prices, 
+even though for -sale inventory ha s risen sharply in recent 
+quarters. 
+New York Score +0.26 
+ 
+
+
+ 
+ –20 –20 –20 
+ 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
+Source: UBS 
+ UBS Global Real Estate Bubble Index 2025 27 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+ Appendix 
+Return-to-office normalization and steady job growth, 
+especially in higher-income segments, have been pulling more 
+renters into the city, increasing competition for limited listings. 
+Rental growth accelerated in the last four quarters amidst low 
+vacancy ra tes. However, prices for condominiums did not 
+benefit from rising demand and stagnated in inflation -
+adjusted terms. High-end properties, on the other hand, were 
+in high demand following strong equity market gains.   
+
+ 
+ –20 –20 –20 
+ 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
+Source: UBS 
+ UBS Global Real Estate Bubble Index 2025 28 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+ Appendix 
+Paris Score +0.25 
+ 
+Home prices continue to lag changes in rents, incomes, and 
+nationwide values. Since mid -2024, inflation-adjusted prices 
+have stabilized roughly 25% below 2020 levels, deflating prior 
+bubble risks. Affordability remains a major challenge, pushing 
+more house holds to cheaper suburbs. Tighter energy 
+standards are driving discounts on inefficient buildings while 
+lifting quality —and rents —further straining budgets. 
+Measures to increase supply, like stricter rules on short -term 
+rentals, are likely to have only a limited impact. 
+Milan Score +0.01 
+ 
+The city remains Italy’s most expensive market, supported by 
+a strong local economy, ongoing infrastructure investment, 
+and rising foreign demand. However, despite a buoyant 
+market image, real prices have declined since mid -2024, 
+lagging both the national average and a rental market boosted 
+by the upcoming Winter Olympics. Looking ahead, lower 
+mortgage rates and renewed population growth may support 
+demand. In the near term, supply constraints —driven by 
+stricter legal procedures and reduced renovation incentives—
+may help underpin prices. 
+São Paulo Score –0.10 
+ 
+Real home prices fell about 25% from 2014 to 2022. Despite 
+robust sales, prices have flatlined since 2022 as double -digit 
+
+
+ 
+ –20 –20 –20 
+ 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
+Source: UBS 
+ UBS Global Real Estate Bubble Index 2025 29 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+ Appendix 
+mortgage rates bite. Renting remains cheaper than buying. 
+Real rents rose 5% in the past year and sit roughly 25% above 
+2022 levels, reflecting strong tenant demand and tight 
+vacancy in well -located areas. Inflation has moderated, but 
+Brazil’s central bank has yet to signal any rate cuts. As long as 
+high mortgage rates penalize leverage, strong price gains are 
+unlikely. 
+
+ 
+   
+ 
+
+
+ 
+ UBS Global Real Estate Bubble Index 2025 31 
+Appendix 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+Overview 
+ 
+⚫ High (above 1.5 standard deviations)        ⚫ Elevated (between 1.0 and 1.5 standard deviations)        ⚫ Moderate (between 0.5 and 1.0 standard deviations)        ⚫ Low (below 0.5 standard deviations) Source: 
+UBS ; 1. Inflation-adjusted price index for Dubai, Singapore, Hong Kong. 
+
+
+ 
+ UBS Global Real Estate Bubble Index 2025 32 
+Appendix 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+Methodology 
+The UBS Global Real Estate Bubble Index traces the 
+fundamental valuation of owner-occupied housing markets 
+and the valuation of cities in relation to their country and 
+economic distortions (such as lending and building booms). 
+Based on the valuation, the “bubble risk” is assessed: low  
+(score below 0.5), moderate (0.5 to 1.0), elevated (1.0 to 
+1.5), and high (above  1.5). This classification is aligned with 
+historical bubble episodes. The method cannot predict if or 
+when a correction will happen. Hence, “bubble risk” refers to 
+the prevalence of a risk of a large price correction.  
+The index score is a weighted average of the following five 
+city sub-indices, standardized using expanding window 
+procedure: price-to-income and price-to-rent ratios 
+(fundamental valuation), change in mortgage-to-GDP ratio 
+and change in construction-to-GDP ratio (economic 
+distortion), and city-to-country price ratio. The city-tocountry 
+price ratio in Singapore, Hong Kong, and Dubai is replaced by 
+an inflation-adjusted price index.  
+The sub-indices are constructed from specific city-level data, 
+except for mortgage-to-GDP and construction-toGDP ratios, 
+which are calculated on the country level. In most cases, 
+publicly available data is used, but in a few cases, the data is 
+supplemented by additional sources, including the results of 
+the UBS Prices and Earnings survey. The index length varies 
+by city depending on data availability. The longest data series 
+starts in 1980 and the shortest in 2008. Data availability was 
+also considered when deciding which cities to include in the 
+index, along with the importance of the city for global 
+financial markets and residential real estate investments. 
+Please see the description of data sources on page 25.  
+Data for this edition were collected through 28 August 2025. 
+Where information was unavailable, estimates were used. As 
+a result of data updates and revisions, scores may differ from 
+previous editions. 
+The weights of the sub-indices are determined using factor 
+analysis, as recommended by the OECD Handbook on 
+Constructing Composite Indicators (2008). Factor analysis 
+weights the sub-indices to capture as much of the common 
+underlying bubble risk information as possible. As the drivers 
+of bubbles vary across cities, this method results in city-
+specific weights on sub-indices. To prevent overweighting 
+country level variables and to increase the comparability of 
+cities, the deviation from the average weight across all cities 
+is limited. Weights adjusted this way approximate the 
+average factor analysis weight of single indices across the 
+cities and complement the calculation.  
+Valuations benchmarks 
+The analysis is complemented by a city benchmarking using 
+current price-to-income and price-to-rent ratios. The price-
+to-income ratio indicates how many years a skilled service 
+worker needs to work to afford a 60-square-meter (650 
+square foot) flat near the city center. The price-torent ratio 
+signals how expensive owner-occupied homes are relative to 
+rental apartments. The higher the ratios, the more expensive 
+buying becomes.  
+Earnings data are primarily taken from official statistical 
+sources and supplemented by available surveys and expert 
+judgement. Real estate prices and rents vary widely near the 
+city center. Our estimates are cross-checked, validated using 
+different sources, and updated and challenged on an annual 
+basis. However, we also specify an uncertainty range due to 
+the differing quality of data sources.  
+Data sources 
+ 
+ Price Index (City) Rent Index (City) Income Index (City) Price Index (Country) Mortgage, Construction, GDP ,   
+Inflation (Country) 
+Amsterdam 2025Q2 CBS, Maastricht  University NVM, UBS P&E UBS P&E, CBS CBS, FED Dallas DNB, CBS, EUKLEMS, B loomberg 
+Dubai 2025Q2 Reidin, BIS Reidin, UBS P&E UBS P&E, Morgan Stanley, Bloomberg – Central Bank UAE, Dubai  Statistics Center,   
+Morgan Stanley, Bloomberg 
+Frankfurt 2025Q2 Bulwiengesa, Kiel Institut für   
+Weltwirtschaft 
+Bulwiengesa, OECD Destatis, UBS P&E, OECD FED Dallas Deutsche Bundesbank,  Destatis,   
+EUKLEMS, Bloomberg 
+
+ 
+ UBS Global Real Estate Bubble Index 2025 33 
+Appendix 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+Geneva 2025Q2 Wüest Partner Statistique Genève FTA, FSO Wüest Partner SNB, SECO, FSO 
+Hong Kong 2025Q2 RVD RVD Census and Statistics Department  
+Hong Kong, Bloomberg 
+– Census and Statistics Department Hong  
+Kong, HKMA,  Macrobond, Bloomberg 
+London 2025Q2 Nationwide ONS, UBS P&E ONS Nationwide BoE, ONS, EUKLEMS,   
+Bloomberg 
+Los Angeles 2025Q2 FHFA, S&P/Shiller CBRE, FED St. Louis BEA FHFA FED, BEA, Bloomberg 
+Madrid 2025Q2 BoS, Idealista Ayuntamiento de Madrid, Idealista INE BoS INE, BoS, EUKLEMS, Bloomberg 
+Miami 2025Q2 FHFA, S&P/Shiller CBRE, FED St. Louis BEA FHFA FED, BEA, Bloomberg 
+Milan 2025Q2 Nomisma Nomisma, OECD Dipartimento delle Finanze,   
+UBS P&E 
+FED Dallas Banca d’Italia, Hypostat, Istat,   
+EUKLEMS, Macrobond,  Bloomberg 
+Munich 2025Q2 Bulwiengesa Bulwiengesa, OECD Destatis, UBS P&E, OECD FED Dallas Deutsche Bundesbank,  Destatis,   
+EUKLEMS, Bloomberg 
+New York 2025Q2 FHFA, S&P/Shiller CBRE, CoStar, FED St. Louis BEA FHFA FED, BEA, Bloomberg 
+Paris 2025Q1 BIS, CGEDD, Insee Insee Insee, Bloomberg, UBS P&E FED Dallas BdF, Insee, EUKLEMS, Macrobond, 
+Bloomberg 
+San Francisco 2025Q2 FHFA, S&P/Shiller CBRE, FED St. Louis BEA FHFA FED, BEA, Bloomberg 
+São Paulo 2025Q2 Fipe Fipe Fundação Seade Fipe Banco do Brasil, IBGE,   
+Bloomberg 
+Singapore 2025Q2 Government of S ingapore Government of   
+Singapore, UBS P&E 
+Government  of 
+Singapore 
+– Government of Singapore,   
+Bloomberg 
+Sydney 2025Q2 REIA, ABS REIA, NSW Government, UBS P&E ABS, UBS P&E FED Dallas ABS, RBA,  Bloomberg 
+Tokyo 2025Q2 The Real Estate Transaction   
+Promotion Center, Haver Analytics,  
+Tokyo Kantei 
+Miki Syoji, Official Statistics of   
+Japan Tokyo Kantei 
+INDB, Tokyo Metropolitan   
+Government, UBS P&E 
+FED Dallas ESRI, EUKLEMS, Bloomberg 
+Toronto 2025Q2 Sauder School   
+of Business UBC, Bloomberg 
+Canadian Housing Observer, Sauder Statistics Canada 
+School of Business UBC, UBS 
+FED Dallas Statistics Canada, BoC,  Bloomberg 
+Vancouver 2025Q2 Sauder School   
+of Business UBC, Bloomberg 
+Canadian Housing Observer, Sauder Statistics Canada, Government   
+School of Business UBC, UBS of British Columbia 
+FED Dallas Statistics Canada, BoC,  Bloomberg 
+Zurich 2025Q2 Wüest Partner Statistik Stadt Zürich FTA, FSO Wüest Partner SNB, SECO, FSO 
+
+ 
+ UBS Global Real Estate Bubble Index 2025 34 
+Appendix 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+Disclaimer 
+UBS Chief Investment Office’s (“CIO”) investment views are 
+prepared and published by the Global Wealth Management 
+business of UBS Switzerland AG (regulated by FINMA in Switzerland) 
+or its affiliates (“UBS”), part of UBS Group AG (“UBS Group”). UBS 
+Group includes former Credit Suisse AG, its subsidiaries, branches 
+and affiliates. Additional disclaimer relevant to Credit Suisse Wealth 
+Management follows at the end of this section. 
+The investment views have been prepared in accordance with legal 
+requirements designed to promote the independence of 
+investment research. 
+Generic investment research – Risk information: This publication is 
+for your information only and is not intended as an offer, or a 
+solicitation of an offer, to buy or sell any investment or other specific 
+product. The analysis contained herein does not co nstitute a 
+personal recommendation or take into account the particular 
+investment objectives, investment strategies, financial situation and 
+needs of any specific recipient. It is based on numerous 
+assumptions. Different assumptions could result in materia lly 
+different results. Certain services and products are subject to legal 
+restrictions and cannot be offered worldwide on an unrestricted 
+basis and/or may not be eligible for sale to all investors. All 
+information and opinions expressed in this document we re 
+obtained from sources believed to be reliable and in good faith, but 
+no representation or warranty, express or implied, is made as to its 
+accuracy or completeness (other than disclosures relating to UBS). 
+All information and opinions as well as any forecasts, estimates and 
+market prices indicated are current as of the date of this report, and 
+are subject to change without notice. Opinions expressed herein 
+may differ or be contrary to those expressed by other business areas 
+or divisions of UBS as a result of using different assumptions and/or 
+criteria. UBS may utilise artificial intelligence tools (“AI Tools”) in the 
+preparation of this document. Notwithstanding any such use of AI 
+Tools, this document has undergone human review. 
+In no circumstances may this document or any of the information 
+(including any forecast, value, index or other calculated amount 
+(“Values”)) be used for any of the following purposes (i) valuation 
+or accounting purposes; (ii) to determine the amounts due o r 
+payable, the price or the value of any financial instrument or 
+financial contract; or (iii) to measure the performance of any 
+financial instrument including, without limitation, for the purpose 
+of tracking the return or performance of any Value or of defining the 
+asset allocation of portfolio or of computing performance fees. By 
+receiving this document and the information you will be deemed to 
+represent and warrant to UBS that you will not use this document 
+or otherwise rely on any of the information for any of the above 
+purposes. UBS and any of its directors or employees may be entitled 
+at any time to hold long or short positions in investment 
+instruments referred to herein, carry out transactions involving 
+relevant investment instruments in the capacity of principal or 
+agent, or provide any other services or have officers, who serve as 
+directors, either to/for the issuer, the investment instrument itself 
+or to/for any company commercially or financially affiliated to such 
+issuers. At any time, investment decisions (including whether to 
+buy, sell or hold securities) made by UBS and its employees may 
+differ from or be contrary to the opinions expressed in UBS research 
+publications. Some investments may not be readily realizable since 
+the market in the securi ties is illiquid and therefore valuing the 
+investment and identifying the risk to which you are exposed may 
+be difficult to quantify. UBS relies on information barriers to control 
+the flow of information contained in one or more areas within UBS, 
+into other areas, units, divisions or affiliates of UBS. Futures and 
+options trading is not suitable for every investor as there is a 
+substantial risk of loss, and losses in excess of an initial investment 
+may occur. Past performance of an investment is no guarante e for 
+its future performance. Additional information will be made 
+available upon request. Some investments may be subject to 
+sudden and large falls in value and on realization you may receive 
+back less than you invested or may be required to pay more. 
+Changes in foreign exchange rates may have an adverse effect on 
+the price, value or income of an investment. The analyst(s) 
+responsible for the preparation of this report may interact with 
+trading desk personnel, sales personnel and other constituencies 
+for the purpose of gathering, synthesizing and interpreting market 
+information. 
+Different areas, groups, and personnel within UBS Group may 
+produce and distribute separate research products independently 
+of each other. For example, research publications from CIO are 
+produced by UBS Global Wealth Management. UBS Global Research 
+is produced by UBS Investment Bank. Research methodologies and 
+rating systems of each separate research organization may differ, for 
+example, in terms of investment recommendations, investment 
+horizon, model assumptions, and valuation methods. As a 
+consequence, except for certain economic forecasts (for which UBS 
+CIO and UBS Global Research may collaborate), investment 
+recommendations, ratings, price targets, and valuations provided 
+by each of the separate research organizations may be different, or 
+inconsistent. You should refer to each relevant research product for 
+the details as to their methodologies and rating system. Not all 
+clients may have access to all products from every organization. 
+Each research product is subject to the policies and procedures of 
+the organization that produces it.  
+The compensation of the analyst(s) who prepared this report is 
+determined exclusively by research management and senior 
+management (not including investment banking). Analyst 
+compensation is not based on investment banking, sales and 
+trading or principal trading revenues, however, compensation may 
+relate to the revenues of UBS Group as a whole, of which 
+investment banking, sales and trading and principal trading are a 
+part. 
+Tax treatment depends on the individual circumstances and may be 
+subject to change in the future. UBS does not provide legal or tax 
+advice and makes no representations as to the tax treatment of 
+assets or the investment returns thereon both in general or w ith 
+reference to specific client’s circumstances and needs. We are of 
+necessity unable to take into account the particular investment 
+objectives, financial situation and needs of our individual clients and 
+we would recommend that you take financial and/or tax advice as 
+
+ 
+ UBS Global Real Estate Bubble Index 2025 35 
+Appendix 
+City profiles  
+Valuations 
+Bubble risks 
+Editorial 
+to the implications (including tax) of investing in any of the products 
+mentioned herein. 
+This material may not be reproduced or copies circulated without 
+prior authority of UBS. Unless otherwise agreed in writing UBS 
+expressly prohibits the distribution and transfer of this material to 
+third parties for any reason. UBS accepts no liability whatsoever for 
+any claims or lawsuits from any third parties arising from the use or 
+distribution of this material. This report is for distribution only 
+under such circumstances as may be permitted by applicable law. 
+For information on the ways in which CIO m anages conflicts and 
+maintains independence of its investment views and publication 
+offering, and research and rating methodologies, please visit 
+www.ubs.com/research-methodology. Additional information on 
+the relevant authors of this publication and other CIO publication(s) 
+referenced in this report; and copies of any past reports on this 
+topic; are available upon request from your client advisor. 
+Important Information About Sustainable Investing Strat egies: 
+Sustainable investing strategies aim to consider and incorporate 
+environmental, social and governance (ESG) factors into investment 
+process and portfolio construction. Strategies across geographies 
+approach ESG analysis and incorporate the findings in a variety of 
+ways. Incorporating ESG factors or Sustainable Investing 
+considerations may inhibit UBS’s ability to participate in or to advise 
+on certain investment opportunities that otherwise would  be 
+consistent with the Client’s investment objectives. The returns on a 
+portfolio incorporating ESG factors or Sustainable Investing 
+considerations may be lower or higher than portfolios where ESG 
+factors, exclusions, or other sustainability issues are not considered 
+by UBS, and the investment opportunities available to such 
+portfolios may differ. 
+External Asset Managers / External Financial Consultants: In case 
+this research or publication is provided to an External Asset 
+Manager or an External Financial Consultant, UBS expressly 
+prohibits that it is redistributed by the External Asset Manager or 
+the External Financial Consultant and is made available to their 
+clients and/or third parties. 
+USA: Distributed to US persons only by UBS Financial Services Inc. or 
+UBS Securities LLC, subsidiaries of UBS AG. UBS Switzerland AG, UBS 
+Europe SE, UBS Bank, S.A., UBS Brasil Administradora de Valores 
+Mobiliarios Ltda, UBS Asesores Mexico, S.A. de C.V., UBS SuMi TRUST 
+Wealth Management Co., Ltd., UBS Wealth Management Israel Ltd 
+and UBS Menkul Degerler AS are affiliates of UBS AG. UBS Financial 
+Services Inc. accepts responsibility for the content of a report 
+prepared by a non -US affiliate when it distribut es reports to US 
+persons. All transactions by a US person in the securities mentioned 
+in this report should be effected through a US -registered broker 
+dealer affiliated with UBS, and not through a non -US affiliate. The 
+contents of this report have not been  and will not be approved by 
+any securities or investment authority in the United States or 
+elsewhere. UBS Financial Services Inc. is not acting as a municipal 
+advisor to any municipal entity or obligated person within the 
+meaning of Section 15B of the Sec urities Exchange Act (the 
+“Municipal Advisor Rule”) and the opinions or views contained 
+herein are not intended to be, and do not constitute, advice within 
+the meaning of the Municipal Advisor Rule. 
+For country information, please visit ubs.com/cio-country-
+disclaimer-gr or ask your client advisor for the full disclaimer. 
+Additional Disclaimer relevant to Credit Suisse Wealth Management 
+You receive this document in your capacity as a client of Credit 
+Suisse Wealth Management. Your personal data will be processed 
+in accordance with the Credit Suisse privacy statement accessible at 
+your domicile through the official Credit Suisse website. In order to 
+provide you with marketing materials concerning our products and 
+services, UBS Group AG and its subsidiaries may process your basic 
+personal data (i.e. contact details such as name, e -mail address) 
+until you notify us that you no longer wish to receive them. You can 
+optout from receiving these materials at any time by informing your 
+Relationship Manager. 
+Except as otherwise specified herein and/or depending on the local 
+Credit Suisse entity from which you are receiving this report, this 
+report is distributed by UBS Switzerland AG, authorised and 
+regulated by the Swiss Financial Market Supervisory Authority  
+(FINMA). 
+Version A/2025. CIO82652744 
+© UBS 2025. The key symbol and UBS are among the registered and 
+unregistered trademarks of UBS. All rights reserved. 
+
+ 
+ 
+ 

@@ -150,7 +150,7 @@ const LocationWidget = ({ highlightNodes }: { highlightNodes: boolean }) => {
                 <span className="text-[8px] font-black text-white/70 uppercase tracking-widest whitespace-nowrap">Verified Growth Node</span>
               </div>
             </div>
-            <p className="text-[6px] text-white/10 uppercase tracking-widest leading-none italic">Ref: 2040_Analysis.pdf</p>
+            <p className="text-[6px] text-white/10 uppercase tracking-widest leading-none italic">Ref: 2040 Analysis</p>
           </div>
         </div>
       </div>

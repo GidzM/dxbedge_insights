@@ -51,6 +51,226 @@ const GrowthBullets = ({ items }: { items: string[] }) => (
   </div>
 );
 
+const ComparativeBars = ({
+  title,
+  items,
+  unit,
+  freshnessLabel,
+}: {
+  title: string;
+  items: { label: string; value: number; display?: string; highlight?: boolean }[];
+  unit: string;
+  freshnessLabel?: string;
+}) => {
+  const maxValue = Math.max(...items.map((item) => Math.max(item.value, 0)), 1);
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between gap-3">
+        <h5
+          className="text-[10px] font-black text-brand-navy uppercase tracking-[0.28em]"
+          style={{ fontFamily: 'Univers, Inter, sans-serif' }}
+        >
+          {title}
+        </h5>
+        {freshnessLabel && (
+          <span className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-grey/70 whitespace-nowrap">
+            {freshnessLabel}
+          </span>
+        )}
+      </div>
+      <div className="space-y-3">
+        {items.map((item) => {
+          const width = `${(Math.max(item.value, 0) / maxValue) * 100}%`;
+
+          return (
+            <div key={item.label} className="space-y-1.5">
+              <div className="flex justify-between items-center gap-4">
+                <span className="text-[12px] text-brand-navy/85 font-medium">{item.label}</span>
+                <span className="text-[12px] text-brand-navy/70 font-semibold">{item.display ?? `${item.value.toFixed(2)}${unit}`}</span>
+              </div>
+              <div className="h-2 bg-slate-200/70 overflow-hidden rounded-sm">
+                <div
+                  className={`h-full ${item.highlight ? 'bg-brand-gold' : 'bg-brand-navy/60'}`}
+                  style={{ width }}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+const CityComparatorExperience: React.FC = () => {
+  const [monthlyBudget, setMonthlyBudget] = useState(3200);
+  const [investmentObjective, setInvestmentObjective] = useState<'balanced' | 'income' | 'growth' | 'defensive'>('balanced');
+  const [riskTolerance, setRiskTolerance] = useState<'low' | 'medium' | 'high'>('medium');
+  const [timeHorizon, setTimeHorizon] = useState<'short' | 'medium' | 'long'>('medium');
+  const [rankedMarkets, setRankedMarkets] = useState<{ city: string; score: number }[]>([]);
+  const [topPick, setTopPick] = useState<{ city: string; score: number } | null>(null);
+  const [isScoring, setIsScoring] = useState(false);
+  const [scoreError, setScoreError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchScores = async () => {
+      setIsScoring(true);
+      setScoreError(null);
+
+      try {
+        const response = await fetch('/api/calculator/score', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            monthlyBudget,
+            objective: investmentObjective,
+            riskTolerance,
+            timeHorizon,
+          }),
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          throw new Error('Scoring request failed.');
+        }
+
+        const payload = await response.json();
+        const ranking = Array.isArray(payload.ranking) ? payload.ranking : [];
+
+        const normalizedRanking = ranking
+          .filter((item: { city?: unknown; score?: unknown }) => typeof item.city === 'string' && typeof item.score === 'number')
+          .map((item: { city: string; score: number }) => ({ city: item.city, score: item.score }));
+
+        setRankedMarkets(normalizedRanking);
+        setTopPick(
+          payload.topPick && typeof payload.topPick.city === 'string' && typeof payload.topPick.score === 'number'
+            ? { city: payload.topPick.city, score: payload.topPick.score }
+            : normalizedRanking[0] ?? null
+        );
+      } catch (error) {
+        if ((error as { name?: string }).name !== 'AbortError') {
+          setScoreError('Calculator service is temporarily unavailable.');
+          setRankedMarkets([]);
+          setTopPick(null);
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setIsScoring(false);
+        }
+      }
+    };
+
+    fetchScores();
+
+    return () => {
+      controller.abort();
+    };
+  }, [monthlyBudget, investmentObjective, riskTolerance, timeHorizon]);
+
+  const highestScore = Math.max(...rankedMarkets.map((market) => market.score), 1);
+
+  return (
+    <div className="space-y-8">
+      <div className="border border-slate-200 bg-soft-grey/30 p-6">
+        <h5 className="text-[10px] font-black text-brand-navy uppercase tracking-[0.3em] mb-5">City Comparator Inputs</h5>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <label className="space-y-2 block">
+            <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-grey/80">Investment Objective</span>
+            <select
+              value={investmentObjective}
+              onChange={(event) => setInvestmentObjective(event.target.value as 'balanced' | 'income' | 'growth' | 'defensive')}
+              className="w-full border border-slate-300 bg-white px-3 py-2 text-[12px] text-brand-navy"
+            >
+              <option value="balanced">Balanced</option>
+              <option value="income">Income Focus</option>
+              <option value="growth">Growth Focus</option>
+              <option value="defensive">Defensive</option>
+            </select>
+          </label>
+
+          <label className="space-y-2 block">
+            <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-grey/80">Risk Tolerance</span>
+            <select
+              value={riskTolerance}
+              onChange={(event) => setRiskTolerance(event.target.value as 'low' | 'medium' | 'high')}
+              className="w-full border border-slate-300 bg-white px-3 py-2 text-[12px] text-brand-navy"
+            >
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+
+          <label className="space-y-2 block">
+            <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-grey/80">Time Horizon</span>
+            <select
+              value={timeHorizon}
+              onChange={(event) => setTimeHorizon(event.target.value as 'short' | 'medium' | 'long')}
+              className="w-full border border-slate-300 bg-white px-3 py-2 text-[12px] text-brand-navy"
+            >
+              <option value="short">0-3 Years</option>
+              <option value="medium">3-7 Years</option>
+              <option value="long">7+ Years</option>
+            </select>
+          </label>
+
+          <label className="space-y-2 block">
+            <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-grey/80">
+              Monthly Living Budget ({`$${monthlyBudget.toLocaleString()}`})
+            </span>
+            <input
+              type="range"
+              min={1800}
+              max={5000}
+              step={50}
+              value={monthlyBudget}
+              onChange={(event) => setMonthlyBudget(Number(event.target.value))}
+              className="w-full accent-brand-gold"
+            />
+          </label>
+        </div>
+      </div>
+
+      <div className="border border-brand-gold/40 bg-brand-navy/[0.03] p-5">
+        <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-navy mb-2">Top Match</p>
+        <div className="flex items-center justify-between gap-5">
+          <p className="text-[18px] font-bold text-brand-navy">{topPick?.city ?? '—'}</p>
+          <p className="text-[12px] font-semibold text-brand-gold">Match Score: {topPick ? (topPick.score * 100).toFixed(1) : '—'}</p>
+        </div>
+      </div>
+
+      {isScoring && (
+        <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-grey/70">Recalculating ranking...</p>
+      )}
+
+      {scoreError && (
+        <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-grey/70">{scoreError}</p>
+      )}
+
+      <div className="space-y-4">
+        <h5 className="text-[10px] font-black text-brand-navy uppercase tracking-[0.3em]">Market Ranking</h5>
+        {rankedMarkets.map((market, rankIndex) => {
+          const width = `${(market.score / highestScore) * 100}%`;
+          return (
+            <div key={market.city} className="space-y-1.5">
+              <div className="flex justify-between items-center gap-4">
+                <span className="text-[12px] text-brand-navy/85 font-medium">#{rankIndex + 1} {market.city}</span>
+                <span className="text-[12px] text-brand-navy/70 font-semibold">{(market.score * 100).toFixed(1)}</span>
+              </div>
+              <div className="h-2 bg-slate-200/70 overflow-hidden rounded-sm">
+                <div className={`h-full ${rankIndex === 0 ? 'bg-brand-gold' : 'bg-brand-navy/60'}`} style={{ width }} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
 const parseGrowthData = (text: string) => {
   const targets = [
     "AED 917 billion", "20%", "6-8%", "8-12%", "15-25%", "$400–$650", 
@@ -74,7 +294,7 @@ const parseGrowthData = (text: string) => {
 };
 
 const SMEInsights: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'performance' | 'mechanics' | 'commercial'>('performance');
+  const [activeTab, setActiveTab] = useState<'performance' | 'mechanics' | 'commercial' | 'comparative'>('performance');
   const [activeDrawer, setActiveDrawer] = useState<DrawerContent | null>(null);
 
   // FIX 1: Prevent parent scroll when drawer is open
@@ -99,7 +319,8 @@ const SMEInsights: React.FC = () => {
   const tabs = [
     { id: 'performance', label: 'Market Performance' },
     { id: 'mechanics', label: 'Investor Mechanics' },
-    { id: 'commercial', label: 'Commercial & Industrial' }
+    { id: 'commercial', label: 'Commercial & Industrial' },
+    { id: 'comparative', label: 'Global Comparative' }
   ];
 
   const content = {
@@ -136,7 +357,7 @@ const SMEInsights: React.FC = () => {
                 "Lower basis pricing leaves room for medium-term yield compression and capital upside as market maturity advances.",
                 "Tax efficiency (no annual property tax, no typical capital gains tax) improves net, not just headline, returns."
               ]} />
-              <SourceNote sources={["SME_Notes.pdf"]} />
+              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -171,7 +392,7 @@ const SMEInsights: React.FC = () => {
                 "Current phase is better characterized as market maturation/normalization than a structural downturn.",
                 "Expected supply growth appears more phased than abrupt, reducing near-term shock risk in core demand corridors."
               ]} />
-              <SourceNote sources={["SME_Notes.pdf"]} />
+              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -207,7 +428,7 @@ const SMEInsights: React.FC = () => {
                 'Current expert forecasts lean toward cooling or moderate price adjustments rather than a crash.',
                 'Emerging communities and developments, luxury and waterfront assets, larger apartments, villas/townhouses, and legacy/trophy properties are still viewed as capable of strong capital appreciation and double-digit ROI over medium to long-term horizons.'
               ]} />
-              <SourceNote sources={["SME Insight Brief"]} />
+              <SourceNote sources={["DXB Edge Expert Insight Brief"]} />
             </div>
           )
         }
@@ -243,7 +464,7 @@ const SMEInsights: React.FC = () => {
                 "Account for phased supply arrivals in 2027–2028 when underwriting exit values.",
                 "Treat off-plan upside as location + developer + payment-structure dependent, not automatic."
               ]} />
-              <SourceNote sources={["SME_Notes.pdf"]} />
+              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -280,7 +501,7 @@ const SMEInsights: React.FC = () => {
                 "Medium-term underwriting should model gradual supply normalization rather than immediate oversupply shock.",
                 "Policy-backed growth visibility (D33 + 2040) adds confidence to longer-duration holding theses."
               ]} />
-              <SourceNote sources={["SME_Notes.pdf"]} />
+              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -316,7 +537,7 @@ const SMEInsights: React.FC = () => {
                 "Prioritize tenant-quality and renewal probability over headline rent alone to improve risk-adjusted income.",
                 "Match asset class to objective: income stability (office/logistics) vs liquidity/flexible exit (residential)."
               ]} />
-              <SourceNote sources={["SME_Notes.pdf", "Investor project 5 - commerical information.pdf"]} />
+              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -355,7 +576,7 @@ const SMEInsights: React.FC = () => {
                 "Mortgage users should include valuation, arrangement fees, and mortgage registration costs.",
                 "Secondary purchases often underwrite at c.7–8% all-in transaction friction before mortgage extras."
               ]} />
-              <SourceNote sources={["SME_Notes.pdf"]} />
+              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -391,7 +612,7 @@ const SMEInsights: React.FC = () => {
                 "Documentation quality (contracts, notices, inspection records) materially improves enforceability.",
                 "Treat legal compliance as an operational alpha lever, not an admin afterthought."
               ]} />
-              <SourceNote sources={["SME_Notes.pdf"]} />
+              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -427,7 +648,7 @@ const SMEInsights: React.FC = () => {
                 "Boutique/design-led names may offer brand premium but require stricter exit/tenant-depth checks.",
                 "Blend core-delivery certainty with selective upside exposure rather than concentrating in one developer profile."
               ]} />
-              <SourceNote sources={["SME_Notes.pdf"]} />
+              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -463,7 +684,7 @@ const SMEInsights: React.FC = () => {
                 "Rebalance on handover milestones, refinancing windows, and rent-reset cycles.",
                 "Align hold periods with transaction-cost drag: shorter flips require stricter spread discipline."
               ]} />
-              <SourceNote sources={["SME_Notes.pdf"]} />
+              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -515,7 +736,7 @@ const SMEInsights: React.FC = () => {
                 "Assess covenant strength, lease rollover clustering, and escalation clauses before underwriting terminal values.",
                 "Treat logistics as an income anchor within a diversified portfolio mix."
               ]} />
-              <SourceNote sources={["Investor project 5 - commerical information.pdf", "SME_Notes.pdf"]} />
+              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -551,7 +772,7 @@ const SMEInsights: React.FC = () => {
                 "Model re-leasing downtime and incentive packages explicitly in net yield assumptions.",
                 "Prefer assets with defensible relevance in evolving occupier requirements (quality, connectivity, flexibility)."
               ]} />
-              <SourceNote sources={["Investor project 5 - commerical information.pdf", "SME_Notes.pdf"]} />
+              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -582,6 +803,266 @@ const SMEInsights: React.FC = () => {
         ]
         // NO Drawer content here
       }
+    ],
+    comparative: [
+      {
+        id: 'macro-comparison',
+        category: 'Comparative Macro',
+        title: 'GDP & FDI Market Comparison',
+        image: 'https://images.unsplash.com/photo-1612873649383-edf91f1cf7fe?auto=format&fit=crop&q=80',
+        points: [
+          'World Bank macro comparison: Dubai/UAE vs global gateway markets.',
+          'GDP growth (2024): Dubai/UAE 3.99%, Singapore 4.39%, US 2.79%.',
+          'FDI inflows (2024): Dubai/UAE 8.26% of GDP, with higher financial-hub concentrations in HK/SG.',
+          'Visualized as ranked bars for quick market momentum read-through.'
+        ],
+        drawerContent: {
+          id: 'macro-comparison-detail',
+          category: 'Comparative // World Bank',
+          title: 'Cross-Market Macro Momentum Dashboard',
+          body: (
+            <div className="space-y-8">
+              <VerbatimText text="This comparative panel benchmarks Dubai/UAE against London/UK, New York/US, Hong Kong, and Singapore using latest public World Bank datapoints currently available in the app." />
+
+              <ComparativeBars
+                title="GDP Growth (Annual %)"
+                unit="%"
+                freshnessLabel="World Bank • 2024"
+                items={[
+                  { label: 'Dubai/UAE', value: 3.99, display: '3.99% (2024)', highlight: true },
+                  { label: 'Singapore', value: 4.39, display: '4.39% (2024)' },
+                  { label: 'United States', value: 2.79, display: '2.79% (2024)' },
+                  { label: 'Hong Kong', value: 2.50, display: '2.50% (2024)' },
+                  { label: 'United Kingdom', value: 1.13, display: '1.13% (2024)' },
+                ]}
+              />
+
+              <ComparativeBars
+                title="FDI Net Inflows (% of GDP)"
+                unit="%"
+                freshnessLabel="World Bank • 2024"
+                items={[
+                  { label: 'Dubai/UAE', value: 8.26, display: '8.26% (2024)', highlight: true },
+                  { label: 'Hong Kong', value: 30.92, display: '30.92% (2024)' },
+                  { label: 'Singapore', value: 27.76, display: '27.76% (2024)' },
+                  { label: 'United States', value: 1.03, display: '1.03% (2024)' },
+                  { label: 'United Kingdom', value: 0, display: '-0.35% (2024)' },
+                ]}
+              />
+
+              <ComparativeBars
+                title="International Tourism Arrivals (Latest Common Year)"
+                unit="M"
+                freshnessLabel="World Bank • 2020"
+                items={[
+                  { label: 'Dubai/UAE', value: 8.08, display: '8.08M (2020)', highlight: true },
+                  { label: 'United States', value: 45.04, display: '45.04M (2020)' },
+                  { label: 'United Kingdom', value: 11.10, display: '11.10M (2020)' },
+                  { label: 'Hong Kong', value: 3.57, display: '3.57M (2020)' },
+                  { label: 'Singapore', value: 2.74, display: '2.74M (2020)' },
+                ]}
+              />
+
+              <SourceNote sources={["World Bank API (NY.GDP.MKTP.KD.ZG, BX.KLT.DINV.WD.GD.ZS, ST.INT.ARVL)"]} />
+            </div>
+          )
+        }
+      },
+      {
+        id: 'valuation-yield-compare',
+        category: 'Comparative Valuation',
+        title: 'PPSQFT & Yield Differential',
+        image: 'https://images.unsplash.com/photo-1623725259601-b8c41ad6a532?auto=format&fit=crop&q=80',
+        points: [
+          'Dubai prime entry remains materially below London/New York/Hong Kong levels.',
+          'Dubai rental yields stay comparatively attractive in global-city context.',
+          'Visual bars prioritize quick spread recognition over long narrative text.',
+          'Supports allocation decisions across value entry and income profile.'
+        ],
+        drawerContent: {
+          id: 'valuation-yield-compare-detail',
+          category: 'Comparative // Pricing & Yield',
+          title: 'Global Price-to-Yield Positioning',
+          body: (
+            <div className="space-y-8">
+              <VerbatimText text="This panel compares residential pricing and income profile using existing in-platform DXB Edge Expert benchmarks and global-city references already used in the strategy notes." />
+
+              <ComparativeBars
+                title="Prime Residential Pricing (USD / sq. ft.)"
+                unit=""
+                freshnessLabel="SME Benchmark Set"
+                items={[
+                  { label: 'Dubai', value: 650, display: '$400–$650', highlight: true },
+                  { label: 'London', value: 3000, display: '$1,700–$3,000+' },
+                  { label: 'New York', value: 2500, display: '$1,500–$2,500+' },
+                  { label: 'Hong Kong', value: 2200, display: '$2,200+ (core zones)' },
+                ]}
+              />
+
+              <ComparativeBars
+                title="Gross Residential Yield Snapshot"
+                unit="%"
+                freshnessLabel="SME Benchmark Set"
+                items={[
+                  { label: 'Dubai Apartments', value: 7.2, display: '7.0–7.3%', highlight: true },
+                  { label: 'Dubai Villas', value: 5.0, display: '5.0%' },
+                  { label: 'Holiday Lets (Dubai)', value: 10.0, display: '8–12% potential' },
+                ]}
+              />
+
+              <SourceNote sources={["DXB Expert Insights", "Global Value Gap references already used in Expert Insights"]} />
+            </div>
+          )
+        }
+      },
+      {
+        id: 'living-cost-snapshot',
+        category: 'Relocation Economics',
+        title: 'Living Cost Snapshot (USD)',
+        image: 'https://images.unsplash.com/photo-1615747476205-991a14cd2358?auto=format&fit=crop&q=80',
+        points: [
+          'Livingcost snapshot comparison added for Dubai, Singapore, Hong Kong, London, and New York.',
+          'Total monthly cost (with rent): Dubai $2,514 vs Singapore $3,201 and New York $4,203.',
+          'Supports relocation and affordability framing for investors and end users.',
+          'Presented as visual bars to keep comparison scannable.'
+        ],
+        drawerContent: {
+          id: 'living-cost-snapshot-detail',
+          category: 'Comparative // Living Cost',
+          title: 'Cross-City Living Cost Comparison',
+          body: (
+            <div className="space-y-8">
+              <VerbatimText text="This panel adds fixed living-cost snapshots to complement pricing/yield and bubble-risk data, helping compare affordability and relocation friction across major markets." />
+
+              <ComparativeBars
+                title="Monthly Cost of Living — Total With Rent (USD)"
+                unit=""
+                freshnessLabel="Livingcost • Oct 2025"
+                items={[
+                  { label: 'Dubai', value: 2514, display: '$2,514', highlight: true },
+                  { label: 'Hong Kong', value: 2718, display: '$2,718' },
+                  { label: 'Singapore', value: 3201, display: '$3,201' },
+                  { label: 'London', value: 3851, display: '$3,851' },
+                  { label: 'New York', value: 4203, display: '$4,203' },
+                ]}
+              />
+
+              <ComparativeBars
+                title="Household Cost Snapshot — Family of Four (USD)"
+                unit=""
+                freshnessLabel="Livingcost • Oct 2025"
+                items={[
+                  { label: 'Dubai', value: 5509, display: '$5,509', highlight: true },
+                  { label: 'Singapore', value: 6971, display: '$6,971' },
+                ]}
+              />
+
+              <ComparativeBars
+                title="Cost-to-Salary Coverage (Months)"
+                unit=""
+                freshnessLabel="Livingcost • Oct 2025"
+                items={[
+                  { label: 'Dubai', value: 1.6, display: '1.6 months (after-tax salary coverage)', highlight: true },
+                  { label: 'Singapore', value: 1.4, display: '1.4 months (after-tax salary coverage)' },
+                ]}
+              />
+
+              <SectionHeader title="Interpretation Note" />
+              <GrowthBullets
+                items={[
+                  'These values are snapshot benchmarks for cross-market orientation and should be refreshed periodically as living-cost baskets move.',
+                  'Cost-to-salary coverage is currently shown where explicit after-tax salary snapshots were available in the extracted feed.',
+                  'Use Numbeo, Expatistan, or Livingcost.org for personalized international relocation scenarios based on salary, household size, and lifestyle assumptions.'
+                ]}
+              />
+
+              <SourceNote sources={["Livingcost.org (city snapshots, updated Oct 14 2025)"]} />
+            </div>
+          )
+        }
+      },
+      {
+        id: 'ubs-bubble-comparator',
+        category: 'Bubble Index',
+        title: 'UBS Bubble Risk Comparator (2025)',
+        image: 'https://images.unsplash.com/photo-1655309893829-407c54619f1f?auto=format&fit=crop&q=80',
+        points: [
+          'UBS score snapshot now integrated for Dubai, Singapore, Hong Kong, London, and New York.',
+          'Dubai score: 1.09 (elevated risk band), above Singapore 0.55 and Hong Kong 0.44.',
+          'London (0.34) and New York (0.26) sit in lower risk territory in this cycle.',
+          'Visual bars replace narrative-heavy interpretation for faster market ranking reads.'
+        ],
+        drawerContent: {
+          id: 'ubs-bubble-comparator-detail',
+          category: 'Comparative // UBS Bubble Index',
+          title: 'UBS Global Real Estate Bubble Index — Selected Markets',
+          body: (
+            <div className="space-y-8">
+              <VerbatimText text="UBS 2025 selected-market scores are now embedded directly in Expert Insights to support cycle-risk comparison across Dubai/UAE, Singapore, Hong Kong, London, and New York." />
+
+              <ComparativeBars
+                title="UBS Bubble Risk Score (2025)"
+                unit=""
+                freshnessLabel="UBS GREBI • 2025"
+                items={[
+                  { label: 'Dubai', value: 1.09, display: '1.09 (elevated)', highlight: true },
+                  { label: 'Singapore', value: 0.55, display: '0.55 (moderate)' },
+                  { label: 'Hong Kong', value: 0.44, display: '0.44 (low/moderate)' },
+                  { label: 'London', value: 0.34, display: '0.34 (low)' },
+                  { label: 'New York', value: 0.26, display: '0.26 (low)' },
+                ]}
+              />
+
+              <SectionHeader title="Cycle Read-Through" />
+              <GrowthBullets
+                items={[
+                  'UBS text indicates Miami had the highest bubble risk among covered markets, while Dubai registered one of the largest score increases since 2022.',
+                  'Dubai appears in the elevated-risk band in the 2025 score table, while Singapore is shown as moderate and London/New York as lower risk in this cycle.',
+                  'The index should be interpreted as a risk thermometer, not a market-timing trigger; trajectory and local demand/funding conditions remain critical.'
+                ]}
+              />
+
+              <SourceNote sources={["UBS Global Real Estate Bubble Index 2025"]} />
+            </div>
+          )
+        }
+      },
+      {
+        id: 'city-comparator-flow',
+        category: 'Decision Flow',
+        title: 'City Comparator (Top 5 Markets)',
+        image: 'https://images.unsplash.com/photo-1473186505569-9c61870c11f9?auto=format&fit=crop&q=80',
+        points: [
+          'Decision flow added for Dubai, Singapore, Hong Kong, London, and New York.',
+          'Adjust objective, risk tolerance, horizon, and budget to re-rank markets instantly.',
+          'Top recommendation and full ranked list are generated from current comparative dataset.',
+          'Built for practical shortlisting rather than static source-tracking tables.'
+        ],
+        drawerContent: {
+          id: 'city-comparator-flow-detail',
+          category: 'Comparative // Decision Flow',
+          title: 'Interactive 5-City Investment Comparator',
+          body: (
+            <div className="space-y-8">
+              <VerbatimText text="This comparator models a practical decision flow: set your investment objective and constraints, then review a ranked shortlist across the five target global markets." />
+
+              <CityComparatorExperience />
+
+              <SectionHeader title="Data Inputs Used" />
+              <GrowthBullets
+                items={[
+                  'Living cost snapshots (monthly total with rent) for affordability fit.',
+                  'UBS 2025 bubble scores for cycle-risk weighting.',
+                  'World Bank GDP growth and FDI inflows for macro momentum and capital-flow context.',
+                  'Outputs are directional and should be paired with asset-level underwriting before execution.'
+                ]}
+              />
+
+              <SourceNote sources={["World Bank API", "UBS Global Real Estate Bubble Index 2025", "Livingcost.org"]} />
+            </div>
+          )
+        }
+      },
     ]
   };
 
@@ -601,7 +1082,7 @@ const SMEInsights: React.FC = () => {
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id as 'performance' | 'mechanics' | 'commercial')}
+                  onClick={() => setActiveTab(tab.id as 'performance' | 'mechanics' | 'commercial' | 'comparative')}
                   className={`pb-4 text-[10px] lg:text-[11px] font-bold uppercase tracking-[0.2em] transition-all whitespace-nowrap ${
                     activeTab === tab.id ? 'text-brand-navy' : 'text-slate-grey/40 hover:text-brand-navy/60'
                   }`}

@@ -35,3 +35,29 @@ If multiple are set, the app resolves in that order.
 Quick verification after deploy:
 
 - `GET /api/health` returns service status and `keyConfigured` (true/false).
+
+## Calculator API (compliant data foundation)
+
+This app now includes a minimal backend scoring foundation for global city comparison.
+
+- `GET /api/calculator/schema` returns model dimensions, required metadata fields, and source catalog.
+- `GET /api/calculator/snapshots` returns current city-metric snapshot records with validation status.
+- `POST /api/calculator/score` returns ranked city outputs based on user input.
+
+Sample score request:
+
+```bash
+curl -X POST http://localhost:8080/api/calculator/score \
+   -H "Content-Type: application/json" \
+   -d '{
+      "monthlyBudget": 3200,
+      "objective": "balanced",
+      "riskTolerance": "medium",
+      "timeHorizon": "medium"
+   }'
+```
+
+Compliance note:
+
+- Only use sources with explicit open, licensed, or internal rights for reuse.
+- Avoid scraping or republishing restricted third-party data without permission.

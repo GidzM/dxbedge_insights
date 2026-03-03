@@ -7,7 +7,7 @@ interface Message {
 }
 
 const DISPLAY_SOURCES = [
-  "DXB Edge SME Insight",
+  "DXB Edge Expert Insight",
   "D33 Analysis",
   "2040 Analysis",
   "Strategic Outlook"
@@ -16,7 +16,7 @@ const DISPLAY_SOURCES = [
 const STRATEGIC_SHORTCUTS = [
   {
     title: "Yield Dynamics",
-    query: "Identify the top 3 high-yield communities for 2026 based on the SME Insight data. Provide a comparative table.",
+    query: "Identify the top 3 high-yield communities for 2026 based on the Expert Insight data. Provide a comparative table.",
     icon: (
       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
@@ -171,7 +171,7 @@ const DataTransparencyFooter: React.FC = () => {
   const docTooltips: Record<string, string> = {
     "Dubai 2040 Urban Master Plan": "The structural roadmap for Dubai's spatial development and liveability until 2040.",
     "D33 Economic Agenda": "The economic roadmap to double the size of Dubai's economy and make it a top-3 global city by 2033.",
-    "DxB Edge SME Strategic Insights": "Ground-truth tactical intelligence and yield projections distilled from specialised market experts."
+    "DXB Edge Expert Strategic Insights": "Ground-truth tactical intelligence and yield projections distilled from specialised market experts."
   };
 
   const renderDoc = (name: string) => (

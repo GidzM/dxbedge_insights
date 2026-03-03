@@ -3,6 +3,13 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { GoogleGenAI } from '@google/genai';
 import dotenv from 'dotenv';
+import {
+  CALCULATOR_SCHEMA,
+  SOURCE_CATALOG,
+  SNAPSHOT_DATA,
+  validateSnapshotRecord,
+  computeCityScores,
+} from './server/calculatorModel.mjs';
 
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 dotenv.config();
@@ -65,6 +72,53 @@ FORMATTING RULES:
   } catch (error) {
     console.error('Gemini proxy request failed', error);
     res.status(502).json({ error: 'Gemini request failed.' });
+  }
+});
+
+app.get('/api/calculator/schema', (_req, res) => {
+  res.json({
+    ok: true,
+    schema: CALCULATOR_SCHEMA,
+    sourceCatalog: SOURCE_CATALOG,
+  });
+});
+
+app.get('/api/calculator/snapshots', (_req, res) => {
+  const invalidRows = [];
+
+  SNAPSHOT_DATA.forEach((row, index) => {
+    const check = validateSnapshotRecord(row);
+    if (!check.valid) {
+      invalidRows.push({ index, error: check.error });
+    }
+  });
+
+  res.json({
+    ok: invalidRows.length === 0,
+    records: SNAPSHOT_DATA,
+    invalidRows,
+    total: SNAPSHOT_DATA.length,
+  });
+});
+
+app.post('/api/calculator/score', (req, res) => {
+  try {
+    const monthlyBudget = Number(req.body?.monthlyBudget ?? 3200);
+    const objective = typeof req.body?.objective === 'string' ? req.body.objective : 'balanced';
+    const riskTolerance = typeof req.body?.riskTolerance === 'string' ? req.body.riskTolerance : 'medium';
+    const timeHorizon = typeof req.body?.timeHorizon === 'string' ? req.body.timeHorizon : 'medium';
+
+    const result = computeCityScores({
+      monthlyBudget,
+      objective,
+      riskTolerance,
+      timeHorizon,
+    });
+
+    res.json({ ok: true, ...result });
+  } catch (error) {
+    console.error('Calculator scoring failed', error);
+    res.status(400).json({ ok: false, error: 'Invalid calculator input.' });
   }
 });
 

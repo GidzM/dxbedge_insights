@@ -2,6 +2,7 @@ import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import { GoogleGenAI } from '@google/genai';
+import { CALCULATOR_SCHEMA, SOURCE_CATALOG, SNAPSHOT_DATA, validateSnapshotRecord, computeCityScores } from './server/calculatorModel.mjs';
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
@@ -85,6 +86,88 @@ FORMATTING RULES:
                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify({ error: 'Gemini request failed.' }));
               }
+            });
+
+            server.middlewares.use('/api/calculator/schema', (req, res, next) => {
+              if (req.method !== 'GET') {
+                next();
+                return;
+              }
+
+              res.statusCode = 200;
+              res.setHeader('Content-Type', 'application/json');
+              res.end(
+                JSON.stringify({
+                  ok: true,
+                  schema: CALCULATOR_SCHEMA,
+                  sourceCatalog: SOURCE_CATALOG,
+                })
+              );
+            });
+
+            server.middlewares.use('/api/calculator/snapshots', (req, res, next) => {
+              if (req.method !== 'GET') {
+                next();
+                return;
+              }
+
+              const invalidRows = [] as { index: number; error: string }[];
+
+              SNAPSHOT_DATA.forEach((row, index) => {
+                const check = validateSnapshotRecord(row);
+                if (!check.valid) {
+                  invalidRows.push({ index, error: check.error || 'Invalid row' });
+                }
+              });
+
+              res.statusCode = 200;
+              res.setHeader('Content-Type', 'application/json');
+              res.end(
+                JSON.stringify({
+                  ok: invalidRows.length === 0,
+                  records: SNAPSHOT_DATA,
+                  invalidRows,
+                  total: SNAPSHOT_DATA.length,
+                })
+              );
+            });
+
+            server.middlewares.use('/api/calculator/score', (req, res, next) => {
+              if (req.method !== 'POST') {
+                next();
+                return;
+              }
+
+              let body = '';
+              req.on('data', chunk => {
+                body += chunk;
+              });
+
+              req.on('end', () => {
+                try {
+                  const parsed = body ? JSON.parse(body) : {};
+                  const monthlyBudget = Number(parsed?.monthlyBudget ?? 3200);
+                  const objective = typeof parsed?.objective === 'string' ? parsed.objective : 'balanced';
+                  const riskTolerance = typeof parsed?.riskTolerance === 'string' ? parsed.riskTolerance : 'medium';
+                  const timeHorizon = typeof parsed?.timeHorizon === 'string' ? parsed.timeHorizon : 'medium';
+
+                  const result = computeCityScores({
+                    monthlyBudget,
+                    objective,
+                    riskTolerance,
+                    timeHorizon,
+                  });
+
+                  res.statusCode = 200;
+                  res.setHeader('Content-Type', 'application/json');
+                  res.end(JSON.stringify({ ok: true, ...result }));
+                } catch (error) {
+                  console.error('Dev calculator scoring failed', error);
+                  res.statusCode = 400;
+                  res.setHeader('Content-Type', 'application/json');
+                  res.end(JSON.stringify({ ok: false, error: 'Invalid calculator input.' }));
+                }
+              });
             });
           },
         },

@@ -72,7 +72,7 @@ return (
             <>Prime Residential: <Highlight>- $400–$650/sqft (AED 1,468–2,386/sqft)</Highlight> (<Highlight>50–75%</Highlight> pricing advantage vs. London, NY, HK).</>,
             <>Commercial Office: <Highlight>- $350–$700/sqft (AED 1,285–2,569/sqft)</Highlight> (materially cheaper than Singapore or Paris).</>,
             <>Ultra-Luxury: <Highlight>- $1,200–$2,500/sqft (AED 4,404–9,175/sqft)</Highlight> (far below Monaco or Hong Kong Peak).</>,
-            <span className="text-[10px] opacity-60 uppercase font-black tracking-widest">[Source: SME Strategic Insights]</span>
+            <span className="text-[10px] opacity-60 uppercase font-black tracking-widest">[Source: DXB Edge Expert Strategic Insights]</span>
           ]}
           isPremium
         />
@@ -85,7 +85,7 @@ return (
             <>Growth: Population reached <Highlight>4.0M</Highlight> in 2025 (<Highlight>6.1%</Highlight> growth); projected <Highlight>4.2M</Highlight> by 2026.</>,
             <>The Gap: <Highlight>182,500</Highlight> new residents vs. only <Highlight>55,400</Highlight> units delivered in 2025.</>,
             <>Trajectory: Anchored by <Highlight>5M</Highlight> residents by 2030 and <Highlight>5.8M</Highlight> by 2040.</>,
-            <span className="text-[10px] opacity-60 uppercase font-black tracking-widest">[Source: SME Strategic Insights]</span>
+            <span className="text-[10px] opacity-60 uppercase font-black tracking-widest">[Source: DXB Edge Expert Strategic Insights]</span>
           ]}
         />
 
@@ -110,7 +110,7 @@ return (
             <>Volume: <Highlight>AED 917B</Highlight> in total transactions (2025) (<Highlight>20% YoY</Highlight> increase).</>,
             <>Yields: Apartment yields at <Highlight>7.0–7.3%</Highlight>; Villas at <Highlight>5%</Highlight>.</>,
             <>Stability: Transitioning into a stable, mature phase supported by a high share of <Highlight>cash buyers</Highlight>.</>,
-            <span className="text-[10px] opacity-60 uppercase font-black tracking-widest">[Source: SME Strategic Insights]</span>
+            <span className="text-[10px] opacity-60 uppercase font-black tracking-widest">[Source: DXB Edge Expert Strategic Insights]</span>
           ]}
         />
       </div>
