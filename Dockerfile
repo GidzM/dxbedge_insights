@@ -14,5 +14,6 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 COPY --from=build /app/dist ./dist
 COPY server.mjs ./server.mjs
+COPY server ./server
 EXPOSE 8080
 CMD ["npm", "run", "start"]
