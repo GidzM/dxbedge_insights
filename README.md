@@ -45,6 +45,7 @@ Phase 1 safeguards are enabled in `server.mjs` for `/api/gemini`:
 - Per-IP rate limit (`GEMINI_RATE_LIMIT_WINDOW_MS`, default `300000`; `GEMINI_RATE_LIMIT_MAX_REQUESTS`, default `10`)
 - Per-IP daily cap (`GEMINI_DAILY_LIMIT_PER_IP`, default `120`)
 - Upstream timeout (`GEMINI_TIMEOUT_MS`, default `20000`)
+- Context retrieval size (`GEMINI_CONTEXT_MAX_CHUNKS`, default `4`)
 - Response cache (`GEMINI_CACHE_ENABLED`, default `true`; `GEMINI_CACHE_TTL_MS`, default `300000`; `GEMINI_CACHE_MAX_ENTRIES`, default `300`; `GEMINI_CACHE_MIN_MESSAGE_CHARS`, default `20`; `GEMINI_CACHE_MAX_MESSAGE_CHARS`, default `1200`)
 
 Phase 2 controls:

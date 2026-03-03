@@ -25,6 +25,7 @@ const port = Number(process.env.PORT || 8080);
 const AI_ASSISTANT_ENABLED = process.env.AI_ASSISTANT_ENABLED !== 'false';
 const GEMINI_MAX_MESSAGE_CHARS = Number(process.env.GEMINI_MAX_MESSAGE_CHARS || 2000);
 const GEMINI_TIMEOUT_MS = Number(process.env.GEMINI_TIMEOUT_MS || 20000);
+const GEMINI_CONTEXT_MAX_CHUNKS = Number(process.env.GEMINI_CONTEXT_MAX_CHUNKS || 4);
 const GEMINI_RATE_LIMIT_WINDOW_MS = Number(process.env.GEMINI_RATE_LIMIT_WINDOW_MS || 300000);
 const GEMINI_RATE_LIMIT_MAX_REQUESTS = Number(process.env.GEMINI_RATE_LIMIT_MAX_REQUESTS || 10);
 const GEMINI_DAILY_LIMIT_PER_IP = Number(process.env.GEMINI_DAILY_LIMIT_PER_IP || 120);
@@ -491,6 +492,7 @@ app.get('/api/health', (_req, res) => {
     geminiGuards: {
       maxMessageChars: GEMINI_MAX_MESSAGE_CHARS,
       timeoutMs: GEMINI_TIMEOUT_MS,
+      contextMaxChunks: GEMINI_CONTEXT_MAX_CHUNKS,
       rateLimitWindowMs: GEMINI_RATE_LIMIT_WINDOW_MS,
       rateLimitMaxRequests: GEMINI_RATE_LIMIT_MAX_REQUESTS,
       dailyLimitPerIp: GEMINI_DAILY_LIMIT_PER_IP,
@@ -580,7 +582,7 @@ app.post('/api/gemini', async (req, res) => {
     }
 
     const ai = new GoogleGenAI({ apiKey });
-    const contextChunks = getRelevantContext(message);
+    const contextChunks = getRelevantContext(message, GEMINI_CONTEXT_MAX_CHUNKS);
     const contextBlock = contextChunks
       .map((chunk, index) => `[Source: ${chunk.source}]\n${chunk.text}`)
       .join('\n\n');
