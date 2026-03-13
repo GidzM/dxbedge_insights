@@ -230,8 +230,14 @@ const CityComparatorExperience: React.FC = () => {
               onChange={(event) => setMonthlyBudget(Number(event.target.value))}
               className="w-full accent-brand-gold"
             />
+            <p className="text-[11px] text-slate-grey/70 leading-relaxed">
+              Estimated monthly cost of living in the target city (rent, utilities, transport, and daily expenses).
+            </p>
           </label>
         </div>
+        <p className="text-[11px] text-slate-grey/70 mt-5 leading-relaxed">
+          This tool is live: update any input and the ranking recalculates automatically.
+        </p>
       </div>
 
       <div className="border border-brand-gold/40 bg-brand-navy/[0.03] p-5">
@@ -240,6 +246,9 @@ const CityComparatorExperience: React.FC = () => {
           <p className="text-[18px] font-bold text-brand-navy">{topPick?.city ?? '—'}</p>
           <p className="text-[12px] font-semibold text-brand-gold">Match Score: {topPick ? (topPick.score * 100).toFixed(1) : '—'}</p>
         </div>
+        <p className="text-[11px] text-slate-grey/70 mt-3 leading-relaxed">
+          Match Score is a directional fit index (0-100), not a guaranteed return. It reflects how closely each city aligns with your selected objective, risk tolerance, time horizon, and budget fit.
+        </p>
       </div>
 
       {isScoring && (
@@ -296,6 +305,7 @@ const parseGrowthData = (text: string) => {
 const SMEInsights: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'performance' | 'mechanics' | 'commercial' | 'comparative'>('performance');
   const [activeDrawer, setActiveDrawer] = useState<DrawerContent | null>(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   // FIX 1: Prevent parent scroll when drawer is open
   useEffect(() => {
@@ -307,6 +317,29 @@ const SMEInsights: React.FC = () => {
     return () => { document.body.style.overflow = 'unset'; };
   }, [activeDrawer]);
 
+  useEffect(() => {
+    const scrollContainer = document.querySelector('main');
+
+    const handleScroll = () => {
+      const mainScrollTop = scrollContainer ? scrollContainer.scrollTop : 0;
+      const windowScrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+      setShowScrollTop(Math.max(mainScrollTop, windowScrollTop) > 180);
+    };
+
+    handleScroll();
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', handleScroll);
+      }
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   const drawerOpen = Boolean(activeDrawer);
 
   const copyDrawerText = () => {
@@ -314,6 +347,14 @@ const SMEInsights: React.FC = () => {
     const text = document.getElementById('sme-drawer-body')?.innerText || '';
     navigator.clipboard.writeText(text);
     alert('Strategic intelligence copied to clipboard.');
+  };
+
+  const scrollToTop = () => {
+    const scrollContainer = document.querySelector('main');
+    if (scrollContainer) {
+      scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const tabs = [
@@ -492,7 +533,7 @@ const SMEInsights: React.FC = () => {
               <GrowthBullets items={[
                 "Focus on scarcity: limited-supply beach or waterfront locations tend to preserve and grow value.",
                 "Consider branded residences: these can command pricing premiums and attract premium renters.",
-                "Analyze yield vs growth: urban cores (Downtown/Business Bay) can deliver stable rents, while developing waterfront districts can offer stronger appreciation."
+                "Analyse yield vs growth: urban cores (Downtown/Business Bay) can deliver stable rents, while developing waterfront districts can offer stronger appreciation."
               ]} />
               <SourceNote sources={["DXB Expert Insights"]} />
             </div>
@@ -550,7 +591,7 @@ const SMEInsights: React.FC = () => {
         drawerContent: {
           id: 'yield-detail',
           category: 'Expert Insight // ROI Analysis',
-          title: 'Yield Optimization Strategy',
+          title: 'Yield Optimisation Strategy',
           body: (
             <div className="space-y-8">
               <VerbatimText text="Dubai’s income profile remains globally competitive, with citywide residential yields typically above mature-market peers and strong dispersion by micro-location and operating model." />
@@ -602,7 +643,7 @@ const SMEInsights: React.FC = () => {
               ]} />
               <SectionHeader title="True Acquisition Cost Stack" />
               <GrowthBullets items={[
-                "DLD transfer fee, brokerage, trustee/registration, and admin items should be modeled upfront.",
+                "DLD transfer fee, brokerage, trustee/registration, and admin items should be modelled upfront.",
                 "Mortgage users should include valuation, arrangement fees, and mortgage registration costs.",
                 "Secondary purchases often underwrite at c.7–8% all-in transaction friction before mortgage extras."
               ]} />
@@ -674,7 +715,7 @@ const SMEInsights: React.FC = () => {
               ]} />
               <SectionHeader title="Tiering Lens for Portfolio Construction" />
               <GrowthBullets items={[
-                "Large master developers often optimize liquidity and financing familiarity.",
+                "Large master developers often optimise liquidity and financing familiarity.",
                 "Boutique/design-led names may offer brand premium but require stricter exit/tenant-depth checks.",
                 "Blend core-delivery certainty with selective upside exposure rather than concentrating in one developer profile."
               ]} />
@@ -700,7 +741,7 @@ const SMEInsights: React.FC = () => {
           title: 'Capital Horizons',
           body: (
             <div className="space-y-8">
-              <VerbatimText text="Off-plan and secondary serve different objectives: one optimizes capital growth and IRR through staged entry, the other optimizes immediate income, liquidity, and lower execution risk." />
+              <VerbatimText text="Off-plan and secondary serve different objectives: one optimises capital growth and IRR through staged entry, the other optimises immediate income, liquidity, and lower execution risk." />
               <SectionHeader title="Off-Plan vs Secondary — Strategic Fit" />
               <GrowthBullets items={[
                 "Off-plan: stronger for appreciation-seeking investors with 2–4 year horizons and tolerance for delivery timing risk.",
@@ -1051,7 +1092,7 @@ const SMEInsights: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-soft-grey overflow-hidden">
+    <div className="flex flex-col min-h-screen md:h-screen bg-soft-grey md:overflow-hidden">
       <header className="px-10 lg:px-16 pt-14 pb-6 border-b border-slate-200 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="border-l border-brand-gold pl-8">
@@ -1060,28 +1101,39 @@ const SMEInsights: React.FC = () => {
               Strategic intelligence distilled from on-the-ground expertise, structured for decisive investment action.
             </p>
           </div>
-
-          <div className="mt-8 border-b border-slate-200 overflow-x-auto no-scrollbar">
-            <div className="flex gap-6">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id as 'performance' | 'mechanics' | 'commercial' | 'comparative')}
-                  className={`pb-4 text-[10px] lg:text-[11px] font-bold uppercase tracking-[0.2em] transition-all whitespace-nowrap ${
-                    activeTab === tab.id ? 'text-brand-navy' : 'text-slate-grey/40 hover:text-brand-navy/60'
-                  }`}
-                >
-                  {tab.label}
-                  {activeTab === tab.id && <div className="mt-3 h-0.5 bg-brand-navy" />}
-                </button>
-              ))}
-            </div>
-          </div>
         </div>
       </header>
 
+      <div className="border-b border-slate-200 bg-white md:border-b-0 md:bg-transparent">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-16 py-3 md:py-0 md:mt-8">
+          <div>
+            <div className="flex items-center justify-between mb-3 gap-4">
+              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-navy/70">Insight Sections</p>
+              <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-slate-grey/60 whitespace-nowrap">Swipe Tabs →</p>
+            </div>
+            <div className="overflow-x-auto custom-scrollbar custom-scrollbar-prominent">
+              <div className="inline-flex min-w-full w-max gap-2 p-2 border border-slate-200 bg-soft-grey/70 rounded-lg">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id as 'performance' | 'mechanics' | 'commercial' | 'comparative')}
+                    className={`px-4 py-2.5 text-[10px] lg:text-[11px] font-bold uppercase tracking-[0.16em] transition-all whitespace-nowrap rounded-md border ${
+                      activeTab === tab.id
+                        ? 'bg-brand-navy text-white border-brand-navy shadow-sm'
+                        : 'bg-white text-brand-navy/70 border-slate-200 hover:text-brand-navy hover:border-brand-gold/40'
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Grid Content */}
-      <div className="flex-1 overflow-y-auto p-12 custom-scrollbar bg-[#F8F9FA]">
+      <div className="flex-1 overflow-visible md:overflow-y-auto p-5 sm:p-8 lg:p-12 custom-scrollbar custom-scrollbar-prominent bg-[#F8F9FA]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {content[activeTab].map((card) => (
             <Card
@@ -1092,6 +1144,17 @@ const SMEInsights: React.FC = () => {
           ))}
         </div>
       </div>
+
+      <button
+        type="button"
+        onClick={scrollToTop}
+        aria-label="Scroll to top"
+        className={`md:hidden fixed right-4 bottom-6 z-50 w-12 h-12 rounded-full border border-brand-gold/40 bg-brand-navy text-white shadow-lg transition-all duration-300 ${showScrollTop && !drawerOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3 pointer-events-none'}`}
+      >
+        <svg className="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+        </svg>
+      </button>
 
       {/* Drawer System */}
       <div 
@@ -1138,7 +1201,7 @@ const SMEInsights: React.FC = () => {
 
             <div
               id="sme-drawer-body"
-              className={`flex-1 p-12 overflow-y-auto custom-scrollbar bg-white transition-opacity duration-700 delay-200 ${drawerOpen ? 'opacity-100' : 'opacity-0'}`}
+              className={`flex-1 p-12 overflow-y-auto custom-scrollbar custom-scrollbar-prominent bg-white transition-opacity duration-700 delay-200 ${drawerOpen ? 'opacity-100' : 'opacity-0'}`}
               style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
             >
                {activeDrawer.body}

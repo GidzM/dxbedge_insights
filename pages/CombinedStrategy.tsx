@@ -49,6 +49,7 @@ const CombinedStrategy: React.FC = () => {
   const [activeTab, setActiveTab] = useState('framework');
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerContent, setDrawerContent] = useState<DrawerContent | null>(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     if (drawerOpen) {
@@ -57,6 +58,29 @@ const CombinedStrategy: React.FC = () => {
       document.body.style.overflow = 'unset';
     }
   }, [drawerOpen]);
+
+  useEffect(() => {
+    const scrollContainer = document.querySelector('main');
+
+    const handleScroll = () => {
+      const mainScrollTop = scrollContainer ? scrollContainer.scrollTop : 0;
+      const windowScrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+      setShowScrollTop(Math.max(mainScrollTop, windowScrollTop) > 180);
+    };
+
+    handleScroll();
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', handleScroll);
+      }
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const openDrawer = (content: DrawerContent) => {
     setDrawerContent(content);
@@ -72,6 +96,14 @@ const CombinedStrategy: React.FC = () => {
     const text = document.getElementById('drawer-body-text')?.innerText || '';
     navigator.clipboard.writeText(text);
     alert('Strategic intelligence copied to clipboard.');
+  };
+
+  const scrollToTop = () => {
+    const scrollContainer = document.querySelector('main');
+    if (scrollContainer) {
+      scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const tabs = [
@@ -102,20 +134,27 @@ const CombinedStrategy: React.FC = () => {
         </p>
       </header>
 
-      <div className="mb-12 border-b border-slate-200 overflow-x-auto no-scrollbar">
-        <div className="flex gap-10">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`pb-4 text-[11px] font-bold uppercase tracking-[0.2em] transition-all relative whitespace-nowrap ${
-                activeTab === tab.id ? 'text-brand-navy' : 'text-slate-grey/40 hover:text-brand-navy/60'
-              }`}
-            >
-              {tab.label}
-              {activeTab === tab.id && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-brand-navy" />}
-            </button>
-          ))}
+      <div className="mb-12 py-3 bg-soft-grey border-b border-slate-200 md:py-0 md:border-b-0 md:bg-transparent">
+        <div className="flex items-center justify-between mb-3 gap-4">
+          <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-navy/70">Strategy Sections</p>
+          <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-slate-grey/60 whitespace-nowrap">Swipe Tabs →</p>
+        </div>
+        <div className="overflow-x-auto custom-scrollbar custom-scrollbar-prominent">
+          <div className="inline-flex min-w-full w-max gap-2 p-2 border border-slate-200 bg-soft-grey/70 rounded-lg">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.16em] transition-all whitespace-nowrap rounded-md border ${
+                  activeTab === tab.id
+                    ? 'bg-brand-navy text-white border-brand-navy shadow-sm'
+                    : 'bg-white text-brand-navy/70 border-slate-200 hover:text-brand-navy hover:border-brand-gold/40'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -255,13 +294,13 @@ const CombinedStrategy: React.FC = () => {
                 "Analysis of Price Implications and Rental Effects.",
                 "Impact of 5.8 million residents and 4.9 million workers.",
                 "68% increase in urban density valuations.",
-                "Moratorium on offshore reclamation scarcity effect."
+                "Offshore reclamation moratorium reinforces long-term waterfront scarcity premiums."
               ]}
               isPremium
               onMore={() => openDrawer({
                 id: 'market-impact',
                 category: 'Economic Analysis',
-                title: 'Real Estate Impact: Verbatim Restoration',
+                title: 'Real Estate Impact',
                 body: (
                   <div className="space-y-12">
                     <Section title="Demand Drivers">
@@ -324,11 +363,11 @@ const CombinedStrategy: React.FC = () => {
                 "Execution complexity across 48+ entities.",
                 "Analysis of ambitious growth (75% pop growth).",
                 "Supply-demand timing risks (2025-2028).",
-                "Technology-driven disruption of office stock."
+                "Technology-led obsolescence risk in traditional office and retail stock."
               ]}
               onMore={() => openDrawer({
                 id: 'investor-risks',
-                category: 'Strategic Defense',
+                category: 'Strategic Defence',
                 title: 'Combined Investor Risks',
                 body: (
                   <div className="space-y-6">
@@ -354,10 +393,10 @@ const CombinedStrategy: React.FC = () => {
               title="Success Factors"
               image="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800"
               points={[
-                "Verbatim restoration of Success Factors guide.",
+                "Location precision in designated centres is a core success lever.",
                 "8 Critical factors for institutional excellence.",
-                "Timing transit acquisitions (2-3 years pre-launch).",
-                "Capturing sustainability premiums of 10-15%.",
+                "Transit-linked acquisitions perform best 2-3 years pre-launch.",
+                "Al Sa’fat-compliant assets can achieve 10-15% sustainability premiums.",
                 "Building asset flexibility into portfolios."
               ]}
               onMore={() => openDrawer({
@@ -393,7 +432,7 @@ const CombinedStrategy: React.FC = () => {
               image="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800"
               points={[
                 "Unabridged analysis of all 6 primary sectors.",
-                "Thesis, Returns, and Risks for Logistics & Residential.",
+                "Investment thesis, target returns, and risk profile by sector.",
                 "Hospitality RevPAR and STR yield targets.",
                 "Mixed-Use target returns of 22-28% on cost.",
                 "Retail transformation mapping (AED 3T demand)."
@@ -516,7 +555,7 @@ const CombinedStrategy: React.FC = () => {
               title="Strategy by Timeline"
               image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800"
               points={[
-                "Verbatim restoration of 2024-2040 phases.",
+                "Three-phase timeline: 2024-2027, 2028-2033, and 2034-2040.",
                 "Immediate Term: Core income-producing focus.",
                 "Medium Term: Emerging centre growth projects.",
                 "Long Term: Post-2040 city-shaping expansion.",
@@ -606,6 +645,17 @@ const CombinedStrategy: React.FC = () => {
         )}
       </div>
 
+      <button
+        type="button"
+        onClick={scrollToTop}
+        aria-label="Scroll to top"
+        className={`md:hidden fixed right-4 bottom-6 z-50 w-12 h-12 rounded-full border border-brand-gold/40 bg-brand-navy text-white shadow-lg transition-all duration-300 ${showScrollTop && !drawerOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3 pointer-events-none'}`}
+      >
+        <svg className="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+        </svg>
+      </button>
+
       {/* STRATEGIC VAULT SIDE DRAWER */}
       <div 
         className={`fixed inset-0 z-[90] bg-brand-navy/60 backdrop-blur-sm transition-opacity duration-700 ${drawerOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
@@ -654,7 +704,7 @@ const CombinedStrategy: React.FC = () => {
             {/* Drawer Body - Standardized typography */}
             <div
               id="drawer-body-text"
-              className={`flex-1 p-12 overflow-y-auto custom-scrollbar bg-white transition-opacity duration-700 delay-200 ${drawerOpen ? 'opacity-100' : 'opacity-0'}`}
+              className={`flex-1 p-12 overflow-y-auto custom-scrollbar custom-scrollbar-prominent bg-white transition-opacity duration-700 delay-200 ${drawerOpen ? 'opacity-100' : 'opacity-0'}`}
               style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
             >
                {drawerContent.body}

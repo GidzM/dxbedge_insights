@@ -1,6 +1,7 @@
 
 import React from 'react';
 import Card from '../components/Card';
+import { useCurrency } from '../components/CurrencyContext';
 
 const Highlight = ({ children }: { children: React.ReactNode }) => (
   <strong className="text-brand-navy font-black">{children}</strong>
@@ -11,6 +12,8 @@ interface MarketOverviewProps {
 }
 
 const MarketOverview: React.FC<MarketOverviewProps> = ({ openModal }) => {
+const { formatFromAED } = useCurrency();
+
 return (
   <>
     <div>
@@ -61,6 +64,18 @@ return (
         </p>
       </header>
 
+      <section className="mb-14 rounded-sm border border-brand-gold/50 bg-brand-navy p-6 md:p-8">
+        <div className="text-[10px] uppercase tracking-[0.3em] text-brand-gold/80 mb-3">Current Conflict Watch</div>
+        <h2 className="text-2xl font-serif italic text-brand-gold mb-3">Regional Tensions & Market Resilience</h2>
+        <p className="text-white/90 text-sm md:text-base leading-relaxed max-w-5xl">
+          Placeholder update: regional conflict headlines remain fluid. Dubai has so far retained investor confidence due to strong liquidity,
+          sovereign stability, and ongoing inward migration, but volatility risk can rise quickly if escalation broadens.
+        </p>
+        <p className="text-white/70 text-xs mt-3">
+          This section is a live placeholder and will be replaced with verified, timestamped intelligence updates.
+        </p>
+      </section>
+
 
       {/* Professional 2x2 Grid Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
@@ -69,9 +84,9 @@ return (
           title="Global Value Data"
           image="https://images.unsplash.com/photo-1651467606797-e1c660cf3fda?auto=format&fit=crop&q=80&w=800"
           points={[
-            <>Prime Residential: <Highlight>- $400–$650/sqft (AED 1,468–2,386/sqft)</Highlight> (<Highlight>50–75%</Highlight> pricing advantage vs. London, NY, HK).</>,
-            <>Commercial Office: <Highlight>- $350–$700/sqft (AED 1,285–2,569/sqft)</Highlight> (materially cheaper than Singapore or Paris).</>,
-            <>Ultra-Luxury: <Highlight>- $1,200–$2,500/sqft (AED 4,404–9,175/sqft)</Highlight> (far below Monaco or Hong Kong Peak).</>,
+            <>Prime Residential: <Highlight>- $400–$650/sqft ({formatFromAED(1468, { maximumFractionDigits: 0 })}–{formatFromAED(2386, { maximumFractionDigits: 0 })}/sqft)</Highlight> (<Highlight>50–75%</Highlight> pricing advantage vs. London, NY, HK).</>,
+            <>Commercial Office: <Highlight>- $350–$700/sqft ({formatFromAED(1285, { maximumFractionDigits: 0 })}–{formatFromAED(2569, { maximumFractionDigits: 0 })}/sqft)</Highlight> (materially cheaper than Singapore or Paris).</>,
+            <>Ultra-Luxury: <Highlight>- $1,200–$2,500/sqft ({formatFromAED(4404, { maximumFractionDigits: 0 })}–{formatFromAED(9175, { maximumFractionDigits: 0 })}/sqft)</Highlight> (far below Monaco or Hong Kong Peak).</>,
             <span className="text-[10px] opacity-60 uppercase font-black tracking-widest">[Source: DXB Edge Expert Strategic Insights]</span>
           ]}
           isPremium
@@ -94,9 +109,9 @@ return (
           title="Institutional Growth Targets"
           image="https://images.unsplash.com/photo-1462007895615-c8c073bebcd8?auto=format&fit=crop&q=80&w=800"
           points={[
-            <>Economic Scale: D33 aims to double the economy to <Highlight>AED 32 Trillion</Highlight> by 2033.</>,
-            <>FDI Attraction: Target of doubling annual FDI to <Highlight>AED 60 Billion</Highlight>.</>,
-            <>Foreign Trade: <Highlight>80%</Highlight> expansion target to <Highlight>AED 25.6 Trillion</Highlight>.</>,
+            <>Economic Scale: D33 aims to double the economy to <Highlight>{formatFromAED(32000000000000, { maximumFractionDigits: 0 })}</Highlight> by 2033.</>,
+            <>FDI Attraction: Target of doubling annual FDI to <Highlight>{formatFromAED(60000000000, { maximumFractionDigits: 0 })}</Highlight>.</>,
+            <>Foreign Trade: <Highlight>80%</Highlight> expansion target to <Highlight>{formatFromAED(25600000000000, { maximumFractionDigits: 0 })}</Highlight>.</>,
             <>Urban Structure: Development strictly focused on six major urban centres within controlled boundaries.</>,
             <span className="text-[10px] opacity-60 uppercase font-black tracking-widest">[Source: Combined Strategy]</span>
           ]}
@@ -107,7 +122,7 @@ return (
           title="Transaction & Yield Health"
           image="https://images.unsplash.com/photo-1688671525781-d9447cf1abd2?auto=format&fit=crop&q=80&w=800"
           points={[
-            <>Volume: <Highlight>AED 917B</Highlight> in total transactions (2025) (<Highlight>20% YoY</Highlight> increase).</>,
+            <>Volume: <Highlight>{formatFromAED(917000000000, { maximumFractionDigits: 0 })}</Highlight> in total transactions (2025) (<Highlight>20% YoY</Highlight> increase).</>,
             <>Yields: Apartment yields at <Highlight>7.0–7.3%</Highlight>; Villas at <Highlight>5%</Highlight>.</>,
             <>Stability: Transitioning into a stable, mature phase supported by a high share of <Highlight>cash buyers</Highlight>.</>,
             <span className="text-[10px] opacity-60 uppercase font-black tracking-widest">[Source: DXB Edge Expert Strategic Insights]</span>

@@ -49,7 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile = false, onNavigate, onClose
         </div>
       </div>
 
-      <nav className="flex-1 px-6 py-10 overflow-y-auto custom-scrollbar">
+      <nav className="flex-1 px-6 py-10 overflow-y-auto custom-scrollbar custom-scrollbar-prominent">
         <ul className="space-y-4">
           {NAV_ITEMS.map((item) => (
             <li key={item.path}>

@@ -415,7 +415,7 @@ const AIAssistant: React.FC = () => {
             backgroundSize: '100px 100px'
           }} />
 
-          <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar p-4 sm:p-10 space-y-6 sm:space-y-12 relative z-10 scroll-smooth [scrollbar-gutter:stable]">
+          <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar custom-scrollbar-prominent p-4 sm:p-10 space-y-6 sm:space-y-12 relative z-10 scroll-smooth [scrollbar-gutter:stable]">
             {messages.map((msg, idx) => (
               <div 
                 key={idx} 
@@ -424,14 +424,14 @@ const AIAssistant: React.FC = () => {
               >
                 <div className={`shadow-2xl relative ${
                   msg.role === 'user' 
-                    ? 'max-w-[88%] sm:max-w-[70%] md:max-w-[50%] lg:max-w-[40%] bg-growth-green text-white p-4 sm:p-5 md:p-6 rounded-2xl rounded-tr-none break-words' 
+                    ? 'max-w-[88%] sm:max-w-[70%] md:max-w-[50%] lg:max-w-[40%] bg-brand-gold/90 text-brand-navy p-4 sm:p-5 md:p-6 rounded-2xl rounded-tr-none break-words' 
                     : 'max-w-[92%] sm:max-w-[90%] md:max-w-[85%] min-w-0 bg-white text-brand-navy p-5 sm:p-8 md:p-10 border border-brand-gold/10 rounded-2xl rounded-tl-none break-words'
                 }`}>
                   <div className="flex items-center gap-3 mb-6">
-                    <span className={`text-[9px] font-black uppercase tracking-[0.2em] ${msg.role === 'user' ? 'text-white/40' : 'text-brand-gold'}`}>
+                    <span className={`text-[9px] font-black uppercase tracking-[0.2em] ${msg.role === 'user' ? 'text-brand-navy/60' : 'text-brand-gold'}`}>
                       {msg.role === 'user' ? 'Investor Query' : 'DxB Edge Insight'}
                     </span>
-                    <div className={`w-1 h-1 rounded-full ${msg.role === 'user' ? 'bg-white/20' : 'bg-brand-gold/20'}`} />
+                    <div className={`w-1 h-1 rounded-full ${msg.role === 'user' ? 'bg-brand-navy/30' : 'bg-brand-gold/20'}`} />
                   </div>
                   
                   {msg.role === 'model' ? (

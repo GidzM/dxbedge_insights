@@ -1,13 +1,9 @@
 import React, { useState, useMemo } from 'react';
+import { useCurrency } from '../components/CurrencyContext';
 
 interface CalculatorsProps {
   openModal: (type: 'Expert' | 'Investment Strategist' | 'Strategic Advisory' | 'Developer' | 'Mortgage Advisor' | 'Services') => void;
 }
-
-const formatCurrency = (val: number) => {
-  if (isNaN(val) || !isFinite(val)) return 'AED 0';
-  return `AED ${Math.round(val).toLocaleString()}`;
-};
 
 const formatPercent = (val: number) => {
   if (isNaN(val) || !isFinite(val)) return '0.00%';
@@ -83,10 +79,17 @@ const ResultCard = ({ title, results, advisory, cta, onCtaClick }: any) => (
 );
 
 const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
-  const [activeTab, setActiveTab] = useState('roi');
+  const { formatFromAED, currency } = useCurrency();
 
-  // ROI Calculator State
-  const [roiInputs, setRoiInputs] = useState({
+  const formatCurrency = (val: number) => {
+    if (isNaN(val) || !isFinite(val)) return formatFromAED(0);
+    return formatFromAED(val, { maximumFractionDigits: 0 });
+  };
+
+  const [activeTab, setActiveTab] = useState('rental_roi');
+
+  // RentalROI Calculator State
+  const [rentalRoiInputs, setRoiInputs] = useState({
     price: 2000000,
     rent: 160000,
     service: 30000,
@@ -98,9 +101,9 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
     tenure: 25
   });
 
-  // ROI Calculations with Sanitization
-  const roiResults = useMemo(() => {
-    const { price, rent, service, maintenance, mgmt, vacancy, mortgageAmount, mortgageRate, tenure } = roiInputs;
+  // Rental ROI Calculations with Sanitization
+  const rentalRoiResults = useMemo(() => {
+    const { price, rent, service, maintenance, mgmt, vacancy, mortgageAmount, mortgageRate, tenure } = rentalRoiInputs;
     
     // Safety check: Price must be > 0 to avoid division by zero errors
     const safePrice = Math.max(1, price);
@@ -134,7 +137,7 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
       { label: "Annual Cash Flow", value: formatCurrency(netIncome - annualMortgage) },
       { label: "Cash-on-Cash Return", value: formatPercent(cashOnCash) }
     ];
-  }, [roiInputs]);
+  }, [rentalRoiInputs, currency]);
 
   // DLD Calculations with Sanitization
   const [dldInputs, setDldInputs] = useState({ price: 2000000, mortgage: 0 });
@@ -147,7 +150,7 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
       { label: "Mortgage Registration", value: formatCurrency(reg) },
       { label: "Total Acquisition Cost", value: formatCurrency(total) }
     ];
-  }, [dldInputs]);
+  }, [dldInputs, currency]);
 
   // Mortgage Calculations with Sanitization
   const [mortgageInputs, setMortgageInputs] = useState({ amount: 1500000, rate: 4.5, tenure: 25 });
@@ -167,7 +170,7 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
       { label: "Total Interest Paid", value: formatCurrency((payment * n) - mortgageInputs.amount) },
       { label: "Total Repayment", value: formatCurrency(payment * n) }
     ];
-  }, [mortgageInputs]);
+  }, [mortgageInputs, currency]);
 
   // Off-Plan Calculations with Sanitization
   const [offPlanInputs, setOffPlanInputs] = useState({ price: 2000000, booking: 10, construction: 40, handover: 50 });
@@ -178,7 +181,72 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
       { label: "Total During Construction", value: formatCurrency(price * (construction / 100)) },
       { label: "Handover Payment", value: formatCurrency(price * (handover / 100)) }
     ];
-  }, [offPlanInputs]);
+  }, [offPlanInputs, currency]);
+
+  // Short-Term ROI (Holiday Let) Calculations
+  const [shortTermInputs, setShortTermInputs] = useState({
+    price: 2000000,
+    rateType: 'nightly',
+    averageRate: 650,
+    occupancy: 72,
+    avgStayNights: 4,
+    cleaningPerTurnover: 180,
+    service: 30000,
+    utilities: 12000,
+    maintenance: 7000,
+    mgmt: 20,
+    platformFee: 15,
+  });
+
+  const shortTermResults = useMemo(() => {
+    const {
+      price,
+      rateType,
+      averageRate,
+      occupancy,
+      avgStayNights,
+      cleaningPerTurnover,
+      service,
+      utilities,
+      maintenance,
+      mgmt,
+      platformFee,
+    } = shortTermInputs;
+
+    const safePrice = Math.max(1, price);
+    const occupiedNights = 365 * ((occupancy || 0) / 100);
+    const occupiedWeeks = occupiedNights / 7;
+
+    const annualGrossIncome = rateType === 'weekly'
+      ? averageRate * occupiedWeeks
+      : averageRate * occupiedNights;
+
+    const annualMgmt = annualGrossIncome * ((mgmt || 0) / 100);
+    const annualPlatform = annualGrossIncome * ((platformFee || 0) / 100);
+    const turnovers = occupiedNights / Math.max(1, avgStayNights || 1);
+    const annualCleaning = turnovers * Math.max(0, cleaningPerTurnover || 0);
+
+    const annualOperatingCosts =
+      Math.max(0, service || 0) +
+      Math.max(0, utilities || 0) +
+      Math.max(0, maintenance || 0) +
+      annualMgmt +
+      annualPlatform +
+      annualCleaning;
+
+    const annualNetIncome = annualGrossIncome - annualOperatingCosts;
+    const grossYield = (annualGrossIncome / safePrice) * 100;
+    const netYield = (annualNetIncome / safePrice) * 100;
+
+    return [
+      { label: 'Gross Yield', value: formatPercent(grossYield) },
+      { label: 'Net Yield', value: formatPercent(netYield) },
+      { label: 'Annual Gross Income', value: formatCurrency(annualGrossIncome) },
+      { label: 'Annual Net Income', value: formatCurrency(annualNetIncome) },
+      { label: 'Occupancy Nights/Year', value: `${Math.round(occupiedNights)}` },
+      { label: 'Turnovers/Year', value: `${Math.round(turnovers)}` },
+    ];
+  }, [shortTermInputs, currency]);
 
   return (
     <div className="max-w-7xl mx-auto py-10 px-6 lg:px-12 animate-fadeIn pb-32">
@@ -188,16 +256,16 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
             alt="Dubai Night Skyline" 
             className="w-full h-full object-cover grayscale brightness-[0.7] contrast-[1.2]"
           />
-          <div className="absolute inset-0 bg-brand-navy/60 mix-blend-multiply transition-opacity duration-700" />
+            <div className="absolute inset-0 bg-brand-navy/60 mix-blend-multiply transition-opacity duration-700" />
           <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-[10px] font-bold uppercase tracking-[0.6em] text-white/40">Financial Modeling Interface</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.6em] text-white/40">Financial Modelling Interface</span>
           </div>
       </div>
 
       <header className="mb-12 border-l border-brand-gold pl-10">
         <h1 className="text-3xl sm:text-4xl font-serif font-bold text-brand-navy italic mb-4">Tools & Calculators</h1>
         <p className="text-base sm:text-lg text-slate-grey max-w-3xl leading-relaxed italic font-serif">
-          Unbiased modeling tools designed to help investors understand the true financial implications of a property purchase.
+          Unbiased modelling tools designed to help investors understand the true financial implications of a property purchase.
         </p>
       </header>
 
@@ -206,7 +274,8 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto lg:overflow-hidden sticky top-24">
             <nav className="flex lg:flex-col p-2 min-w-max lg:min-w-0">
               {[
-                { id: 'roi', label: 'ROI' },
+                { id: 'rental_roi', label: 'Rental ROI' },
+                { id: 'short_term_roi', label: 'Short-Term ROI' },
                 { id: 'dld', label: 'DLD Fee' },
                 { id: 'mortgage', label: 'Mortgage' },
                 { id: 'offplan', label: 'Off-Plan' },
@@ -229,22 +298,71 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
 
         <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 sm:p-8 space-y-8">
-            {activeTab === 'roi' && (
+            {activeTab === 'rental_roi' && (
               <>
                 <div className="border-b border-slate-100 pb-4">
-                  <h2 className="text-lg sm:text-xl font-display font-bold text-deep-forest mb-1">ROI Calculator</h2>
+                  <h2 className="text-lg sm:text-xl font-display font-bold text-deep-forest mb-1">Rental ROI Calculator</h2>
                   <p className="text-[10px] text-slate-grey uppercase tracking-widest opacity-60">Investment Yield Analysis</p>
                 </div>
                 <div className="grid grid-cols-1 gap-6">
-                  <InputField label="Price (AED)" value={roiInputs.price} onChange={(v:any) => setRoiInputs({...roiInputs, price: Number(v)})} />
-                  <InputField label="Annual Rent (AED)" value={roiInputs.rent} onChange={(v:any) => setRoiInputs({...roiInputs, rent: Number(v)})} />
+                  <InputField label="Price (AED)" value={rentalRoiInputs.price} onChange={(v:any) => setRoiInputs({...rentalRoiInputs, price: Number(v)})} />
+                  <InputField label="Annual Rent (AED)" value={rentalRoiInputs.rent} onChange={(v:any) => setRoiInputs({...rentalRoiInputs, rent: Number(v)})} />
                   <div className="grid grid-cols-2 gap-4">
-                    <InputField label="Service (AED/yr)" value={roiInputs.service} onChange={(v:any) => setRoiInputs({...roiInputs, service: Number(v)})} />
-                    <InputField label="Maint (AED/yr)" value={roiInputs.maintenance} onChange={(v:any) => setRoiInputs({...roiInputs, maintenance: Number(v)})} />
+                    <InputField label="Service (AED/yr)" value={rentalRoiInputs.service} onChange={(v:any) => setRoiInputs({...rentalRoiInputs, service: Number(v)})} />
+                    <InputField label="Maint (AED/yr)" value={rentalRoiInputs.maintenance} onChange={(v:any) => setRoiInputs({...rentalRoiInputs, maintenance: Number(v)})} />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
-                    <InputField label="Mgmt Fee (%)" value={roiInputs.mgmt} onChange={(v:any) => setRoiInputs({...roiInputs, mgmt: Number(v)})} />
-                    <InputField label="Vacancy (%)" value={roiInputs.vacancy} onChange={(v:any) => setRoiInputs({...roiInputs, vacancy: Number(v)})} />
+                    <InputField label="Mgmt Fee (%)" value={rentalRoiInputs.mgmt} onChange={(v:any) => setRoiInputs({...rentalRoiInputs, mgmt: Number(v)})} />
+                    <InputField label="Vacancy (%)" value={rentalRoiInputs.vacancy} onChange={(v:any) => setRoiInputs({...rentalRoiInputs, vacancy: Number(v)})} />
+                  </div>
+                </div>
+              </>
+            )}
+            {activeTab === 'short_term_roi' && (
+              <>
+                <div className="border-b border-slate-100 pb-4">
+                  <h2 className="text-lg sm:text-xl font-display font-bold text-deep-forest mb-1">Short-Term ROI Calculator</h2>
+                  <p className="text-[10px] text-slate-grey uppercase tracking-widest opacity-60">Holiday Let Yield Analysis</p>
+                </div>
+                <div className="grid grid-cols-1 gap-6">
+                  <InputField label="Property Price (AED)" value={shortTermInputs.price} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, price: Number(v) })} />
+
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-black text-deep-forest uppercase tracking-widest">Rate Type</label>
+                    <select
+                      value={shortTermInputs.rateType}
+                      onChange={(e) => setShortTermInputs({ ...shortTermInputs, rateType: e.target.value })}
+                      className="w-full bg-soft-grey border border-slate-200 rounded-lg px-4 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-navy/20 transition-all"
+                    >
+                      <option value="nightly">Nightly (AED per night)</option>
+                      <option value="weekly">Weekly (AED per week)</option>
+                    </select>
+                  </div>
+
+                  <InputField
+                    label={shortTermInputs.rateType === 'weekly' ? 'Average Weekly Rate (AED)' : 'Average Nightly Rate (AED)'}
+                    value={shortTermInputs.averageRate}
+                    onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, averageRate: Number(v) })}
+                  />
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <InputField label="Occupancy (%)" value={shortTermInputs.occupancy} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, occupancy: Number(v) })} />
+                    <InputField label="Avg Stay (Nights)" value={shortTermInputs.avgStayNights} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, avgStayNights: Number(v) })} />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <InputField label="Mgmt Fee (%)" value={shortTermInputs.mgmt} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, mgmt: Number(v) })} />
+                    <InputField label="Platform Fee (%)" value={shortTermInputs.platformFee} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, platformFee: Number(v) })} />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <InputField label="Cleaning / Turnover (AED)" value={shortTermInputs.cleaningPerTurnover} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, cleaningPerTurnover: Number(v) })} />
+                    <InputField label="Utilities (AED/yr)" value={shortTermInputs.utilities} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, utilities: Number(v) })} />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <InputField label="Service Charge (AED/yr)" value={shortTermInputs.service} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, service: Number(v) })} />
+                    <InputField label="Maintenance (AED/yr)" value={shortTermInputs.maintenance} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, maintenance: Number(v) })} />
                   </div>
                 </div>
               </>
@@ -265,7 +383,7 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
               <>
                 <div className="border-b border-slate-100 pb-4">
                   <h2 className="text-lg sm:text-xl font-display font-bold text-deep-forest mb-1">Mortgage Calculator</h2>
-                  <p className="text-[10px] text-slate-grey uppercase tracking-widest opacity-60">Leverage Modeler</p>
+                  <p className="text-[10px] text-slate-grey uppercase tracking-widest opacity-60">Leverage Modeller</p>
                 </div>
                 <div className="space-y-6">
                   <InputField label="Loan Amount (AED)" value={mortgageInputs.amount} onChange={(v:any) => setMortgageInputs({...mortgageInputs, amount: Number(v)})} />
@@ -277,7 +395,7 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
             {activeTab === 'offplan' && (
               <>
                 <div className="border-b border-slate-100 pb-4">
-                  <h2 className="text-lg sm:text-xl font-display font-bold text-deep-forest mb-1">Off-Plan Payment Modeler</h2>
+                  <h2 className="text-lg sm:text-xl font-display font-bold text-deep-forest mb-1">Off-Plan Payment Modeller</h2>
                   <p className="text-[10px] text-slate-grey uppercase tracking-widest opacity-60">Milestone Payment Strategy</p>
                 </div>
                 <div className="space-y-6">
@@ -293,7 +411,8 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
           </div>
 
           <div className="relative">
-            {activeTab === 'roi' && <ResultCard title="ROI Analysis" results={roiResults} advisory="Estimates based on current SME market data and sovereign growth trajectories." cta="Secure Priority Advisor Access" onCtaClick={() => openModal('Mortgage Advisor')} />}
+            {activeTab === 'rental_roi' && <ResultCard title="Rental ROI Analysis" results={rentalRoiResults} advisory="Estimates based on current SME market data and sovereign growth trajectories." cta="Secure Priority Adviser Access" onCtaClick={() => openModal('Expert')} />}
+            {activeTab === 'short_term_roi' && <ResultCard title="Short-Term ROI Analysis" results={shortTermResults} advisory="Calculation method: Annual Gross Income = Average Rate × Occupied Nights (or Occupied Weeks for weekly pricing). Occupied Nights = 365 × Occupancy %. Net Yield includes management, platform, cleaning turnover, service charge, utilities, and maintenance." cta="Connect with a Strategic Expert" onCtaClick={() => openModal('Expert')} />}
             {activeTab === 'dld' && <ResultCard title="Acquisition Costs" results={dldResults} advisory="Calculated based on standard DLD fees (4%) and registration trustee charges." cta="Connect with a Strategic Expert" onCtaClick={() => openModal('Expert')} />}
             {activeTab === 'mortgage' && <ResultCard title="Mortgage breakdown" results={mortgageResults} advisory="Based on standard UAE banking tenure and prevailing interest rates." cta="Consult a Mortgage Specialist" onCtaClick={() => openModal('Mortgage Advisor')} />}
             {activeTab === 'offplan' && <ResultCard title="Payment Schedule" results={offPlanResults} advisory="Projected payment flow based on typical developer milestone structures." cta="Verify Developer Track Records" onCtaClick={() => openModal('Developer')} />}

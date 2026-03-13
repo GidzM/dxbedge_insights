@@ -59,6 +59,24 @@
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
             background: rgba(10, 25, 47, 0.3);
         }
+        .custom-scrollbar-prominent {
+            scrollbar-width: auto;
+            scrollbar-color: rgba(201, 168, 106, 0.85) rgba(10, 25, 47, 0.08);
+        }
+        .custom-scrollbar-prominent::-webkit-scrollbar {
+            width: 12px;
+        }
+        .custom-scrollbar-prominent::-webkit-scrollbar-track {
+            background: rgba(10, 25, 47, 0.08);
+        }
+        .custom-scrollbar-prominent::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, rgba(201, 168, 106, 0.92), rgba(10, 25, 47, 0.55));
+            border-radius: 999px;
+            border: 2px solid rgba(10, 25, 47, 0.08);
+        }
+        .custom-scrollbar-prominent::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, rgba(201, 168, 106, 1), rgba(10, 25, 47, 0.7));
+        }
         .no-scrollbar {
             scrollbar-width: none;
         }

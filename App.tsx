@@ -11,6 +11,7 @@ import SMEInsights from './pages/SMEInsights';
 import Calculators from './pages/Calculators';
 import AIAssistant from './pages/AIAssistant';
 import LeadCaptureModal from './components/LeadCaptureModal';
+import { CurrencyProvider, useCurrency } from './components/CurrencyContext';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -22,12 +23,13 @@ const ScrollToTop = () => {
   return null;
 };
 
-const App: React.FC = () => {
+const AppShell: React.FC = () => {
   const [modalState, setModalState] = useState<{isOpen: boolean, type: 'Expert' | 'Investment Strategist' | 'Strategic Advisory' | 'Developer' | 'Mortgage Advisor' | 'Services'}>({
     isOpen: false,
     type: 'Expert'
   });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { currency, setCurrency, currencyOptions } = useCurrency();
 
   const openModal = (type: 'Expert' | 'Investment Strategist' | 'Strategic Advisory' | 'Developer' | 'Mortgage Advisor' | 'Services') => {
     setModalState({ isOpen: true, type });
@@ -61,9 +63,23 @@ const App: React.FC = () => {
 
         <main className="flex-1 lg:ml-64 min-h-screen flex flex-col overflow-y-auto overflow-x-hidden">
           <div className="lg:hidden sticky top-0 z-50 bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between">
-            <div>
+            <div className="min-w-0">
               <h1 className="text-sm font-serif font-bold text-brand-navy tracking-tight">DXB EDGE</h1>
               <p className="text-[8px] text-brand-gold font-bold tracking-[0.25em] uppercase">Investor Intelligence</p>
+              <div className="mt-2">
+                <select
+                  aria-label="Display currency"
+                  value={currency}
+                  onChange={(event) => setCurrency(event.target.value as typeof currency)}
+                  className="text-[10px] font-bold text-brand-navy border border-slate-200 rounded-md px-2 py-1 bg-white"
+                >
+                  {currencyOptions.map((option) => (
+                    <option key={option.code} value={option.code}>
+                      {option.code}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <button
               type="button"
@@ -81,10 +97,27 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/ai-assistant" element={null} />
             <Route path="*" element={
-              <div className="bg-white border-b border-slate-200 px-10 py-4 flex items-center justify-end gap-10 hidden lg:flex sticky top-0 z-40 shrink-0">
+              <div className="bg-white border-b border-slate-200 px-10 py-4 flex items-center justify-end gap-8 hidden lg:flex sticky top-0 z-40 shrink-0">
+                 <div className="flex items-center gap-2 mr-2">
+                  <span className="text-[9px] font-bold text-slate-grey/70 uppercase tracking-[0.15em]">Display</span>
+                  <select
+                    aria-label="Display currency"
+                    value={currency}
+                    onChange={(event) => setCurrency(event.target.value as typeof currency)}
+                    className="text-[10px] font-bold text-brand-navy border border-slate-200 rounded-md px-2 py-1 bg-white"
+                  >
+                    {currencyOptions.map((option) => (
+                      <option key={option.code} value={option.code}>
+                        {option.code}
+                      </option>
+                    ))}
+                  </select>
+                 </div>
                  <button onClick={() => openModal('Expert')} className="text-[9px] font-bold text-brand-navy hover:text-brand-gold transition-colors uppercase tracking-[0.2em]">Connect to Investment Strategist</button>
+                 <button onClick={() => openModal('Strategic Advisory')} className="text-[9px] font-bold text-brand-navy hover:text-brand-gold transition-colors uppercase tracking-[0.2em]">Connect for Strategic Advisory</button>
                  <button onClick={() => openModal('Mortgage Advisor')} className="text-[9px] font-bold text-brand-navy hover:text-brand-gold transition-colors uppercase tracking-[0.2em]">Connect to Finance Expert</button>
-                 <div className="w-px h-3 bg-slate-200 mx-2" />
+                 <button onClick={() => openModal('Services')} className="text-[9px] font-bold text-brand-navy hover:text-brand-gold transition-colors uppercase tracking-[0.2em]">Connect to Services</button>
+                 <div className="w-px h-3 bg-slate-200 ml-1" />
               </div>
             } />
           </Routes>
@@ -122,7 +155,7 @@ const App: React.FC = () => {
                               </p>
                               <button
                                 onClick={() => openModal('Investment Strategist')}
-                                className="mt-4 border border-brand-gold text-brand-gold px-4 py-3 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-brand-gold hover:text-brand-navy transition-all duration-500 w-full min-h-[72px] flex items-center justify-center text-center"
+                                className="mt-4 border border-brand-gold text-brand-gold px-4 text-[10px] font-bold uppercase tracking-[0.3em] leading-tight hover:bg-brand-gold hover:text-brand-navy transition-all duration-500 block w-full h-[84px] flex items-center justify-center text-center"
                               >
                                 Connect to Investment Strategist
                               </button>
@@ -134,9 +167,9 @@ const App: React.FC = () => {
                               </p>
                               <button
                                 onClick={() => openModal('Strategic Advisory')}
-                                className="mt-4 border border-brand-gold text-brand-gold px-4 py-3 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-brand-gold hover:text-brand-navy transition-all duration-500 w-full min-h-[72px] flex items-center justify-center text-center"
+                                className="mt-4 border border-brand-gold text-brand-gold px-4 text-[10px] font-bold uppercase tracking-[0.3em] leading-tight hover:bg-brand-gold hover:text-brand-navy transition-all duration-500 block w-full h-[84px] flex items-center justify-center text-center"
                               >
-                                Initialise Connection
+                                Connect for Strategic Advisory
                               </button>
                             </div>
                             <div className="p-5 sm:p-6 bg-white/5 border border-white/10 rounded-xl flex flex-col">
@@ -146,7 +179,7 @@ const App: React.FC = () => {
                               </p>
                               <button
                                 onClick={() => openModal('Mortgage Advisor')}
-                                className="mt-4 border border-brand-gold text-brand-gold px-4 py-3 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-brand-gold hover:text-brand-navy transition-all duration-500 w-full min-h-[72px] flex items-center justify-center text-center"
+                                className="mt-4 border border-brand-gold text-brand-gold px-4 text-[10px] font-bold uppercase tracking-[0.3em] leading-tight hover:bg-brand-gold hover:text-brand-navy transition-all duration-500 block w-full h-[84px] flex items-center justify-center text-center"
                               >
                                 Connect to Finance Expert
                               </button>
@@ -158,7 +191,7 @@ const App: React.FC = () => {
                               </p>
                               <button
                                 onClick={() => openModal('Services')}
-                                className="mt-4 border border-brand-gold text-brand-gold px-4 py-3 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-brand-gold hover:text-brand-navy transition-all duration-500 w-full min-h-[72px] flex items-center justify-center text-center"
+                                className="mt-4 border border-brand-gold text-brand-gold px-4 text-[10px] font-bold uppercase tracking-[0.3em] leading-tight hover:bg-brand-gold hover:text-brand-navy transition-all duration-500 block w-full h-[84px] flex items-center justify-center text-center"
                               >
                                 Connect to Services
                               </button>
@@ -209,5 +242,11 @@ const App: React.FC = () => {
     </Router>
   );
 };
+
+const App: React.FC = () => (
+  <CurrencyProvider>
+    <AppShell />
+  </CurrencyProvider>
+);
 
 export default App;

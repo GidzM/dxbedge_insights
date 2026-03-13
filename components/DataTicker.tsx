@@ -1,18 +1,21 @@
 
 import React from 'react';
-
-const TICKER_ITEMS = [
-  { label: "GLOBAL VALUE", value: "Prime Residential 50-75% discount vs London/NY" },
-  { label: "DEMAND GAP", value: "182.5k New Residents vs 55.4k Units Delivered (2025)" },
-  { label: "YIELDS", value: "Apartments 7.0-7.3% | Villas ~5%" },
-  { label: "D33 GOAL", value: "Doubling Economy to AED 32 Trillion by 2033" },
-  { label: "POPULATION", value: "+6.1% Growth | Target 5.8M by 2040" },
-  { label: "FDI TARGET", value: "Doubling to AED 60 Billion annually" },
-  { label: "2025 GDP GROWTH", value: ">4%" },
-  { label: "DUBAI", value: "3rd Safest City in the World" }
-];
+import { useCurrency } from './CurrencyContext';
 
 const DataTicker: React.FC = () => {
+  const { formatFromAED } = useCurrency();
+
+  const TICKER_ITEMS = [
+    { label: "GLOBAL VALUE", value: "Prime Residential 50-75% discount vs London/NY" },
+    { label: "DEMAND GAP", value: "182.5k New Residents vs 55.4k Units Delivered (2025)" },
+    { label: "YIELDS", value: "Apartments 7.0-7.3% | Villas ~5%" },
+    { label: "D33 GOAL", value: `Doubling Economy to ${formatFromAED(32000000000000, { maximumFractionDigits: 0 })} by 2033` },
+    { label: "POPULATION", value: "+6.1% Growth | Target 5.8M by 2040" },
+    { label: "FDI TARGET", value: `Doubling to ${formatFromAED(60000000000, { maximumFractionDigits: 0 })} annually` },
+    { label: "2025 GDP GROWTH", value: ">4%" },
+    { label: "DUBAI", value: "3rd Safest City in the World" }
+  ];
+
   // Triple the list to ensure there's always content filling the screen 
   // and the translateX(-50%) loop remains seamless.
   const list = [...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS];

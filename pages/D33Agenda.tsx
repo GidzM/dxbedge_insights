@@ -295,7 +295,7 @@ const D33Agenda: React.FC = () => {
 
             <div
               id="d33-drawer-body"
-              className={`flex-1 p-12 overflow-y-auto custom-scrollbar bg-white transition-opacity duration-700 delay-200 ${drawerOpen ? 'opacity-100' : 'opacity-0'}`}
+              className={`flex-1 p-12 overflow-y-auto custom-scrollbar custom-scrollbar-prominent bg-white transition-opacity duration-700 delay-200 ${drawerOpen ? 'opacity-100' : 'opacity-0'}`}
               style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
             >
                {drawerContent.body}

@@ -203,7 +203,7 @@
   },
 
   "critical_success_factors_for_investors": [
-    "**Location precision is paramount**: With growth contained in urban boundaries and centered on 6 major hubs, being within 800m of Metro stations and inside designated centres is difference between 100% appreciation and 30%",
+    "**Location precision is paramount**: With growth contained in urban boundaries and centred on 6 major hubs, being within 800m of Metro stations and inside designated centres is difference between 100% appreciation and 30%",
     
     "**Transit timing matters**: Properties along planned Metro/light rail extensions offer best risk-adjusted returns if acquired 2-3 years before line opening",
     

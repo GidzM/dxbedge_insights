@@ -11,7 +11,7 @@
 - Shared colors are also exported in `constants.tsx` (used for semantic reference, not enforced).
 
 ## External integrations & env
-- Gemini integration in `pages/AIAssistant.tsx` initializes `GoogleGenAI` with `process.env.API_KEY`.
+- Gemini integration in `pages/AIAssistant.tsx` initialises `GoogleGenAI` with `process.env.API_KEY`.
 - README instructs setting `GEMINI_API_KEY` in `.env.local`; verify env naming before changing any key references to avoid runtime auth issues.
 
 ## Developer workflows
