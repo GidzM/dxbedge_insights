@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
+import { useCurrency } from '../components/CurrencyContext';
 
 interface DrawerContent {
   id: string;
@@ -56,6 +57,17 @@ const parseGrowthData = (text: string) => {
 };
 
 const D33Agenda: React.FC = () => {
+  const { formatFromAED } = useCurrency();
+  const economy32T = formatFromAED(32000000000000, { maximumFractionDigits: 0 });
+  const trade14_2T = formatFromAED(14200000000000, { maximumFractionDigits: 0 });
+  const trade25_6T = formatFromAED(25600000000000, { maximumFractionDigits: 0 });
+  const digital100B = formatFromAED(100000000000, { maximumFractionDigits: 0 });
+  const fdi650B = formatFromAED(650000000000, { maximumFractionDigits: 0 });
+  const fdi32B = formatFromAED(32000000000, { maximumFractionDigits: 0 });
+  const fdi60B = formatFromAED(60000000000, { maximumFractionDigits: 0 });
+  const private1T = formatFromAED(1000000000000, { maximumFractionDigits: 0 });
+  const gov700B = formatFromAED(700000000000, { maximumFractionDigits: 0 });
+
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerContent, setDrawerContent] = useState<DrawerContent | null>(null);
 
@@ -97,7 +109,7 @@ const D33Agenda: React.FC = () => {
       <header className="mb-16 border-l-4 border-brand-gold pl-10">
         <h1 className="text-5xl font-serif font-bold text-brand-navy mb-6 italic tracking-tight">Global Hub Tier-1 Strategy</h1>
         <p className="text-xl text-slate-grey max-w-4xl leading-relaxed font-serif italic opacity-80">
-          A 10-year roadmap to position Dubai as one of the top three global economic cities. Targeting an aggregate economic output of <span className="text-brand-navy font-bold">AED 32 Trillion</span>. [Source: D33 Analysis]
+          A 10-year roadmap to position Dubai as one of the top three global economic cities. Targeting an aggregate economic output of <span className="text-brand-navy font-bold">{economy32T}</span>. [Source: D33 Analysis]
         </p>
       </header>
 
@@ -108,7 +120,7 @@ const D33Agenda: React.FC = () => {
           image="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800"
           points={[
             "Expanding the foreign trade network by adding 400 cities to Dubai's global map.",
-            "Targeting a surge in foreign trade from AED 14.2 trillion to AED 25.6 trillion.",
+            `Targeting a surge in foreign trade from ${trade14_2T} to ${trade25_6T}.`,
             "Achieving an 80% increase in total trade volume over the next decade.",
             "Positioning Dubai as the world's most connected trading gateway."
           ]}
@@ -131,7 +143,7 @@ const D33Agenda: React.FC = () => {
 
                 <SectionHeader title="INVESTOR IMPLICATIONS" />
                 <GrowthBullets items={[
-                  "Foreign trade set to expand from AED 14.2 trillion to AED 25.6 trillion (80% increase).",
+                  `Foreign trade set to expand from ${trade14_2T} to ${trade25_6T} (80% increase).`,
                   "Significant upward pressure on industrial and logistics asset values, particularly near Jebel Ali Port and Al Maktoum Airport.",
                   "Increased demand for high-value warehousing and specialised fulfilment centers."
                 ]} />
@@ -145,7 +157,7 @@ const D33Agenda: React.FC = () => {
           title="Digital Transformation"
           image="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800"
           points={[
-            "Generating AED 100 billion in annual economic value via digital innovation.",
+            `Generating ${digital100B} in annual economic value via digital innovation.`,
             "Launch of 'Sandbox Dubai' for the commercial testing of next-gen technologies.",
             "Accelerating the adoption of smart-city infrastructure and smart building standards.",
             "Integration of AI and digital ecosystems as a core pillar of economic output."
@@ -160,7 +172,7 @@ const D33Agenda: React.FC = () => {
                 
                 <SectionHeader title="STRATEGIC INITIATIVES" />
                 <GrowthBullets items={[
-                  "Generation of AED 100 billion in annual economic value through digital innovation.",
+                  `Generation of ${digital100B} in annual economic value through digital innovation.`,
                   "Launch of 'Sandbox Dubai' for the commercial testing of next-gen technologies and disruptive business models.",
                   "Implementation of technology adoption mandates for businesses and government entities.",
                   "Support for a dedicated regulatory framework enabling the digital economy."
@@ -219,9 +231,9 @@ const D33Agenda: React.FC = () => {
           title="Investment & FDI Inflow"
           image="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800"
           points={[
-            "Targeting AED 650 billion in total FDI inflows over the next decade.",
-            "Increasing annual FDI from AED 32 billion to AED 60 billion per year.",
-            "Incentivizing AED 1 trillion in private sector investment by 2033.",
+            `Targeting ${fdi650B} in total FDI inflows over the next decade.`,
+            `Increasing annual FDI from ${fdi32B} to ${fdi60B} per year.`,
+            `Incentivizing ${private1T} in private sector investment by 2033.`,
             "Strategic focus on attracting multinational headquarters and prime capital."
           ]}
           isPremium
@@ -235,16 +247,16 @@ const D33Agenda: React.FC = () => {
                 
                 <SectionHeader title="STRATEGIC INITIATIVES" />
                 <GrowthBullets items={[
-                  "Targeting AED 32 trillion in total economic output over the decade.",
-                  "AED 700 billion government spending plan to support emerging and traditional industries.",
+                  `Targeting ${economy32T} in total economic output over the decade.`,
+                  `${gov700B} government spending plan to support emerging and traditional industries.`,
                   "Streamlined foreign investment regulations and expanded incentives (Enhanced FDI Framework).",
                   "Encouraging public-private partnerships (PPP) for infrastructure delivery."
                 ]} />
 
                 <SectionHeader title="INVESTOR IMPLICATIONS" />
                 <GrowthBullets items={[
-                  "Target of AED 650 billion in FDI across ten years supports large-scale developments across asset classes.",
-                  "AED 1 trillion in private-sector investment injects substantial capital into large-scale real estate projects.",
+                  `Target of ${fdi650B} in FDI across ten years supports large-scale developments across asset classes.`,
+                  `${private1T} in private-sector investment injects substantial capital into large-scale real estate projects.`,
                   "Doubling the economy correlates with broad real estate price appreciation cycles."
                 ]} />
               </div>

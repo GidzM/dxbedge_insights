@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
+import { useCurrency } from '../components/CurrencyContext';
 
 interface DrawerContent {
   id: string;
@@ -303,6 +304,11 @@ const parseGrowthData = (text: string) => {
 };
 
 const SMEInsights: React.FC = () => {
+  const { formatFromAED } = useCurrency();
+  const transactions917B = formatFromAED(917000000000, { maximumFractionDigits: 0 });
+  const income10k = formatFromAED(10000, { maximumFractionDigits: 0 });
+  const income15k = formatFromAED(15000, { maximumFractionDigits: 0 });
+
   const [activeTab, setActiveTab] = useState<'performance' | 'mechanics' | 'commercial' | 'comparative'>('performance');
   const [activeDrawer, setActiveDrawer] = useState<DrawerContent | null>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -409,7 +415,7 @@ const SMEInsights: React.FC = () => {
         title: 'Market Performance Records',
         image: 'https://images.unsplash.com/photo-1651467606797-e1c660cf3fda?auto=format&fit=crop&q=80',
         points: [
-          "AED 917 billion total transactions in 2024 (20% YoY increase).",
+          `${transactions917B} total transactions in 2024 (20% YoY increase).`,
           "Transitioning to a 'Mature Market Cycle'.",
           "High proportion of cash buyers reducing leverage risk.",
           "Sovereign support via D33 & 2040 Urban Plan."
@@ -420,7 +426,7 @@ const SMEInsights: React.FC = () => {
           title: 'Transaction & Resilience Data',
           body: (
             <div className="space-y-8">
-              <VerbatimText text="Dubai recorded AED 917 billion in total real estate transactions, with growth anchored by off-plan absorption, luxury demand, and broad end-user participation rather than purely leveraged speculation." />
+              <VerbatimText text={`Dubai recorded ${transactions917B} in total real estate transactions, with growth anchored by off-plan absorption, luxury demand, and broad end-user participation rather than purely leveraged speculation.`} />
               <SectionHeader title="Resilience Drivers" />
               <GrowthBullets items={[
                 "High cash-buyer share reduces refinancing stress and supports price stability through rate cycles.",
@@ -624,7 +630,7 @@ const SMEInsights: React.FC = () => {
         points: [
           "Residents: Up to 75-80% LTV for first property.",
           "Non-Residents: 50-70% LTV available.",
-          "AED 10k–15k+ min income requirements.",
+          `${income10k}–${income15k}+ min income requirements.`,
           "7-8% total acquisition fees (DLD & Commissions)."
         ],
         drawerContent: {

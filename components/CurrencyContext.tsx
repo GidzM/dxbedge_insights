@@ -63,10 +63,14 @@ export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const formatFromAED = (amountAED: number, options?: Intl.NumberFormatOptions) => {
     const converted = convertFromAED(amountAED);
+    const shouldCompact = Math.abs(converted) >= 1_000_000;
+
     return new Intl.NumberFormat('en-GB', {
       style: 'currency',
       currency,
-      maximumFractionDigits: 0,
+      notation: shouldCompact ? 'compact' : 'standard',
+      compactDisplay: 'short',
+      maximumFractionDigits: shouldCompact ? 1 : 0,
       ...options,
     }).format(converted);
   };

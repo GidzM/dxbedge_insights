@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
+import { useCurrency } from '../components/CurrencyContext';
 
 interface DrawerContent {
   id: string;
@@ -46,6 +47,17 @@ const GoldBullets = ({ items }: { items: string[] }) => (
 );
 
 const CombinedStrategy: React.FC = () => {
+  const { formatFromAED } = useCurrency();
+  const economy32T = formatFromAED(32000000000000, { maximumFractionDigits: 0 });
+  const trade25_6T = formatFromAED(25600000000000, { maximumFractionDigits: 0 });
+  const trade14_2T = formatFromAED(14200000000000, { maximumFractionDigits: 0 });
+  const fdi60B = formatFromAED(60000000000, { maximumFractionDigits: 0 });
+  const digital100B = formatFromAED(100000000000, { maximumFractionDigits: 0 });
+  const gov700B = formatFromAED(700000000000, { maximumFractionDigits: 0 });
+  const private1T = formatFromAED(1000000000000, { maximumFractionDigits: 0 });
+  const consumption2_2T = formatFromAED(2200000000000, { maximumFractionDigits: 0 });
+  const consumption3T = formatFromAED(3000000000000, { maximumFractionDigits: 0 });
+
   const [activeTab, setActiveTab] = useState('framework');
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerContent, setDrawerContent] = useState<DrawerContent | null>(null);
@@ -168,8 +180,8 @@ const CombinedStrategy: React.FC = () => {
               points={[
                 "Unification of 2040 Spatial Foundation and D33 Engine.",
                 "Targeting 75% population increase to 5.8 million.",
-                "AED 32 Trillion economic output target by 2033.",
-                "FDI goals of AED 60 Billion annually.",
+                `Economic output target of ${economy32T} by 2033.`,
+                `FDI goals of ${fdi60B} annually.`,
                 "Unlocking transit-oriented mixed-use and logistics nodes."
               ]}
               isPremium
@@ -180,7 +192,7 @@ const CombinedStrategy: React.FC = () => {
                 body: (
                   <div className="space-y-6">
                     <VerbatimText text="Dubai’s two flagship strategies—the 2040 Urban Master Plan and the D33 Economic Agenda—form a unified roadmap for transforming the city into a top-three global hub by 2033–2040. The 2040 plan sets the spatial foundation, targeting a 75% population increase to 5.8 million, higher urban density, and transit-oriented growth centred on six major urban centres within tightly controlled development boundaries." />
-                    <VerbatimText text="D33 provides the economic engine, aiming to double the economy to AED 32 trillion, expand foreign trade by 80% to AED 25.6 trillion, nearly double annual FDI to AED 60 billion, and generate AED 100 billion annually from digital transformation." />
+                    <VerbatimText text={`D33 provides the economic engine, aiming to double the economy to ${economy32T}, expand foreign trade by 80% to ${trade25_6T}, nearly double annual FDI to ${fdi60B}, and generate ${digital100B} annually from digital transformation.`} />
                     <VerbatimText text="Together, these plans create a powerful, coordinated framework that unlocks major real estate opportunities across transit-oriented mixed-use districts, logistics and industrial zones near trade gateways, knowledge-economy office and residential clusters, and technology-enabled smart developments. With aligned timelines and mutually reinforcing goals, the combined strategy represents one of the most comprehensive and investable urban transformation programmes globally." />
                   </div>
                 )
@@ -194,7 +206,7 @@ const CombinedStrategy: React.FC = () => {
                 "Full 10-Point Strategic Alignment Analysis.",
                 "Population targets supporting D33 economic goals.",
                 "Transit-Oriented Development linked to trade expansion.",
-                "AED 700B infrastructure expenditure sync.",
+                `Infrastructure expenditure sync (${gov700B}).`,
                 "Smart-City foundations for digital economy growth."
               ]}
               onMore={() => openDrawer({
@@ -204,19 +216,19 @@ const CombinedStrategy: React.FC = () => {
                 body: (
                   <div className="space-y-2">
                     <Section title="1. Aligned Population & Economic Growth">
-                      <VerbatimText text="The projected 75% population increase—from 3.3 million to 5.8 million—directly supports D33’s economic-doubling goals by expanding the workforce and increasing domestic consumption from AED 2.2 trillion to AED 3 trillion." />
+                      <VerbatimText text={`The projected 75% population increase—from 3.3 million to 5.8 million—directly supports D33’s economic-doubling goals by expanding the workforce and increasing domestic consumption from ${consumption2_2T} to ${consumption3T}.`} />
                     </Section>
                     <Section title="2. Urban Centres Reinforce Economic Diversification">
-                      <VerbatimText text="The six major urban centres, including Silicon Oasis as a technology hub, align with D33’s focus on the knowledge economy and digital transformation valued at AED 100 billion annually." />
+                      <VerbatimText text={`The six major urban centres, including Silicon Oasis as a technology hub, align with D33’s focus on the knowledge economy and digital transformation valued at ${digital100B} annually.`} />
                     </Section>
                     <Section title="3. Transit-Oriented Development Supports Trade Expansion">
-                      <VerbatimText text="Metro and light-rail expansion, combined with Etihad Rail connectivity, strengthens the logistics network required for foreign trade growth from AED 14.2 trillion to AED 25.6 trillion." />
+                      <VerbatimText text={`Metro and light-rail expansion, combined with Etihad Rail connectivity, strengthens the logistics network required for foreign trade growth from ${trade14_2T} to ${trade25_6T}.`} />
                     </Section>
                     <Section title="4. Integrated Southern Logistics Hub">
                       <VerbatimText text="The Urban Plan’s multi-modal logistics zone—anchored by Jebel Ali Port, Al Maktoum Airport, and Etihad Rail—directly enables D33’s trade and FDI targets." />
                     </Section>
                     <Section title="5. Coordinated Infrastructure Investment">
-                      <VerbatimText text="The Urban Plan’s phased development approach aligns with D33’s AED 700 billion in government expenditure, ensuring infrastructure delivery is synchronised with economic growth." />
+                      <VerbatimText text={`The Urban Plan’s phased development approach aligns with D33’s ${gov700B} in government expenditure, ensuring infrastructure delivery is synchronised with economic growth.`} />
                     </Section>
                     <Section title="6. Mixed-Use Centres Enable Knowledge-Economy Growth">
                       <VerbatimText text="The Urban Plan’s hierarchy of mixed-use, live-work-play centres helps attract and retain skilled professionals essential for knowledge-based industries." />
@@ -228,7 +240,7 @@ const CombinedStrategy: React.FC = () => {
                       <VerbatimText text="Doubling open space from 21.7 km² to 42.8 km² improves liveability, strengthening Dubai’s ability to attract global talent for high-skill sectors." />
                     </Section>
                     <Section title="9. Smart-City Infrastructure Enables Digital Transformation">
-                      <VerbatimText text="Integrated utilities and digital infrastructure in the Urban Plan provide the foundation for D33’s AED 100 billion annual digital-economy ambitions." />
+                      <VerbatimText text={`Integrated utilities and digital infrastructure in the Urban Plan provide the foundation for D33’s ${digital100B} annual digital-economy ambitions.`} />
                     </Section>
                     <Section title="10. Aligned Timelines Create a Unified Investment Horizon">
                       <VerbatimText text="D33’s 2033 targets and the Urban Plan’s 2040 horizon form a coordinated 10–15 year roadmap with clear milestones for investors." />
@@ -246,7 +258,7 @@ const CombinedStrategy: React.FC = () => {
                 "Permanent scarcity premiums of 30-50%.",
                 "Transit timing: 2-3 years prior to opening.",
                 "Southern emirate as the logistics powerhouse.",
-                "AED 1 Trillion private-sector investment signals."
+                `Private-sector investment signals (${private1T}).`
               ]}
               onMore={() => openDrawer({
                 id: 'takeaways',
@@ -259,9 +271,9 @@ const CombinedStrategy: React.FC = () => {
                       "2. Population growth with structural supply constraints: Adding 2.5 million residents within fixed urban boundaries and a ban on offshore reclamation supports sustained appreciation.",
                       "3. Transit-oriented assets deliver the strongest premiums: Properties within 800 metres of Metro or light-rail are highest-conviction investments, with expected 40–60% premiums.",
                       "4. Six urban centres anchor long-term value: Deira/Bur Dubai, Downtown/SZR, Marina, Silicon Oasis, District 2020, and future Jebel Ali are designated cores.",
-                      "5. Logistics is the most predictable growth story: With foreign trade rising 80% to AED 25.6 trillion, logistics real estate near trade hubs offers exceptionally strong potential.",
-                      "6. Digital transformation creates a new real estate class: AED 100 billion annual digital value drives demand for smart buildings, data centres, and innovation districts.",
-                      "7. FDI growth brings institutional-grade tenants: Annual FDI rising to AED 60 billion attracts multinational firms requiring Grade A office and bulk residential leasing.",
+                      `5. Logistics is the most predictable growth story: With foreign trade rising 80% to ${trade25_6T}, logistics real estate near trade hubs offers exceptionally strong potential.`,
+                      `6. Digital transformation creates a new real estate class: ${digital100B} annual digital value drives demand for smart buildings, data centres, and innovation districts.`,
+                      `7. FDI growth brings institutional-grade tenants: Annual FDI rising to ${fdi60B} attracts multinational firms requiring Grade A office and bulk residential leasing.`,
                       "8. Knowledge-economy expansion boosts premium residential demand: Skilled professionals seek high-quality housing, amenities, and transit access.",
                       "9. Mixed-use becomes the dominant development model: Both plans prioritise walkable, integrated mixed-use environments that achieve higher densities.",
                       "10. Waterfront scarcity premium is locked in: The moratorium on offshore reclamation ensures permanent scarcity, supporting 30–50% premiums.",
@@ -270,8 +282,8 @@ const CombinedStrategy: React.FC = () => {
                       "13. Affordable housing offers scale and complexity: Mandated housing expands market depth; understanding allocation requirements is essential.",
                       "14. Industrial-to-mixed-use regeneration: Underutilised industrial districts in the core offer strong uplift potential through redevelopment.",
                       "15. Transit-oriented timing is critical: Acquiring TOD assets two to three years before opening delivers the best risk-adjusted returns.",
-                      "16. Private-sector investment validates market confidence: D33’s AED 1 trillion private-sector investment target signals strong capital availability.",
-                      "17. Domestic demand strengthens retail and hospitality: Consumption growth to AED 3 trillion supports neighbourhood retail and family hospitality.",
+                      `16. Private-sector investment validates market confidence: D33’s ${private1T} private-sector investment target signals strong capital availability.`,
+                      `17. Domestic demand strengthens retail and hospitality: Consumption growth to ${consumption3T} supports neighbourhood retail and family hospitality.`,
                       "18. Hatta presents a niche, asymmetric opportunity: Sustainable tourism in Hatta offers high-margin potential through eco-resorts and adventure assets.",
                       "19. Sustainability delivers measurable premiums: Green buildings meeting Al Sa’fat standards achieve 10–15% price premiums and attract stronger tenants.",
                       "20. A 10–15 year horizon is essential: Full value creation aligns with the 2033–2040 timeline, requiring long-term commitment."
@@ -307,19 +319,19 @@ const CombinedStrategy: React.FC = () => {
                       <GoldBullets items={[
                         "Dual population and economic doubling generates powerful, compounding demand across all real estate asset classes.",
                         "A city of 5.8 million residents and 4.9 million workers, combined with economic doubling, creates unprecedented requirements for housing, offices, and commercial space.",
-                        "Rising FDI to AED 60 billion annually, paired with transit-oriented urban centres, concentrates demand in premium locations near Metro stations.",
-                        "Foreign trade expansion to AED 25.6 trillion and the southern logistics hub drive major demand for industrial, warehousing, and free-zone facilities.",
-                        "Digital transformation worth AED 100 billion annually fuels demand for smart buildings, data centres, and technology-focused real estate.",
-                        "Domestic consumption rising to AED 3 trillion strengthens demand for retail, hospitality, and mixed-use developments.",
-                        "Tourism growth to 25 million visitors annually, supported by AED 1 trillion in private investment, expands hospitality and short-term rental demand.",
+                        `Rising FDI to ${fdi60B} annually, paired with transit-oriented urban centres, concentrates demand in premium locations near Metro stations.`,
+                        `Foreign trade expansion to ${trade25_6T} and the southern logistics hub drive major demand for industrial, warehousing, and free-zone facilities.`,
+                        `Digital transformation worth ${digital100B} annually fuels demand for smart buildings, data centres, and technology-focused real estate.`,
+                        `Domestic consumption rising to ${consumption3T} strengthens demand for retail, hospitality, and mixed-use developments.`,
+                        `Tourism growth to 25 million visitors annually, supported by ${private1T} in private investment, expands hospitality and short-term rental demand.`,
                         "A 68% increase in urban density and the 20-minute city model elevate valuations for walkable, transit-accessible properties."
                       ]} />
                     </Section>
                     <Section title="Supply Factors">
                       <GoldBullets items={[
                         "Strict urban boundary controls and a moratorium on offshore reclamation create permanently constrained land supply, supporting long-term value appreciation.",
-                        "A staged land-bank system and AED 1 trillion in private-sector investment ensure supply is released in a controlled, demand-aligned manner.",
-                        "AED 700 billion in government expenditure unlocks new development areas through phased infrastructure delivery.",
+                        `A staged land-bank system and ${private1T} in private-sector investment ensure supply is released in a controlled, demand-aligned manner.`,
+                        `${gov700B} in government expenditure unlocks new development areas through phased infrastructure delivery.`,
                         "Industrial-to-mixed-use regeneration introduces new supply from underutilised urban core districts.",
                         "Transit-oriented development and the six major urban centres concentrate new supply in high-value, infrastructure-rich locations.",
                         "Environmental protections—such as Hatta’s 15% slope restriction and expanded conservation areas—limit outward sprawl.",
@@ -435,7 +447,7 @@ const CombinedStrategy: React.FC = () => {
                 "Investment thesis, target returns, and risk profile by sector.",
                 "Hospitality RevPAR and STR yield targets.",
                 "Mixed-Use target returns of 22-28% on cost.",
-                "Retail transformation mapping (AED 3T demand)."
+                `Retail transformation mapping (${consumption3T} demand).`
               ]}
               isPremium
               onMore={() => openDrawer({
@@ -445,10 +457,10 @@ const CombinedStrategy: React.FC = () => {
                 body: (
                   <div className="space-y-12">
                     <Section title="Logistics & Industrial">
-                      <VerbatimText text="Opportunity Scale: Exceptional — the AED 25.6 trillion foreign-trade target requires major expansion of logistics and industrial infrastructure." />
+                      <VerbatimText text={`Opportunity Scale: Exceptional — the ${trade25_6T} foreign-trade target requires major expansion of logistics and industrial infrastructure.`} />
                       <VerbatimText text="Key Locations: Southern multi-modal logistics hub (Jebel Ali Port, Al Maktoum Airport, Etihad Rail) and designated industrial zones near major urban centres." />
                       <GoldBullets items={[
-                        "Investment Thesis: Trade growth of 80% over the decade demands proportional increases in warehousing, fulfilment centres, cold storage, and last-mile logistics. E-commerce expansion and AED 3 trillion in domestic demand add further pressure.",
+                        `Investment Thesis: Trade growth of 80% over the decade demands proportional increases in warehousing, fulfilment centres, cold storage, and last-mile logistics. E-commerce expansion and ${consumption3T} in domestic demand add further pressure.`,
                         "Target Returns: Land appreciation of 60–80%, stabilised yields of 6–8% net, and development returns of 18–22% on cost.",
                         "Risks: Competition from Jebel Ali Free Zone expansions and automation reducing space requirements per transaction."
                       ]} />
@@ -457,7 +469,7 @@ const CombinedStrategy: React.FC = () => {
                       <VerbatimText text="Opportunity Scale: Strong — the knowledge-economy shift and doubling of FDI create sustained demand for premium office space." />
                       <VerbatimText text="Key Locations: Six major urban centres (especially Silicon Oasis and District 2020), downtown business districts, and transit-oriented developments." />
                       <GoldBullets items={[
-                        "Investment Thesis: Digital transformation (AED 100 billion annually) and rising FDI (AED 60 billion annually) attract high-quality tenants seeking smart buildings. Knowledge workers prioritise premium amenities and transit access. As the economy doubles, Grade A office supply may lag demand.",
+                        `Investment Thesis: Digital transformation (${digital100B} annually) and rising FDI (${fdi60B} annually) attract high-quality tenants seeking smart buildings. Knowledge workers prioritise premium amenities and transit access. As the economy doubles, Grade A office supply may lag demand.`,
                         "Target Returns: Prime office appreciation of 50–70%, stabilised yields of 6–7%, and development returns of 15–18% on cost.",
                         "Risks: Remote-work adoption, obsolescence of traditional office stock, and oversupply risk if speculative development outpaces absorption."
                       ]} />
@@ -484,7 +496,7 @@ const CombinedStrategy: React.FC = () => {
                       <VerbatimText text="Opportunity Scale: Moderate — supported by domestic demand growth but challenged by e-commerce disruption." />
                       <VerbatimText text="Key Locations: Street-level retail in mixed-use centres, neighbourhood commercial in high-density areas, and experiential retail in tourist zones." />
                       <GoldBullets items={[
-                        "Investment Thesis: Domestic consumption rising from AED 2.2 trillion to AED 3 trillion supports retail expansion, but the market is shifting from traditional malls toward street retail and experiential formats. The 20-minute city model increases demand for neighbourhood commercial assets.",
+                        `Investment Thesis: Domestic consumption rising from ${consumption2_2T} to ${consumption3T} supports retail expansion, but the market is shifting from traditional malls toward street retail and experiential formats. The 20-minute city model increases demand for neighbourhood commercial assets.`,
                         "Target Returns: Prime street-retail appreciation of 30–40%, yields of 6–8%, and development returns of 12–15% on cost.",
                         "Risks: E-commerce cannibalisation, oversupply of mall space, evolving consumer preferences, and high fit-out costs."
                       ]} />
@@ -522,20 +534,20 @@ const CombinedStrategy: React.FC = () => {
                     <Section title="TIER 1 – Highest Conviction">
                       <GoldBullets items={[
                         "Transit-oriented mixed-use developments within 800 metres of Metro and light-rail stations in the six major urban centres (Silicon Oasis, District 2020, Downtown, Marina, Deira/Bur Dubai, and future Jebel Ali). These locations capture both population growth and economic diversification.",
-                        "Logistics and industrial real estate along the Etihad Rail corridor and near Jebel Ali Port and Al Maktoum Airport, directly benefiting from the AED 25.6 trillion foreign-trade target and strong visibility on 80% trade growth.",
-                        "Smart office and innovation-district assets in Silicon Oasis and technology clusters, aligned with AED 100 billion in annual digital-economy value and attracting premium tenants."
+                        `Logistics and industrial real estate along the Etihad Rail corridor and near Jebel Ali Port and Al Maktoum Airport, directly benefiting from the ${trade25_6T} foreign-trade target and strong visibility on 80% trade growth.`,
+                        `Smart office and innovation-district assets in Silicon Oasis and technology clusters, aligned with ${digital100B} in annual digital-economy value and attracting premium tenants.`
                       ]} />
                     </Section>
                     <Section title="TIER 2">
                       <GoldBullets items={[
-                        "Premium residential properties in major urban centres targeting knowledge-economy professionals, supported by FDI growth to AED 60 billion annually and rising demand from skilled workers.",
+                        `Premium residential properties in major urban centres targeting knowledge-economy professionals, supported by FDI growth to ${fdi60B} annually and rising demand from skilled workers.`,
                         "Hospitality assets along the coastal tourism corridor, benefiting from the 25-million-visitor target and increased business travel linked to FDI expansion.",
                         "Industrial-to-mixed-use regeneration projects in the urban core, offering value-add potential through redevelopment of underutilised but infrastructure-rich sites."
                       ]} />
                     </Section>
                     <Section title="TIER 3">
                       <GoldBullets items={[
-                        "Retail and street-level commercial in walkable mixed-use centres, supported by domestic consumption growth to AED 3 trillion and the 20-minute city model.",
+                        `Retail and street-level commercial in walkable mixed-use centres, supported by domestic consumption growth to ${consumption3T} and the 20-minute city model.`,
                         "Data centres and technology infrastructure, a specialised but high-value segment capturing digital-transformation demand.",
                         "Affordable and mid-income housing near employment hubs, offering scale opportunities aligned with national housing goals and workforce expansion.",
                         "Free-zone commercial and light-industrial properties, benefiting from foreign company relocations driven by rising FDI."

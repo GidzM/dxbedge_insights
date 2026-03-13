@@ -305,11 +305,11 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
                   <p className="text-[10px] text-slate-grey uppercase tracking-widest opacity-60">Investment Yield Analysis</p>
                 </div>
                 <div className="grid grid-cols-1 gap-6">
-                  <InputField label="Price (AED)" value={rentalRoiInputs.price} onChange={(v:any) => setRoiInputs({...rentalRoiInputs, price: Number(v)})} />
-                  <InputField label="Annual Rent (AED)" value={rentalRoiInputs.rent} onChange={(v:any) => setRoiInputs({...rentalRoiInputs, rent: Number(v)})} />
+                  <InputField label={`Price (${currency})`} value={rentalRoiInputs.price} onChange={(v:any) => setRoiInputs({...rentalRoiInputs, price: Number(v)})} />
+                  <InputField label={`Annual Rent (${currency})`} value={rentalRoiInputs.rent} onChange={(v:any) => setRoiInputs({...rentalRoiInputs, rent: Number(v)})} />
                   <div className="grid grid-cols-2 gap-4">
-                    <InputField label="Service (AED/yr)" value={rentalRoiInputs.service} onChange={(v:any) => setRoiInputs({...rentalRoiInputs, service: Number(v)})} />
-                    <InputField label="Maint (AED/yr)" value={rentalRoiInputs.maintenance} onChange={(v:any) => setRoiInputs({...rentalRoiInputs, maintenance: Number(v)})} />
+                    <InputField label={`Service (${currency}/yr)`} value={rentalRoiInputs.service} onChange={(v:any) => setRoiInputs({...rentalRoiInputs, service: Number(v)})} />
+                    <InputField label={`Maint (${currency}/yr)`} value={rentalRoiInputs.maintenance} onChange={(v:any) => setRoiInputs({...rentalRoiInputs, maintenance: Number(v)})} />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <InputField label="Mgmt Fee (%)" value={rentalRoiInputs.mgmt} onChange={(v:any) => setRoiInputs({...rentalRoiInputs, mgmt: Number(v)})} />
@@ -325,7 +325,7 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
                   <p className="text-[10px] text-slate-grey uppercase tracking-widest opacity-60">Holiday Let Yield Analysis</p>
                 </div>
                 <div className="grid grid-cols-1 gap-6">
-                  <InputField label="Property Price (AED)" value={shortTermInputs.price} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, price: Number(v) })} />
+                  <InputField label={`Property Price (${currency})`} value={shortTermInputs.price} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, price: Number(v) })} />
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-black text-deep-forest uppercase tracking-widest">Rate Type</label>
@@ -334,13 +334,13 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
                       onChange={(e) => setShortTermInputs({ ...shortTermInputs, rateType: e.target.value })}
                       className="w-full bg-soft-grey border border-slate-200 rounded-lg px-4 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-navy/20 transition-all"
                     >
-                      <option value="nightly">Nightly (AED per night)</option>
-                      <option value="weekly">Weekly (AED per week)</option>
+                      <option value="nightly">Nightly ({currency} per night)</option>
+                      <option value="weekly">Weekly ({currency} per week)</option>
                     </select>
                   </div>
 
                   <InputField
-                    label={shortTermInputs.rateType === 'weekly' ? 'Average Weekly Rate (AED)' : 'Average Nightly Rate (AED)'}
+                    label={shortTermInputs.rateType === 'weekly' ? `Average Weekly Rate (${currency})` : `Average Nightly Rate (${currency})`}
                     value={shortTermInputs.averageRate}
                     onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, averageRate: Number(v) })}
                   />
@@ -356,13 +356,13 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <InputField label="Cleaning / Turnover (AED)" value={shortTermInputs.cleaningPerTurnover} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, cleaningPerTurnover: Number(v) })} />
-                    <InputField label="Utilities (AED/yr)" value={shortTermInputs.utilities} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, utilities: Number(v) })} />
+                    <InputField label={`Cleaning / Turnover (${currency})`} value={shortTermInputs.cleaningPerTurnover} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, cleaningPerTurnover: Number(v) })} />
+                    <InputField label={`Utilities (${currency}/yr)`} value={shortTermInputs.utilities} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, utilities: Number(v) })} />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <InputField label="Service Charge (AED/yr)" value={shortTermInputs.service} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, service: Number(v) })} />
-                    <InputField label="Maintenance (AED/yr)" value={shortTermInputs.maintenance} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, maintenance: Number(v) })} />
+                    <InputField label={`Service Charge (${currency}/yr)`} value={shortTermInputs.service} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, service: Number(v) })} />
+                    <InputField label={`Maintenance (${currency}/yr)`} value={shortTermInputs.maintenance} onChange={(v:any) => setShortTermInputs({ ...shortTermInputs, maintenance: Number(v) })} />
                   </div>
                 </div>
               </>
@@ -374,8 +374,8 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
                   <p className="text-[10px] text-slate-grey uppercase tracking-widest opacity-60">Acquisition Cost breakdown</p>
                 </div>
                 <div className="space-y-6">
-                  <InputField label="Property Price (AED)" value={dldInputs.price} onChange={(v:any) => setDldInputs({...dldInputs, price: Number(v)})} />
-                  <InputField label="Mortgage Amount (AED)" value={dldInputs.mortgage} onChange={(v:any) => setDldInputs({...dldInputs, mortgage: Number(v)})} />
+                  <InputField label={`Property Price (${currency})`} value={dldInputs.price} onChange={(v:any) => setDldInputs({...dldInputs, price: Number(v)})} />
+                  <InputField label={`Mortgage Amount (${currency})`} value={dldInputs.mortgage} onChange={(v:any) => setDldInputs({...dldInputs, mortgage: Number(v)})} />
                 </div>
               </>
             )}
@@ -386,7 +386,7 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
                   <p className="text-[10px] text-slate-grey uppercase tracking-widest opacity-60">Leverage Modeller</p>
                 </div>
                 <div className="space-y-6">
-                  <InputField label="Loan Amount (AED)" value={mortgageInputs.amount} onChange={(v:any) => setMortgageInputs({...mortgageInputs, amount: Number(v)})} />
+                  <InputField label={`Loan Amount (${currency})`} value={mortgageInputs.amount} onChange={(v:any) => setMortgageInputs({...mortgageInputs, amount: Number(v)})} />
                   <InputField label="Interest Rate (%)" value={mortgageInputs.rate} onChange={(v:any) => setMortgageInputs({...mortgageInputs, rate: Number(v)})} />
                   <InputField label="Tenure (Years)" value={mortgageInputs.tenure} onChange={(v:any) => setMortgageInputs({...mortgageInputs, tenure: Number(v)})} />
                 </div>
@@ -399,7 +399,7 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
                   <p className="text-[10px] text-slate-grey uppercase tracking-widest opacity-60">Milestone Payment Strategy</p>
                 </div>
                 <div className="space-y-6">
-                  <InputField label="Purchase Price (AED)" value={offPlanInputs.price} onChange={(v:any) => setOffPlanInputs({...offPlanInputs, price: Number(v)})} />
+                  <InputField label={`Purchase Price (${currency})`} value={offPlanInputs.price} onChange={(v:any) => setOffPlanInputs({...offPlanInputs, price: Number(v)})} />
                   <div className="grid grid-cols-3 gap-3">
                     <InputField label="Booking (%)" value={offPlanInputs.booking} onChange={(v:any) => setOffPlanInputs({...offPlanInputs, booking: Number(v)})} />
                     <InputField label="Const (%)" value={offPlanInputs.construction} onChange={(v:any) => setOffPlanInputs({...offPlanInputs, construction: Number(v)})} />
