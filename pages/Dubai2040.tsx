@@ -1,5 +1,7 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import Card from '../components/Card';
 
 interface DrawerContent {
@@ -53,11 +55,144 @@ const LocationWidget = ({ highlightNodes }: { highlightNodes: boolean }) => {
     { id: '5', label: 'District 2020', hub: 'Logistics Hub', x: 165, y: 300 },
   ];
 
+  const mapContainerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!mapContainerRef.current) return;
+    try {
+      mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+      const map = new mapboxgl.Map({
+        container: mapContainerRef.current,
+        style: 'mapbox://styles/gman7714/cmrijbyf9009s01sifrr4ema9',
+        center: [55.2708, 25.2048],
+        zoom: 10.3,
+      });
+
+      map.on('load', async () => {
+        const geoJsonCandidates = ['/data/growth-nodes.geojson', '/data/growth-nodes.geo.json'];
+        let geoData: any = null;
+
+        for (const url of geoJsonCandidates) {
+          try {
+            const response = await fetch(url);
+            if (response.ok) {
+              geoData = await response.json();
+              break;
+            }
+          } catch {
+            // Try next candidate.
+          }
+        }
+
+        if (!geoData || !Array.isArray(geoData.features)) {
+          return;
+        }
+
+        map.addSource('growth-nodes', {
+          type: 'geojson',
+          data: geoData,
+        });
+
+        const hubFeatures = geoData.features.filter((f: any) => f?.properties?.type === 'node');
+        let minLng = Infinity;
+        let minLat = Infinity;
+        let maxLng = -Infinity;
+        let maxLat = -Infinity;
+
+        for (const feature of hubFeatures) {
+          const coordinates = feature?.geometry?.coordinates;
+          if (!coordinates) continue;
+
+          const rings = feature.geometry.type === 'Polygon' ? coordinates : feature.geometry.type === 'MultiPolygon' ? coordinates.flat() : [];
+
+          for (const ring of rings) {
+            for (const point of ring) {
+              const [lng, lat] = point;
+              if (typeof lng !== 'number' || typeof lat !== 'number') continue;
+              minLng = Math.min(minLng, lng);
+              minLat = Math.min(minLat, lat);
+              maxLng = Math.max(maxLng, lng);
+              maxLat = Math.max(maxLat, lat);
+            }
+          }
+        }
+
+        if (Number.isFinite(minLng) && Number.isFinite(minLat) && Number.isFinite(maxLng) && Number.isFinite(maxLat)) {
+          map.fitBounds(
+            [
+              [minLng, minLat],
+              [maxLng, maxLat],
+            ],
+            {
+              padding: 40,
+              duration: 1200,
+            }
+          );
+        }
+
+        map.addLayer({
+          id: 'node-fill',
+          type: 'fill',
+          source: 'growth-nodes',
+          filter: ['==', ['get', 'type'], 'node'],
+          paint: { 'fill-color': '#4A90E2', 'fill-opacity': 0.55 },
+        });
+
+        map.addLayer({
+          id: 'node-outline',
+          type: 'line',
+          source: 'growth-nodes',
+          filter: ['==', ['get', 'type'], 'node'],
+          paint: { 'line-color': '#003f7f', 'line-width': 3 },
+        });
+
+        map.addLayer({
+          id: 'surround-fill',
+          type: 'fill',
+          source: 'growth-nodes',
+          filter: ['==', ['get', 'type'], 'surround'],
+          paint: { 'fill-color': '#4A90E2', 'fill-opacity': 0.15 },
+        });
+
+        map.addLayer({
+          id: 'corridor-line',
+          type: 'line',
+          source: 'growth-nodes',
+          filter: ['==', ['get', 'type'], 'corridor'],
+          paint: { 'line-color': '#ffffff', 'line-width': 3, 'line-dasharray': [2, 2] },
+        });
+
+        map.addLayer({
+          id: 'coastal-baseline',
+          type: 'line',
+          source: 'growth-nodes',
+          filter: ['==', ['get', 'type'], 'coast'],
+          paint: { 'line-color': '#7FDBFF', 'line-width': 4 },
+        });
+
+        map.addLayer({
+          id: 'node-labels',
+          type: 'symbol',
+          source: 'growth-nodes',
+          filter: ['==', ['get', 'type'], 'node'],
+          layout: { 'text-field': ['get', 'name'], 'text-size': 13, 'text-offset': [0, 0.6] },
+          paint: { 'text-color': '#003f7f' },
+        });
+      });
+
+      return () => map.remove();
+    } catch (err) {
+      // fail silently in environments without Mapbox token
+    }
+  }, []);
+
   return (
-    <div 
-      className={`relative w-full h-[450px] bg-[#050C16] rounded-xl overflow-hidden border border-white/10 shadow-2xl transition-all duration-700 ease-in-out font-sans ${highlightNodes ? 'ring-1 ring-[#00E676]/30' : ''}`}
+    <div
+      className={`relative w-full h-[520px] bg-[#050C16] rounded-xl overflow-hidden border border-white/10 shadow-2xl transition-all duration-700 ease-in-out font-sans box-border ${highlightNodes ? 'ring-1 ring-[#00E676]/30' : ''}`}
+      role="region"
+      aria-label="2040 Spatial Hierarchy map widget"
     >
-      {/* Terminal Header */}
+      {/* Header */}
       <div className="bg-white/5 border-b border-white/5 px-6 py-2 flex justify-between items-center z-20 relative">
         <span className="text-[8px] font-black text-brand-gold uppercase tracking-[0.4em]">2040 SPATIAL HIERARCHY</span>
         <div className="flex items-center gap-1">
@@ -66,68 +201,25 @@ const LocationWidget = ({ highlightNodes }: { highlightNodes: boolean }) => {
         </div>
       </div>
 
-      <div className="flex h-full">
-        {/* Left: Map Section (Reduced to 45% for more legend width) */}
-        <div className="w-[45%] h-full relative border-r border-white/5 p-4 flex items-center justify-center">
-          <svg viewBox="0 0 300 400" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full opacity-90">
-            {/* Grid Lines */}
-            <g opacity="0.03" stroke="white" strokeWidth="0.5">
-              {[...Array(10)].map((_, i) => (
-                <line key={`v-${i}`} x1={i * 30} y1="0" x2={i * 30} y2="400" />
-              ))}
-              {[...Array(13)].map((_, i) => (
-                <line key={`h-${i}`} x1="0" y1={i * 30} x2="300" y2={i * 30} />
-              ))}
-            </g>
-
-            {/* Coastline Baseline - Significantly brightened to #7DA1C4 */}
-            <path d="M40 350C80 320 120 300 160 270C200 240 230 190 250 130L260 20" stroke="#7DA1C4" strokeWidth="4" strokeLinecap="round" />
-            
-            {/* Investment Corridor Boundary (E611) - Increased thickness and contrast */}
-            <path d="M20 380Q150 380 280 100" stroke="white" strokeDasharray="5 7" strokeWidth="2.5" opacity="1" />
-
-            {/* Numbered Nodes - Increased radius r="10.5" for better visibility */}
-            {centers.map((node) => (
-              <g key={`node-${node.id}`} className="transition-all duration-500" opacity={highlightNodes ? 1 : 0.4}>
-                <circle 
-                  cx={node.x} 
-                  cy={node.y} 
-                  r="10.5" 
-                  fill="#00E676" 
-                  style={{ filter: highlightNodes ? 'drop-shadow(0 0 12px #00E676)' : 'none' }}
-                />
-                <text 
-                  x={node.x} 
-                  y={node.y + 4} 
-                  textAnchor="middle" 
-                  fill="black" 
-                  fontSize="11" 
-                  fontWeight="900" 
-                  fontFamily="Inter, sans-serif"
-                >
-                  {node.id}
-                </text>
-              </g>
-            ))}
-          </svg>
+      <div className="flex h-full flex-col lg:flex-row">
+        {/* Map area */}
+        <div className="w-full lg:w-[62%] h-[65%] lg:h-full relative lg:border-r border-white/5 p-4 flex items-center justify-center box-border min-w-0">
+          <div className="w-full h-full flex flex-col">
+            <div ref={mapContainerRef} className="w-full flex-1" />
+            <div className="h-6" />
+          </div>
         </div>
 
-        {/* Right: Legend Section (Expanded to 55% for premium spacing) */}
-        <div className="w-[55%] bg-[#050C16] p-6 flex flex-col justify-between border-l border-white/5 overflow-hidden">
-          <div className="space-y-5 pt-4">
+        {/* Legend area */}
+        <aside className="w-full lg:w-[38%] h-[35%] lg:h-full bg-[#050C16] p-5 flex flex-col justify-between lg:border-l border-white/5 overflow-hidden min-w-0" aria-label="Map legend">
+          <div className="space-y-5 pt-4 max-w-full">
             {centers.map((node) => (
               <div key={`legend-${node.id}`} className="flex flex-col">
                 <div className="flex items-center gap-2 mb-0.5">
-                  <span className={`text-[10px] font-black transition-colors duration-500 ${highlightNodes ? 'text-[#00E676]' : 'text-white/20'}`}>
-                    0{node.id}
-                  </span>
-                  <span className={`text-[9px] font-bold uppercase tracking-widest leading-tight transition-colors duration-500 ${highlightNodes ? 'text-white' : 'text-white/20'}`}>
-                    {node.label}
-                  </span>
+                  <span className={`text-[10px] font-black transition-colors duration-500 ${highlightNodes ? 'text-[#00E676]' : 'text-white/20'}`}>0{node.id}</span>
+                  <span className={`text-[9px] font-bold uppercase tracking-[0.12em] leading-tight break-words transition-colors duration-500 ${highlightNodes ? 'text-white' : 'text-white/20'}`}>{node.label}</span>
                 </div>
-                <p className={`text-[10px] font-serif italic transition-colors duration-500 ${highlightNodes ? 'text-brand-gold' : 'text-white/10'}`}>
-                  {node.hub}
-                </p>
+                <p className={`text-[10px] font-serif italic transition-colors duration-500 ${highlightNodes ? 'text-brand-gold' : 'text-white/10'} break-words whitespace-normal`}>{node.hub}</p>
               </div>
             ))}
           </div>
@@ -136,23 +228,24 @@ const LocationWidget = ({ highlightNodes }: { highlightNodes: boolean }) => {
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <div className="w-6 h-1 bg-[#7DA1C4] rounded-full" />
-                <span className="text-[8px] font-black text-white/70 uppercase tracking-widest whitespace-nowrap">Coastal Baseline</span>
+                <span className="text-[8px] font-black text-white/70 uppercase tracking-widest break-words">Coastal Baseline</span>
               </div>
+
               <div className="flex items-center gap-3">
-                {/* Fixed visibility of dotted line in Key */}
                 <svg width="24" height="4" viewBox="0 0 24 4" className="shrink-0">
                   <line x1="0" y1="2" x2="24" y2="2" stroke="white" strokeWidth="3" strokeDasharray="3 4" />
                 </svg>
-                <span className="text-[8px] font-black text-white/70 uppercase tracking-widest whitespace-nowrap">E611 Strategic Corridor</span>
+                <span className="text-[7px] sm:text-[8px] font-black text-white/70 uppercase tracking-[0.1em] leading-tight break-words max-w-full">E611 Strategic Corridor</span>
               </div>
+
               <div className="flex items-center gap-3">
                 <div className={`w-2.5 h-2.5 rounded-full ${highlightNodes ? 'bg-[#00E676] shadow-[0_0_10px_#00E676]' : 'bg-white/10'}`} />
-                <span className="text-[8px] font-black text-white/70 uppercase tracking-widest whitespace-nowrap">Verified Growth Node</span>
+                <span className="text-[7px] sm:text-[8px] font-black text-white/70 uppercase tracking-[0.1em] leading-tight break-words max-w-full">Verified Growth Node</span>
               </div>
             </div>
             <p className="text-[6px] text-white/10 uppercase tracking-widest leading-none italic">Ref: 2040 Analysis</p>
           </div>
-        </div>
+        </aside>
       </div>
     </div>
   );
@@ -186,7 +279,7 @@ const Dubai2040: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto py-16 px-10 lg:px-16 animate-fadeIn pb-32">
+    <div className="max-w-[92rem] mx-auto py-16 px-6 md:px-8 lg:px-10 animate-fadeIn pb-32">
       {/* Header Section */}
       <header className="mb-16 border-l-4 border-brand-gold pl-10">
         <h1 className="text-5xl lg:text-6xl font-serif font-bold text-brand-navy mb-6 italic tracking-tight">Dubai 2040 Urban Master Plan</h1>
@@ -195,9 +288,9 @@ const Dubai2040: React.FC = () => {
         </p>
       </header>
 
-      <div className="flex flex-col lg:flex-row gap-16">
-        {/* Left Column: Data Cards (65% width) */}
-        <div className="lg:w-[65%] space-y-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-8 lg:gap-10 items-start">
+        {/* Cards area — 2.5 of 4 desktop columns (5/8) */}
+        <div className="col-span-1 md:col-span-2 lg:col-span-5 space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Card 1: Urban Hierarchy */}
             <div 
@@ -382,8 +475,8 @@ const Dubai2040: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Column: Location Sidebar Widget (35% width) */}
-        <div className="hidden lg:block lg:w-[35%]">
+        {/* Sidebar / Map widget area — spans 1.5 of 4 desktop columns (3/8) */}
+        <div className="col-span-1 md:col-span-2 lg:col-span-3 min-w-0">
           <div className="sticky top-32">
             <LocationWidget highlightNodes={isCard1Hovered} />
             <div className="mt-8 p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
