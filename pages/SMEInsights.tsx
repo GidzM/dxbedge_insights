@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import { useCurrency } from '../components/CurrencyContext';
+import SEO from '@/components/SEO';
 
 interface DrawerContent {
   id: string;
@@ -11,7 +12,7 @@ interface DrawerContent {
 
 const VerbatimText = ({ text }: { text: string }) => (
   <p
-    className="text-brand-navy/80 text-[14px] leading-relaxed mb-4 font-medium"
+    className="text-brand-navy/80 text-[14px] leading-relaxed mb-4 font-medium whitespace-pre-line"
     style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
   >
     {parseGrowthData(text)}
@@ -36,19 +37,44 @@ const SourceNote = ({ sources }: { sources: string[] }) => (
   </p>
 );
 
-const GrowthBullets = ({ items }: { items: string[] }) => (
+type GrowthBulletItem = string | { text: string; subItems?: string[] };
+
+const GrowthBullets = ({ items }: { items: GrowthBulletItem[] }) => (
   <div className="space-y-5">
-    {items.map((item, idx) => (
-      <div key={idx} className="flex gap-4 items-start">
-  <div className="w-1.5 h-1.5 bg-brand-gold mt-2.5 shrink-0 shadow-[0_0_8px_rgba(201,168,106,0.4)]" />
-        <p
-          className="text-brand-navy/80 text-[14px] leading-relaxed font-medium"
-          style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
-        >
-          {parseGrowthData(item)}
-        </p>
-      </div>
-    ))}
+    {items.map((item, idx) => {
+      const text = typeof item === 'string' ? item : item.text;
+      const subItems = typeof item === 'string' ? [] : item.subItems ?? [];
+
+      return (
+        <div key={idx} className="space-y-3">
+          <div className="flex gap-4 items-start">
+            <div className="w-1.5 h-1.5 bg-brand-gold mt-2.5 shrink-0 shadow-[0_0_8px_rgba(201,168,106,0.4)]" />
+            <p
+              className="text-brand-navy/80 text-[14px] leading-relaxed font-medium"
+              style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
+            >
+              {parseGrowthData(text)}
+            </p>
+          </div>
+
+          {subItems.length > 0 && (
+            <ul className="ml-7 space-y-2 border-l border-brand-navy/10 pl-4">
+              {subItems.map((subItem, subIndex) => (
+                <li key={subIndex} className="flex gap-3 items-start">
+                  <span className="mt-2 h-1 w-1 rounded-full bg-brand-gold shrink-0" />
+                  <p
+                    className="text-brand-navy/70 text-[13px] leading-relaxed font-medium"
+                    style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
+                  >
+                    {parseGrowthData(subItem)}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      );
+    })}
   </div>
 );
 
@@ -404,7 +430,6 @@ const SMEInsights: React.FC = () => {
                 "Lower basis pricing leaves room for medium-term yield compression and capital upside as market maturity advances.",
                 "Tax efficiency (no annual property tax, no typical capital gains tax) improves net, not just headline, returns."
               ]} />
-              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -439,7 +464,6 @@ const SMEInsights: React.FC = () => {
                 "Current phase is better characterized as market maturation/normalization than a structural downturn.",
                 "Expected supply growth appears more phased than abrupt, reducing near-term shock risk in core demand corridors."
               ]} />
-              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -475,7 +499,6 @@ const SMEInsights: React.FC = () => {
                 'Current expert forecasts lean toward cooling or moderate price adjustments rather than a crash.',
                 'Emerging communities and developments, luxury and waterfront assets, larger apartments, villas/townhouses, and legacy/trophy properties are still viewed as capable of strong capital appreciation and double-digit ROI over medium to long-term horizons.'
               ]} />
-              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -541,7 +564,6 @@ const SMEInsights: React.FC = () => {
                 "Consider branded residences: these can command pricing premiums and attract premium renters.",
                 "Analyse yield vs growth: urban cores (Downtown/Business Bay) can deliver stable rents, while developing waterfront districts can offer stronger appreciation."
               ]} />
-              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -578,7 +600,6 @@ const SMEInsights: React.FC = () => {
                 "Medium-term underwriting should model gradual supply normalization rather than immediate oversupply shock.",
                 "Policy-backed growth visibility (D33 + 2040) adds confidence to longer-duration holding theses."
               ]} />
-              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -614,7 +635,6 @@ const SMEInsights: React.FC = () => {
                 "Prioritize tenant-quality and renewal probability over headline rent alone to improve risk-adjusted income.",
                 "Match asset class to objective: income stability (office/logistics) vs liquidity/flexible exit (residential)."
               ]} />
-              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -653,7 +673,6 @@ const SMEInsights: React.FC = () => {
                 "Mortgage users should include valuation, arrangement fees, and mortgage registration costs.",
                 "Secondary purchases often underwrite at c.7–8% all-in transaction friction before mortgage extras."
               ]} />
-              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -689,7 +708,6 @@ const SMEInsights: React.FC = () => {
                 "Documentation quality (contracts, notices, inspection records) materially improves enforceability.",
                 "Treat legal compliance as an operational alpha lever, not an admin afterthought."
               ]} />
-              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -725,7 +743,6 @@ const SMEInsights: React.FC = () => {
                 "Boutique/design-led names may offer brand premium but require stricter exit/tenant-depth checks.",
                 "Blend core-delivery certainty with selective upside exposure rather than concentrating in one developer profile."
               ]} />
-              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -761,7 +778,6 @@ const SMEInsights: React.FC = () => {
                 "Rebalance on handover milestones, refinancing windows, and rent-reset cycles.",
                 "Align hold periods with transaction-cost drag: shorter flips require stricter spread discipline."
               ]} />
-              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -778,8 +794,106 @@ const SMEInsights: React.FC = () => {
           "Market maturity reducing exit friction."
         ]
         // NO Drawer content here
-      }
-    ],
+      },
+      {
+  id: 'offplan-vs-ready',
+  category: 'Investment Strategy',
+  title: 'Off-Plan vs Ready Properties (2026)',
+  isPremium: true,
+  image: 'https://images.unsplash.com/photo-1501183638710-841dd1904471?auto=format&fit=crop&q=80&w=2000',
+  points: [
+    "Off-plan: lower upfront capital, structured payment plans.",
+    "Ready: immediate rental income (6–9% yields).",
+    "Off-plan: higher long-term appreciation potential.",
+    "Ready: stronger negotiation leverage in 2026."
+  ],
+  drawerContent: {
+    id: 'offplan-vs-ready-detail',
+    category: 'Expert Insight // Investor Mechanics',
+    title: 'Off-Plan vs Ready Properties | Dubai Investment Guide 2026',
+    body: (
+      <div className="space-y-8">
+
+        <VerbatimText text="In the current 2026 market environment, the distinction between off-plan and ready property investments has become increasingly strategic. Each asset class serves a different objective within a well-structured portfolio." />
+
+        <SectionHeader title="Off-Plan Property (Developer Sales)" />
+        <GrowthBullets items={[
+          "Investment Objective: Capital appreciation with lower initial capital outlay.",
+          "Reduced upfront capital through structured payment plans.",
+          "Developer incentives: fee waivers, post-handover plans.",
+          "Early entry pricing offering capital uplift potential.",
+          "Competitive positioning in softer market conditions, where developers are actively stimulating demand."
+        ]} />
+
+        <SectionHeader title="Off-Plan Considerations" />
+        <GrowthBullets items={[
+          "No immediate income generation.",
+          "Exposure to construction timelines and delivery risk.",
+          "Limited price negotiation vs secondary market.",
+          "Sensitivity to future supply (2026–2028 pipeline)."
+        ]} />
+
+        <SectionHeader title="Current Off-Plan Insight (2026)" />
+        <VerbatimText text="Opportunities exist where developers are offering aggressive commercial terms. Selectivity is critical—prioritise prime locations, reputable developers, and differentiated projects to mitigate supply-driven risk." />
+
+        <SectionHeader title="Ready Property (Secondary Market)" />
+        <GrowthBullets items={[
+          "Investment Objective: Income generation with lower risk exposure",
+          "Immediate rental income (6–9% yields).",
+          "No construction or delivery risk.",
+          "High negotiation leverage in buyer-favourable conditions.",
+          "Potential to acquire from motivated sellers."
+        ]} />
+
+        <SectionHeader title="Ready Property Considerations" />
+        <GrowthBullets items={[
+          "Higher upfront capital requirement.",
+          "Lower short-term appreciation vs early-stage off-plan.",
+          "Potential refurbishment depending on asset age."
+        ]} />
+
+        <SectionHeader title="Current Ready Market Insight (2026)" />
+        <VerbatimText text="The secondary market presents compelling opportunities. With reduced transaction volumes and elevated negotiation levels, investors can secure income-producing assets below recent peak pricing." />
+
+        <SectionHeader title="Strategic Allocation Framework" />
+        <GrowthBullets items={[
+          {
+            text: "Short-Term (0–2 yrs): Preferred Strategy: Ready property for income stability.",
+            subItems: [
+              "Immediate income generation",
+              "Enhanced pricing opportunities due to softer market conditions",
+              "Reduced exposure to market and delivery uncertainty"
+            ]
+          },
+          {
+            text: "Medium/Long-Term (3–7 yrs): Preferred Strategy: Balanced Allocation.",
+            subItems: [
+              "Ready assets for stable cash flow",
+              "Off-plan exposure for capital growth potential",
+            ]
+          },
+          {
+            text: "High-risk strategy: selective off-plan in prime, supply-constrained zones.",
+            subItems: [
+              "Partner with established, top-tier developers",
+              "Avoid oversupplied mid-market segments where future pricing pressure is more likely"
+            ]
+          }
+        ]} />
+
+        <SectionHeader title="Key Takeaway" />
+        <VerbatimText text="The current market is not uniform and does not support a one-dimensional investment approach.
+
+        Ready property offers pricing inefficiencies and immediate income stability.
+
+        Off-plan property provides structured entry points and long-term capital appreciation potential, albeit with higher risk.
+
+        The most effective investors in 2026 are not choosing between off-plan and ready—they are allocating strategically across both to optimise risk-adjusted returns." />
+      </div>
+    )
+  }
+}
+],
     commercial: [
       {
         id: 'logistics-yields',
@@ -813,7 +927,6 @@ const SMEInsights: React.FC = () => {
                 "Assess covenant strength, lease rollover clustering, and escalation clauses before underwriting terminal values.",
                 "Treat logistics as an income anchor within a diversified portfolio mix."
               ]} />
-              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -849,7 +962,6 @@ const SMEInsights: React.FC = () => {
                 "Model re-leasing downtime and incentive packages explicitly in net yield assumptions.",
                 "Prefer assets with defensible relevance in evolving occupier requirements (quality, connectivity, flexibility)."
               ]} />
-              <SourceNote sources={["DXB Expert Insights"]} />
             </div>
           )
         }
@@ -879,7 +991,80 @@ const SMEInsights: React.FC = () => {
           "Fit-out periods and incentives."
         ]
         // NO Drawer content here
-      }
+      },
+      {
+  id: 'metro-expansion',
+  category: 'Infrastructure Growth',
+  title: 'Metro & Rail Expansion (2026–2030)',
+  isPremium: true,
+  image: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&q=80',
+  points: [
+    "Blue Line: Creek Harbour → International City → Academic City.",
+    "Gold Line: Business Bay → Dubailand → JGE.",
+    "10–25% price premium near metro stations.",
+    "Infrastructure-led appreciation historically up to 16%."
+  ],
+  drawerContent: {
+    id: 'metro-expansion-detail',
+    category: 'Expert Insight // Commercial & Industrial',
+    title: 'Emerging Growth Corridors (2026–2030)',
+    body: (
+      <div className="space-y-8">
+
+        <VerbatimText text="Dubai’s next phase of real estate growth is closely aligned with its expanding metro and rail infrastructure. Transit-oriented development remains a core pillar of urban planning, unlocking new residential corridors and supporting long-term population growth." />
+
+        <SectionHeader title="Blue Line (Completion Target: 2029)" />
+        <GrowthBullets items={[
+          "The Blue Line represents a significant east–north connectivity upgrade, linking several high-potential residential districts.",
+          "Key connections include: Dubai Creek Harbour, International City, Academic City.",
+          "Unlocks substantial value in currently under-connected areas.",
+          "Transforms areas into viable end-user and rental markets."
+        ]} />
+
+        <SectionHeader title="Gold Line (Announced 2026)" />
+        <GrowthBullets items={[
+          "Enhances central-to-inland connectivity, directly linking key residential and lifestyle destinations.",
+          "Connects Business Bay, Dubailand, Jumeirah Golf Estates.",
+          "Integrates economic hubs with large-scale suburban communities.",
+          "Supports future population absorption."
+        ]} />
+
+        <SectionHeader title="Wider Infrastructure Integration" />
+        <GrowthBullets items={[
+          "Enhanced connectivity to Al Maktoum International Airport.",
+          "Infrastructure support for Palm Jebel Ali.",
+          "Expansion into outer suburban zones for large-scale development."
+        ]} />
+
+        <SectionHeader title="Impact on Real Estate" />
+        <GrowthBullets items={[
+          "Metro proximity drives 10–25% price premiums.",
+          "Transit-oriented communities see up to 16% capital uplift post-delivery.",
+          "Improved accessibility strengthens rental demand.",
+          "Connectivity increases liquidity and long-term viability."
+        ]} />
+
+        
+        <SectionHeader title="Investor Considerations" />
+        <GrowthBullets items={[
+          "The expansion of Dubai’s metro and rail network is not merely a transportation upgrade—it is a forward-looking demand map for real estate."
+        ]} />
+
+        <SectionHeader title="Investor Framework" />
+        <GrowthBullets items={[
+          "Pre-infrastructure: lower entry pricing, higher upside, higher execution risk.",
+          "Construction phase: gradual appreciation as certainty increases.",
+          "Post-completion: stabilised demand, stronger rental performance."
+        ]} />
+
+        <SectionHeader title="Strategic Takeaway" />
+        <VerbatimText text="Dubai’s 2026–2030 infrastructure pipeline will define the next real estate cycle. The strongest opportunities lie along planned metro corridors, especially in supply-constrained, master-planned communities positioned for population decentralisation." />
+
+      </div>
+    )
+  }
+}
+
     ],
     comparative: [
       {
@@ -987,7 +1172,7 @@ const SMEInsights: React.FC = () => {
                 ]}
               />
 
-              <SourceNote sources={["DXB Expert Insights", "Global Value Gap Benchmark Set"]} />
+              <SourceNote sources={["Global Value Gap Benchmark Set"]} />
             </div>
           )
         }
@@ -1098,7 +1283,14 @@ const SMEInsights: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen md:h-screen bg-soft-grey md:overflow-hidden">
+    <>
+      <SEO
+        title="DXB Edge Expert Insights | Dubai Real Estate Intelligence"
+        description="Strategic Dubai real estate intelligence for investors across market performance, investor mechanics, commercial opportunities, and global comparative analysis."
+        path="/expert-insights"
+        type="website"
+      />
+    <div className="flex flex-col min-h-screen bg-soft-grey">
       <header className="px-10 lg:px-16 pt-14 pb-6 border-b border-slate-200 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="border-l border-brand-gold pl-8">
@@ -1139,7 +1331,7 @@ const SMEInsights: React.FC = () => {
       </div>
 
       {/* Grid Content */}
-      <div className="flex-1 overflow-visible md:overflow-y-auto p-5 sm:p-8 lg:p-12 custom-scrollbar custom-scrollbar-prominent bg-[#F8F9FA]">
+      <div className="flex-1 overflow-visible p-5 sm:p-8 lg:p-12 bg-[#F8F9FA]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {content[activeTab].map((card) => (
             <Card
@@ -1225,6 +1417,7 @@ const SMEInsights: React.FC = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Card from '../components/Card';
+import SEO from '@/components/SEO';
 
 interface DrawerContent {
   id: string;
@@ -279,6 +280,14 @@ const Dubai2040: React.FC = () => {
   };
 
   return (
+    <>
+        <SEO
+        title="Dubai 2040 Urban Master Plan – Strategic Outlook"
+        description="Analysis of the Dubai 2040 Urban Master Plan"
+        image="/media/dxb-edge-default.jpg"
+        type="article"
+        jsonLd
+      />
     <div className="max-w-[92rem] mx-auto py-16 px-6 md:px-8 lg:px-10 animate-fadeIn pb-32">
       {/* Header Section */}
       <header className="mb-16 border-l-4 border-brand-gold pl-10">
@@ -553,6 +562,7 @@ const Dubai2040: React.FC = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

@@ -4,6 +4,7 @@ import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-d
 import Sidebar from './components/Sidebar';
 import DataTicker from './components/DataTicker';
 import MarketOverview from './pages/MarketOverview';
+import GeoPolitics2026 from './pages/GeoPolitics2026';
 import Dubai2040 from './pages/Dubai2040';
 import D33Agenda from './pages/D33Agenda';
 import CombinedStrategy from './pages/CombinedStrategy';
@@ -128,6 +129,7 @@ const AppShell: React.FC = () => {
           <div className="flex-1">
             <Routes>
               <Route path="/" element={<MarketOverview openModal={openModal} />} />
+              <Route path="/analysis/geopolitics-2026" element={<GeoPolitics2026 />} />
               <Route path="/expert-insights" element={<SMEInsights />} />
               <Route path="/combined" element={<CombinedStrategy />} />
               <Route path="/dubai-2040" element={<Dubai2040 />} />

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import { useCurrency } from '../components/CurrencyContext';
+import SEO from '@/components/SEO';
 
 interface DrawerContent {
   id: string;
@@ -93,6 +94,15 @@ const D33Agenda: React.FC = () => {
   };
 
   return (
+  <>
+        <SEO
+        title="D33 Economic Agenda – Strategic Outlook"
+        description="Analysis of the Dubai D33 Economic Agenda"
+        image="/media/dxb-edge-default.jpg"
+        type="article"
+        jsonLd
+      />
+  
     <div className="max-w-7xl mx-auto py-16 px-10 lg:px-16 animate-fadeIn pb-32">
       <div className="w-full h-[300px] bg-brand-navy overflow-hidden mb-16 relative rounded-2xl border border-white/5">
         <img 
@@ -325,6 +335,7 @@ const D33Agenda: React.FC = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

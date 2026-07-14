@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useCurrency } from '../components/CurrencyContext';
+import SEO from '@/components/SEO';
 
 interface CalculatorsProps {
   openModal: (type: 'Expert' | 'Investment Strategist' | 'Strategic Advisory' | 'Developer' | 'Mortgage Advisor' | 'Services') => void;
@@ -249,6 +250,12 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
   }, [shortTermInputs, currency]);
 
   return (
+        <>
+    <SEO
+  title="DXB Edge – Financial Modelling Tools"
+  description="Financial modelling tools for Dubai real estate, providing strategic insights and guidance."
+  type="website"
+/>
     <div className="max-w-7xl mx-auto py-10 px-6 lg:px-12 animate-fadeIn pb-32">
       <div className="w-full h-[250px] bg-brand-navy overflow-hidden mb-16 relative rounded-2xl">
           <img 
@@ -420,6 +427,7 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

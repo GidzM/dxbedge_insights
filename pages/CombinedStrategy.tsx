@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import { useCurrency } from '../components/CurrencyContext';
+import SEO from '@/components/SEO';
 
 interface DrawerContent {
   id: string;
@@ -126,7 +127,16 @@ const CombinedStrategy: React.FC = () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto py-16 px-10 lg:px-16 animate-fadeIn pb-32">
+    <>
+      <SEO
+        title="Strategic Outlook"
+        description="Combined Analysis of Dubai 2040 Urban Plan & D33 Economic Agenda"
+        image="/media/dxb-edge-default.jpg"
+        type="article"
+        jsonLd
+      />
+
+      <div className="max-w-7xl mx-auto py-16 px-10 lg:px-16 animate-fadeIn pb-32">
       <div className="w-full h-[300px] bg-brand-navy overflow-hidden mb-16 relative">
           <img 
             src="https://images.unsplash.com/photo-1655309893829-407c54619f1f?auto=format&fit=crop&q=80&w=2000" 
@@ -735,6 +745,7 @@ const CombinedStrategy: React.FC = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

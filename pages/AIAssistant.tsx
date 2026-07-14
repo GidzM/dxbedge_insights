@@ -1,6 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { CANONICAL_SOURCE_LABELS, SOURCE_TOOLTIPS } from '../sourceLabels.js';
+import SEO from '@/components/SEO.js';
 
 declare global {
   interface Window {
@@ -361,6 +362,13 @@ const AIAssistant: React.FC = () => {
   };
 
   return (
+    <>
+    <SEO
+  title="DXB Edge – AI Investment Assistant"
+  description="AI-powered investment assistant for Dubai real estate, providing strategic insights and guidance."
+  type="website"
+/>
+
     <div className="h-screen flex flex-col bg-brand-navy overflow-hidden font-sans">
       {/* Premium Header */}
       <div className="bg-white border-b border-slate-200 px-4 sm:px-10 py-4 sm:py-5 flex items-center justify-between z-20 shadow-sm">
@@ -498,7 +506,7 @@ const AIAssistant: React.FC = () => {
                 />
                 <button
                   onClick={() => handleSend()}
-                  disabled={isLoading || (CAPTCHA_ENFORCED && TURNSTILE_SITE_KEY && !captchaToken)}
+                  disabled={isLoading || (CAPTCHA_ENFORCED && !!TURNSTILE_SITE_KEY && !captchaToken)}
                   style={{ WebkitTapHighlightColor: 'transparent' }}
                   className="w-full sm:w-auto box-border appearance-none touch-manipulation select-none bg-brand-gold text-brand-navy px-6 sm:px-8 py-3 text-[10px] font-bold uppercase tracking-[0.2em] rounded-xl sm:rounded-full hover:bg-white transition-all disabled:opacity-50 focus:outline-none active:scale-100"
                 >
@@ -555,6 +563,7 @@ const AIAssistant: React.FC = () => {
         </aside>
       </div>
     </div>
+    </>
   );
 };
 
