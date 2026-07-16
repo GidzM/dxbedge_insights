@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import Turnstile from "react-turnstile";
 
 interface LeadCaptureModalProps {
   isOpen: boolean;
@@ -18,7 +19,6 @@ const CURRENCIES = [
 ];
 
 const DIRECT_EXPERT_PHONE = '+971585610931';
-
 const SERVICE_LABELS: Record<LeadCaptureModalProps['type'], string> = {
   Expert: 'Investment Strategist / Strategic Advisory',
   'Investment Strategist': 'Investment Strategist',
@@ -50,6 +50,8 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({ isOpen, onClose, ty
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [serviceError, setServiceError] = useState('');
   const [copied, setCopied] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+
 
   const isServicesModal = type === 'Services';
   const headingTypeLabel = isServicesModal ? 'Services Team' : type;
@@ -74,7 +76,7 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({ isOpen, onClose, ty
   const whatsappUrl = `https://wa.me/${formatPhoneForWhatsApp(DIRECT_EXPERT_PHONE)}?text=${encodeURIComponent(buildContactMessage())}`;
   const emailSubject = encodeURIComponent(`DxB Edge Insight enquiry - ${serviceLabel}`);
   const emailBody = encodeURIComponent(buildContactMessage());
-  const emailUrl = `mailto:?subject=${emailSubject}&body=${emailBody}`;
+  const emailUrl = `mailto:contacts@dxbedge.com?subject=${emailSubject}&body=${emailBody}`;
 
   const handleCopyDetails = async () => {
     try {
@@ -88,20 +90,65 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({ isOpen, onClose, ty
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (isServicesModal && selectedServices.length === 0) {
-      setServiceError('Select at least one additional service.');
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  // 1. CAPTCHA check
+  if (!captchaToken) {
+    setServiceError("Please complete the CAPTCHA");
+    return;
+  }
+
+  // 2. Services validation
+  if (isServicesModal && selectedServices.length === 0) {
+    setServiceError("Select at least one additional service.");
+    return;
+  }
+
+  setServiceError("");
+
+  // 3. Build payload for backend
+  const payload = {
+    fullName,
+    emailAddress,
+    phoneNumber,
+    investmentBudget,
+    currency,
+    selectedServices,
+    serviceLabel,
+    captchaToken
+  };
+
+  try {
+    // 4. Send POST request to your backend
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    if (!data.ok) {
+      setServiceError(data.error || "Something went wrong");
       return;
     }
-    setServiceError('');
+
+    // 5. Success UI
     setSubmitted(true);
+
     setTimeout(() => {
       setSubmitted(false);
       setSelectedServices([]);
       onClose();
     }, 3000);
-  };
+
+  } catch (err) {
+    console.error(err);
+    setServiceError("Submission failed. Please try again.");
+  }
+};
+
 
   return (
     <div className="fixed inset-0 z-[100] flex items-start sm:items-center justify-center p-3 sm:p-4 bg-deep-forest/60 backdrop-blur-sm animate-fadeIn overflow-y-auto">
@@ -235,6 +282,16 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({ isOpen, onClose, ty
                   {serviceError && <p className="text-[10px] text-red-500 mt-2">{serviceError}</p>}
                 </div>
               )}
+
+
+
+              {isOpen && (
+                <Turnstile
+                  sitekey={import.meta.env.VITE_TURNSTILE_SITE_KEY || ''}
+                  onVerify={(token) => setCaptchaToken(token)}
+                />
+              )}
+
 
               <button type="submit" className="w-full bg-brand-navy text-white font-bold py-4 rounded-xl mt-4 hover:bg-brand-gold hover:text-brand-navy transition-all shadow-lg active:scale-95 sm:hover:scale-[1.02]">
                 Request Professional Connection
