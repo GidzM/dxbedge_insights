@@ -129,7 +129,6 @@ const AppShell: React.FC = () => {
           <div className="flex-1">
             <Routes>
               <Route path="/" element={<MarketOverview openModal={openModal} />} />
-              <Route path="/analysis/geopolitics-2026" element={<GeoPolitics2026 />} />
               <Route path="/expert-insights" element={<SMEInsights />} />
               <Route path="/combined" element={<CombinedStrategy />} />
               <Route path="/dubai-2040" element={<Dubai2040 />} />
