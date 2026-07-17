@@ -330,10 +330,22 @@ const parseGrowthData = (text: string) => {
 };
 
 const SMEInsights: React.FC = () => {
-  const { formatFromAED } = useCurrency();
+  const { formatFromAED, formatRangeFromAED } = useCurrency();
+  const aedPerUsd = 1 / 0.2723;
+  const formatFromUSD = (amountUsd: number, options?: Intl.NumberFormatOptions) =>
+    formatFromAED(amountUsd * aedPerUsd, options);
+  const formatRangeFromUSD = (minUsd: number, maxUsd: number, options?: Intl.NumberFormatOptions) =>
+    formatRangeFromAED(minUsd * aedPerUsd, maxUsd * aedPerUsd, options);
+
   const transactions917B = formatFromAED(917000000000, { maximumFractionDigits: 0 });
   const income10k = formatFromAED(10000, { maximumFractionDigits: 0 });
   const income15k = formatFromAED(15000, { maximumFractionDigits: 0 });
+  const dubaiEntryRange = formatRangeFromUSD(400, 650, { maximumFractionDigits: 0 });
+  const londonRange = `${formatRangeFromUSD(1700, 3000, { maximumFractionDigits: 0 })}+`;
+  const newYorkRange = `${formatRangeFromUSD(1500, 2500, { maximumFractionDigits: 0 })}+`;
+  const hongKongCore = `${formatFromUSD(2200, { maximumFractionDigits: 0 })}+`;
+  const ultraPrimeDubaiRange = formatRangeFromUSD(1200, 2500, { maximumFractionDigits: 0 });
+  const commercialDubaiRange = formatRangeFromUSD(350, 700, { maximumFractionDigits: 0 });
 
   const [activeTab, setActiveTab] = useState<'performance' | 'mechanics' | 'commercial' | 'comparative'>('performance');
   const [activeDrawer, setActiveDrawer] = useState<DrawerContent | null>(null);
@@ -405,9 +417,9 @@ const SMEInsights: React.FC = () => {
         isPremium: true,
         image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80',
         points: [
-          "Dubai Entry: $400–$650 per sq. ft.",
-          "Vs. London: $1,700–$3,000+ per sq. ft.",
-          "Vs. New York: $1,500–$2,500+ per sq. ft.",
+          `Dubai Entry: ${dubaiEntryRange} per sq. ft.`,
+          `Vs. London: ${londonRange} per sq. ft.`,
+          `Vs. New York: ${newYorkRange} per sq. ft.`,
           "Zero annual property or capital gains tax advantage."
         ],
         drawerContent: {
@@ -417,11 +429,11 @@ const SMEInsights: React.FC = () => {
           body: (
             <div className="space-y-8">
               <VerbatimText text="Dubai continues to trade at a meaningful discount to global gateway cities on a price-per-square-foot basis, while offering developed-market infrastructure and institutional demand depth." />
-              <SectionHeader title="Global Price Positioning (USD/sq. ft.)" />
+              <SectionHeader title="Global Price Positioning (per sq. ft.)" />
               <GrowthBullets items={[
-                "Dubai prime residential: $400–$650, versus London/New York often $1,500–$3,000+ and Hong Kong above $2,200 in core zones.",
-                "Ultra-prime Dubai (Palm/Jumeirah Bay): c.$1,200–$2,500, still below Monaco, Mayfair, and Billionaires’ Row benchmarks.",
-                "Commercial office pricing in Dubai (c.$350–$700) remains significantly below London/New York/Singapore ranges.",
+                `Dubai prime residential: ${dubaiEntryRange}, versus London/New York often ${newYorkRange}–${londonRange} and Hong Kong above ${hongKongCore} in core zones.`,
+                `Ultra-prime Dubai (Palm/Jumeirah Bay): c.${ultraPrimeDubaiRange}, still below Monaco, Mayfair, and Billionaires’ Row benchmarks.`,
+                `Commercial office pricing in Dubai (c.${commercialDubaiRange}) remains significantly below London/New York/Singapore ranges.`,
                 "Capital efficiency remains high: similar capital can secure materially more area in Dubai than in mature Western hubs."
               ]} />
               <SectionHeader title="Investor Implications" />
