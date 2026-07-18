@@ -247,12 +247,6 @@ const handleSubmit = async (e: React.FormEvent) => {
     // 5. Success UI
     setSubmitted(true);
 
-    setTimeout(() => {
-      setSubmitted(false);
-      setSelectedServices([]);
-      onClose();
-    }, 3000);
-
   } catch (err) {
     console.error(err);
     setServiceError("Submission failed. Please try again.");
@@ -389,7 +383,6 @@ const handleSubmit = async (e: React.FormEvent) => {
                     ))}
                   </select>
                   <p className="text-[10px] text-slate-grey/60 mt-2">Hold Ctrl (Windows) or Cmd (Mac) to select multiple services.</p>
-                  {serviceError && <p className="text-[10px] text-red-500 mt-2">{serviceError}</p>}
                 </div>
               )}
 
@@ -401,6 +394,8 @@ const handleSubmit = async (e: React.FormEvent) => {
                   onVerify={(token) => setCaptchaToken(token)}
                 />
               )}
+
+              {serviceError && <p className="text-[11px] text-red-600 mt-2">{serviceError}</p>}
 
 
               <button type="submit" className="w-full bg-brand-navy text-white font-bold py-4 rounded-xl mt-4 hover:bg-brand-gold hover:text-brand-navy transition-all shadow-lg active:scale-95 sm:hover:scale-[1.02]">
@@ -422,6 +417,41 @@ const handleSubmit = async (e: React.FormEvent) => {
                 ? 'A specialised services coordinator will reach out shortly to action your selected requirements.'
                 : `A specialised ${type.toLowerCase()} will reach out shortly to provide tailored guidance.`}
             </p>
+            <p className="text-xs sm:text-sm text-slate-grey/80 mt-4 mb-6">Choose your preferred contact method to continue now.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <a
+                href={`tel:${DIRECT_EXPERT_PHONE}`}
+                className="inline-flex items-center justify-center gap-2 border border-slate-300 bg-white text-deep-forest px-3 py-2.5 rounded-lg text-[11px] font-bold uppercase tracking-[0.14em] hover:border-brand-gold hover:text-brand-gold transition-colors"
+              >
+                Call
+              </a>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 border border-slate-300 bg-white text-deep-forest px-3 py-2.5 rounded-lg text-[11px] font-bold uppercase tracking-[0.14em] hover:border-brand-gold hover:text-brand-gold transition-colors"
+              >
+                WhatsApp
+              </a>
+              <a
+                href={emailUrl}
+                className="inline-flex items-center justify-center gap-2 border border-slate-300 bg-white text-deep-forest px-3 py-2.5 rounded-lg text-[11px] font-bold uppercase tracking-[0.14em] hover:border-brand-gold hover:text-brand-gold transition-colors"
+              >
+                Email
+              </a>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setSubmitted(false);
+                setSelectedServices([]);
+                setServiceError('');
+                onClose();
+              }}
+              className="mt-6 text-xs font-bold uppercase tracking-[0.16em] text-slate-grey hover:text-deep-forest transition-colors"
+            >
+              Close
+            </button>
           </div>
         )}
       </div>
