@@ -112,52 +112,61 @@ export default async function handler(req, res) {
       `Timestamp: ${new Date().toISOString()}`,
     ].join('\n');
 
-    if (!supabase) {
-      return res.status(500).json({ error: 'Supabase is not configured on the server.' });
+    let leadId = null;
+    let leadStored = false;
+
+    // 2. Persist lead in Supabase (best-effort, non-fatal)
+    if (supabase) {
+      const { data: lead, error: leadError } = await supabase
+        .from('leads')
+        .insert({
+          name: fullName,
+          email: emailAddress,
+          message,
+        })
+        .select('id')
+        .single();
+
+      if (leadError) {
+        console.error('Lead insert error:', leadError);
+      } else {
+        leadId = lead?.id || null;
+        leadStored = true;
+
+        // 3. Persist referral metadata (non-fatal)
+        const { error: referralError } = await supabase
+          .from('referrals')
+          .insert({
+            lead_id: leadId,
+            utm_source: utmSource || null,
+            utm_medium: utmMedium || null,
+            utm_campaign: utmCampaign || null,
+            utm_term: utmTerm || null,
+            utm_content: utmContent || null,
+            ref_code: referralCode || null,
+          });
+
+        if (referralError) {
+          console.error('Referral insert error:', referralError);
+        }
+      }
+    } else {
+      console.warn('Supabase lead storage skipped due to missing configuration.');
     }
 
-    // 2. Persist lead in Supabase
-    const { data: lead, error: leadError } = await supabase
-      .from('leads')
-      .insert({
-        name: fullName,
-        email: emailAddress,
-        message,
-      })
-      .select('id')
-      .single();
-
-    if (leadError) {
-      console.error('Lead insert error:', leadError);
-      return res.status(500).json({ error: 'Failed to store lead.' });
-    }
-
-    const leadId = lead?.id || null;
-
-    // 3. Persist referral metadata (non-fatal)
-    const { error: referralError } = await supabase
-      .from('referrals')
-      .insert({
-        lead_id: leadId,
-        utm_source: utmSource || null,
-        utm_medium: utmMedium || null,
-        utm_campaign: utmCampaign || null,
-        utm_term: utmTerm || null,
-        utm_content: utmContent || null,
-        ref_code: referralCode || null,
+    // 4. Send email to contacts@dxbedge.com (best-effort, non-fatal)
+    let emailSent = false;
+    try {
+      await resend.emails.send({
+        from: "DXB Edge <contacts@dxbedge.com>",
+        to: "contacts@dxbedge.com",
+        subject: `DxB Edge Insight enquiry - ${serviceLabel}`,
+        html: message.replace(/\n/g, "<br>")
       });
-
-    if (referralError) {
-      console.error('Referral insert error:', referralError);
+      emailSent = true;
+    } catch (emailError) {
+      console.error('Resend email failed:', emailError);
     }
-
-    // 4. Send email to contacts@dxbedge.com
-    await resend.emails.send({
-      from: "DXB Edge <contacts@dxbedge.com>",
-      to: "contacts@dxbedge.com",
-      subject: `DxB Edge Insight enquiry - ${serviceLabel}`,
-      html: message.replace(/\n/g, "<br>")
-    });
 
     // 5. Always attempt a secondary WhatsApp lead notification (independent of user contact preference).
     let whatsappSent = false;
@@ -212,19 +221,27 @@ export default async function handler(req, res) {
     }
 
     // 6. Persist WhatsApp delivery attempt (non-fatal)
-    const { error: whatsappLogError } = await supabase
-      .from('whatsapp_logs')
-      .insert({
-        lead_id: leadId,
-        status: whatsappStatus,
-        response: whatsappResponsePayload,
-      });
+    if (supabase && leadId) {
+      const { error: whatsappLogError } = await supabase
+        .from('whatsapp_logs')
+        .insert({
+          lead_id: leadId,
+          status: whatsappStatus,
+          response: whatsappResponsePayload,
+        });
 
-    if (whatsappLogError) {
-      console.error('WhatsApp log insert error:', whatsappLogError);
+      if (whatsappLogError) {
+        console.error('WhatsApp log insert error:', whatsappLogError);
+      }
     }
 
-    return res.status(200).json({ ok: true, whatsappSent, leadId });
+    return res.status(200).json({
+      ok: true,
+      leadId,
+      leadStored,
+      emailSent,
+      whatsappSent,
+    });
 
   } catch (err) {
     console.error("Contact API Error:", err);
