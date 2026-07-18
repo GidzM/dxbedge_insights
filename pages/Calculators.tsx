@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useCurrency } from '../components/CurrencyContext';
 import SEO from '@/components/SEO';
 
@@ -80,7 +80,7 @@ const ResultCard = ({ title, results, advisory, cta, onCtaClick }: any) => (
 );
 
 const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
-  const { formatFromAED, currency } = useCurrency();
+  const { formatFromAED, currency, convertAmount } = useCurrency();
 
   const formatCurrency = (val: number) => {
     if (isNaN(val) || !isFinite(val)) return formatFromAED(0);
@@ -199,6 +199,52 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
     platformFee: 15,
   });
 
+  const previousCurrencyRef = useRef(currency);
+
+  useEffect(() => {
+    const previousCurrency = previousCurrencyRef.current;
+    if (previousCurrency === currency) return;
+
+    const convertValue = (value: number) => convertAmount(value, previousCurrency, currency);
+
+    setRoiInputs((prev) => ({
+      ...prev,
+      price: convertValue(prev.price),
+      rent: convertValue(prev.rent),
+      service: convertValue(prev.service),
+      maintenance: convertValue(prev.maintenance),
+      mortgageAmount: convertValue(prev.mortgageAmount),
+    }));
+
+    setDldInputs((prev) => ({
+      ...prev,
+      price: convertValue(prev.price),
+      mortgage: convertValue(prev.mortgage),
+    }));
+
+    setMortgageInputs((prev) => ({
+      ...prev,
+      amount: convertValue(prev.amount),
+    }));
+
+    setOffPlanInputs((prev) => ({
+      ...prev,
+      price: convertValue(prev.price),
+    }));
+
+    setShortTermInputs((prev) => ({
+      ...prev,
+      price: convertValue(prev.price),
+      averageRate: convertValue(prev.averageRate),
+      cleaningPerTurnover: convertValue(prev.cleaningPerTurnover),
+      service: convertValue(prev.service),
+      utilities: convertValue(prev.utilities),
+      maintenance: convertValue(prev.maintenance),
+    }));
+
+    previousCurrencyRef.current = currency;
+  }, [currency, convertAmount]);
+
   const shortTermResults = useMemo(() => {
     const {
       price,
@@ -252,9 +298,22 @@ const Calculators: React.FC<CalculatorsProps> = ({ openModal }) => {
   return (
         <>
     <SEO
-  title="DXB Edge – Financial Modelling Tools"
-  description="Financial modelling tools for Dubai real estate, providing strategic insights and guidance."
+  title="Dubai Real Estate Calculators | ROI, Mortgage, DLD & Off-Plan Analysis"
+  description="Interactive Dubai property calculators for ROI, mortgage, DLD costs, off-plan cash flow, and acquisition planning before you commit capital."
+  path="/calculators"
   type="website"
+  schemaType="SoftwareApplication"
+  image="https://images.unsplash.com/photo-1615747476205-991a14cd2358?auto=format&fit=crop&q=80&w=2000"
+  imageAlt="Dubai real estate financial modelling tools"
+  keywords={[
+    'Dubai real estate calculator',
+    'ROI calculator Dubai',
+    'mortgage calculator Dubai',
+    'DLD calculator',
+    'off-plan calculator',
+    'Dubai investment tools',
+    'Dubai property analysis tools',
+  ]}
 />
     <div className="max-w-7xl mx-auto py-10 px-6 lg:px-12 animate-fadeIn pb-32">
       <div className="w-full h-[250px] bg-brand-navy overflow-hidden mb-16 relative rounded-2xl">

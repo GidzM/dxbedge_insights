@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Sidebar from './components/Sidebar';
 import DataTicker from './components/DataTicker';
 import MarketOverview from './pages/MarketOverview';
-import GeoPolitics2026 from './pages/GeoPolitics2026';
 import Dubai2040 from './pages/Dubai2040';
 import D33Agenda from './pages/D33Agenda';
 import CombinedStrategy from './pages/CombinedStrategy';
@@ -14,13 +13,28 @@ import AIAssistant from './pages/AIAssistant';
 import LeadCaptureModal from './components/LeadCaptureModal';
 import { CurrencyProvider, useCurrency } from './components/CurrencyContext';
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, search, hash } = useLocation();
   useEffect(() => {
     const scrollContainer = document.querySelector('main');
     if (scrollContainer) scrollContainer.scrollTo(0, 0);
     window.scrollTo(0, 0);
-  }, [pathname]);
+
+    // SPA navigation does not trigger a full page load, so send GA4 page_view manually.
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'page_view', {
+        page_path: `${pathname}${search}${hash}`,
+        page_location: window.location.href,
+        page_title: document.title,
+      });
+    }
+  }, [pathname, search, hash]);
   return null;
 };
 

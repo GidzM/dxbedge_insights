@@ -129,10 +129,22 @@ const CombinedStrategy: React.FC = () => {
   return (
     <>
       <SEO
-        title="Strategic Outlook"
-        description="Combined Analysis of Dubai 2040 Urban Plan & D33 Economic Agenda"
+        title="Strategic Outlook | Dubai 2040 & D33 Investment Thesis"
+        description="Combined analysis of the Dubai 2040 Urban Plan and D33 Economic Agenda, translated into practical investor strategy, sector allocation, and market implications."
+        path="/combined"
         image="/media/dxb-edge-default.jpg"
         type="article"
+        schemaType="Article"
+        imageAlt="Dubai strategic outlook and investment thesis"
+        keywords={[
+          'Dubai 2040',
+          'D33 economic agenda',
+          'Dubai investment strategy',
+          'Dubai strategic outlook',
+          'Dubai property outlook',
+          'urban plan Dubai',
+          'Dubai sector allocation',
+        ]}
         jsonLd
       />
 

@@ -12,6 +12,7 @@
   "dependencies": {
     "@google/genai": "^1.38.0",
     "@google/generative-ai": "^0.24.1",
+    "@supabase/supabase-js": "^2.110.7",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mapbox-gl": "^3.26.0",

@@ -15,15 +15,34 @@ interface MarketOverviewProps {
 
 const MarketOverview: React.FC<MarketOverviewProps> = ({ openModal }) => {
   const navigate = useNavigate();
-  const { formatFromAED } = useCurrency();
+  const { formatFromAED, formatRangeFromAED } = useCurrency();
+  const primeResidentialRange = formatRangeFromAED(3305, 4960, { maximumFractionDigits: 0 });
+  const commercialOfficeRange = formatRangeFromAED(3305, 5875, { maximumFractionDigits: 0 });
+  const ultraLuxuryRange = formatRangeFromAED(7340, 16515, { maximumFractionDigits: 0 });
+  const economyTarget = formatFromAED(32000000000000, { maximumFractionDigits: 0 });
+  const fdiTarget = formatFromAED(600000000000, { maximumFractionDigits: 0 });
+  const tradeTarget = formatFromAED(256000000000, { maximumFractionDigits: 0 });
 
 return (
   <>
     <SEO
-      title="DXB Edge – Investor Intelligence for Dubai Real Estate"
-      description="Unbiased market intelligence and data-driven guidance enabling investors to confidently capitalise on high-growth real estate opportunities in Dubai."
+      title="DXB Edge | Dubai Real Estate Investor Intelligence & Market Overview"
+      description="Independent Dubai real estate market intelligence for investors: pricing, yields, supply trends, macro signals, and high-conviction opportunities across the cycle."
       path="/"
       type="website"
+      schemaType="WebSite"
+      image="/media/dxb-edge-default.jpg"
+      imageAlt="DXB Edge Dubai real estate investor intelligence"
+      keywords={[
+        'Dubai real estate',
+        'Dubai property investment',
+        'investor intelligence',
+        'Dubai market overview',
+        'Dubai property analysis',
+        'off-plan Dubai',
+        'Dubai rental yields',
+        'luxury property Dubai',
+      ]}
     />
     <div>
       <section className="h-screen w-full">
@@ -80,9 +99,9 @@ return (
           title="Global Value Data"
           image="https://images.unsplash.com/photo-1651467606797-e1c660cf3fda?auto=format&fit=crop&q=80&w=800"
           points={[
-            "Prime Residential: - $400–$650/sqft (AED 1,468–AED 2,386/sqft) (50–75% pricing advantage vs. London, NY, HK).",
-            "Commercial Office: - $350–$700/sqft (AED 1,285–AED 2,569/sqft) (materially cheaper than Singapore or Paris).",
-            "Ultra-Luxury: - $1,200–$2,500/sqft (AED 4,404–AED 9,175/sqft) (far below Monaco or Hong Kong Peak).",
+            `Prime Residential: ${primeResidentialRange}/sqft, typically 35-60% below comparable prime London, Manhattan, and Hong Kong assets.`,
+            `Prime Commercial Office: ${commercialOfficeRange}/sqft; trophy DIFC and Downtown stock now exceeds ${formatFromAED(5000, { maximumFractionDigits: 0 })}/sqft amid supply constraints.`,
+            `Ultra-Luxury Residential: ${ultraLuxuryRange}/sqft across top beachfront and branded stock, still well below Monaco, Hong Kong Peak, and prime Manhattan pricing.`,
           ]}
           isPremium
         />
@@ -103,9 +122,9 @@ return (
           title="Institutional Growth Targets"
           image="https://images.unsplash.com/photo-1462007895615-c8c073bebcd8?auto=format&fit=crop&q=80&w=800"
           points={[
-            "Economic Scale: D33 aims to double the economy to AED 32 trillion by 2033.",
-            "FDI Attraction: Target of doubling annual FDI to AED 600 billion.",
-            "Foreign Trade: 80% expansion target to AED 256 billion.",
+            `Economic Scale: D33 aims to double the economy to ${economyTarget} by 2033.`,
+            `FDI Attraction: Target of doubling annual FDI to ${fdiTarget}.`,
+            `Foreign Trade: 80% expansion target to ${tradeTarget}.`,
             "Urban Structure: Development strictly focused on six major urban centres within controlled boundaries.",
           ]}
         />

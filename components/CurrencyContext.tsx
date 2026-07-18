@@ -1,8 +1,6 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useContext, useMemo, useState } from 'react';
 
 export type CurrencyCode = 'AED' | 'USD' | 'EUR' | 'GBP' | 'SAR' | 'INR' | 'CNY';
-
-const STORAGE_KEY = 'dxb-edge-display-currency';
 
 const AED_TO_CURRENCY_RATE: Record<CurrencyCode, number> = {
   AED: 1,
@@ -30,6 +28,7 @@ interface CurrencyContextValue {
   currencyOptions: { code: CurrencyCode; name: string }[];
   convertFromAED: (amountAED: number) => number;
   convertToAED: (amountInSelectedCurrency: number) => number;
+  convertAmount: (amount: number, from: CurrencyCode, to: CurrencyCode) => number;
   formatFromAED: (amountAED: number, options?: Intl.NumberFormatOptions) => string;
   formatRangeFromAED: (minAED: number, maxAED: number, options?: Intl.NumberFormatOptions) => string;
 }
@@ -39,16 +38,8 @@ const CurrencyContext = createContext<CurrencyContextValue | null>(null);
 export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currency, setCurrencyState] = useState<CurrencyCode>('AED');
 
-  useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY) as CurrencyCode | null;
-    if (saved && AED_TO_CURRENCY_RATE[saved]) {
-      setCurrencyState(saved);
-    }
-  }, []);
-
   const setCurrency = (nextCurrency: CurrencyCode) => {
     setCurrencyState(nextCurrency);
-    localStorage.setItem(STORAGE_KEY, nextCurrency);
   };
 
   const convertFromAED = (amountAED: number) => {
@@ -59,6 +50,15 @@ export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const convertToAED = (amountInSelectedCurrency: number) => {
     if (!Number.isFinite(amountInSelectedCurrency)) return 0;
     return amountInSelectedCurrency / AED_TO_CURRENCY_RATE[currency];
+  };
+
+  const convertAmount = (amount: number, from: CurrencyCode, to: CurrencyCode) => {
+    if (!Number.isFinite(amount)) return 0;
+    const fromRate = AED_TO_CURRENCY_RATE[from];
+    const toRate = AED_TO_CURRENCY_RATE[to];
+    if (!fromRate || !toRate) return amount;
+    const amountAED = amount / fromRate;
+    return amountAED * toRate;
   };
 
   const formatFromAED = (amountAED: number, options?: Intl.NumberFormatOptions) => {
@@ -96,6 +96,7 @@ export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         currencyOptions,
         convertFromAED,
         convertToAED,
+        convertAmount,
         formatFromAED,
         formatRangeFromAED,
       }}

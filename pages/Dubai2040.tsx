@@ -38,13 +38,32 @@ const GoldBullets = ({ items }: { items: string[] }) => (
 );
 
 const parseBoldData = (text: string) => {
-  const parts = text.split(/(\d+%|\d+M|AED\s[\d,.]+[BMKT]?|134%|400%|60%|80%|20\sminutes|5.8\smillion)/g);
-  return parts.map((part, i) => {
-    if (/(\d+%|\d+M|AED\s[\d,.]+[BMKT]?|134%|400%|60%|80%|20\sminutes|5.8\smillion)/.test(part)) {
-      return <strong key={i} className="text-brand-navy font-black">{part}</strong>;
+  const highlightRegex = /(?:AED|USD|EUR|GBP|SAR|INR|CNY)\s?[\d,.]+(?:\s?(?:[BMKT]|billion|trillion|million))?|[$€£]\s?[\d,.]+(?:\s?(?:[BMKT]|billion|trillion|million))?(?:\s?[+])?|[\d,.]+(?:\s?[-–]\s?[\d,.]+)?%|\d+\s?M|\d+(?:\.\d+)?\s?million|\d+\s?minutes/g;
+  const nodes: React.ReactNode[] = [];
+  let lastIndex = 0;
+
+  for (const match of text.matchAll(highlightRegex)) {
+    const start = match.index ?? 0;
+    const value = match[0];
+
+    if (start > lastIndex) {
+      nodes.push(text.slice(lastIndex, start));
     }
-    return part;
-  });
+
+    nodes.push(
+      <strong key={`${start}-${value}`} className="text-brand-navy font-black">
+        {value}
+      </strong>
+    );
+
+    lastIndex = start + value.length;
+  }
+
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex));
+  }
+
+  return nodes.length > 0 ? nodes : text;
 };
 
 const LocationWidget = ({ highlightNodes }: { highlightNodes: boolean }) => {
@@ -282,10 +301,22 @@ const Dubai2040: React.FC = () => {
   return (
     <>
         <SEO
-        title="Dubai 2040 Urban Master Plan – Strategic Outlook"
-        description="Analysis of the Dubai 2040 Urban Master Plan"
+        title="Dubai 2040 Urban Master Plan | Growth Corridors & Real Estate Impact"
+        description="Investor-focused analysis of the Dubai 2040 Urban Master Plan, mapping growth centres, infrastructure corridors, and the property opportunities they create."
+        path="/dubai-2040"
         image="/media/dxb-edge-default.jpg"
         type="article"
+        schemaType="Article"
+        imageAlt="Dubai 2040 urban master plan strategic analysis"
+        keywords={[
+          'Dubai 2040',
+          'Dubai urban master plan',
+          'Dubai growth corridors',
+          'Dubai infrastructure',
+          'Dubai real estate strategy',
+          'Dubai spatial planning',
+          'Dubai development outlook',
+        ]}
         jsonLd
       />
     <div className="max-w-[92rem] mx-auto py-16 px-6 md:px-8 lg:px-10 animate-fadeIn pb-32">

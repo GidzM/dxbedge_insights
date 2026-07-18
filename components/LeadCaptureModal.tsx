@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Turnstile from "react-turnstile";
 
 interface LeadCaptureModalProps {
@@ -40,6 +40,68 @@ const ADDITIONAL_SERVICES = [
   'Furniture and interior design team',
 ];
 
+const FIRST_TOUCH_STORAGE_KEY = 'dxb_edge_first_touch_attribution_v1';
+
+type AttributionData = {
+  utmSource: string;
+  utmMedium: string;
+  utmCampaign: string;
+  utmTerm: string;
+  utmContent: string;
+  referralCode: string;
+  referrer: string;
+  landingPath: string;
+};
+
+const getCurrentAttribution = (): AttributionData => {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    utmSource: params.get('utm_source') || '',
+    utmMedium: params.get('utm_medium') || '',
+    utmCampaign: params.get('utm_campaign') || '',
+    utmTerm: params.get('utm_term') || '',
+    utmContent: params.get('utm_content') || '',
+    referralCode: params.get('ref') || params.get('referral') || params.get('referral_code') || '',
+    referrer: document.referrer || '',
+    landingPath: `${window.location.pathname}${window.location.search}${window.location.hash}`,
+  };
+};
+
+const readFirstTouchAttribution = (): AttributionData | null => {
+  try {
+    const raw = window.localStorage.getItem(FIRST_TOUCH_STORAGE_KEY);
+    if (!raw) {
+      return null;
+    }
+
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object') {
+      return null;
+    }
+
+    return {
+      utmSource: typeof parsed.utmSource === 'string' ? parsed.utmSource : '',
+      utmMedium: typeof parsed.utmMedium === 'string' ? parsed.utmMedium : '',
+      utmCampaign: typeof parsed.utmCampaign === 'string' ? parsed.utmCampaign : '',
+      utmTerm: typeof parsed.utmTerm === 'string' ? parsed.utmTerm : '',
+      utmContent: typeof parsed.utmContent === 'string' ? parsed.utmContent : '',
+      referralCode: typeof parsed.referralCode === 'string' ? parsed.referralCode : '',
+      referrer: typeof parsed.referrer === 'string' ? parsed.referrer : '',
+      landingPath: typeof parsed.landingPath === 'string' ? parsed.landingPath : '',
+    };
+  } catch {
+    return null;
+  }
+};
+
+const storeFirstTouchAttribution = (data: AttributionData) => {
+  try {
+    window.localStorage.setItem(FIRST_TOUCH_STORAGE_KEY, JSON.stringify(data));
+  } catch {
+    // Ignore storage errors to avoid blocking form usage.
+  }
+};
+
 const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({ isOpen, onClose, type }) => {
   const [submitted, setSubmitted] = useState(false);
   const [currency, setCurrency] = useState('AED');
@@ -58,6 +120,48 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({ isOpen, onClose, ty
   const serviceLabel = SERVICE_LABELS[type];
 
   const formatPhoneForWhatsApp = (phone: string) => phone.replace(/\D/g, '');
+
+  useEffect(() => {
+    const existing = readFirstTouchAttribution();
+    if (existing) {
+      return;
+    }
+
+    const current = getCurrentAttribution();
+    const hasAttributionSignal = Boolean(
+      current.utmSource ||
+      current.utmMedium ||
+      current.utmCampaign ||
+      current.utmTerm ||
+      current.utmContent ||
+      current.referralCode ||
+      current.referrer
+    );
+
+    if (hasAttributionSignal) {
+      storeFirstTouchAttribution(current);
+    }
+  }, []);
+
+  const getAttributionData = () => {
+    const current = getCurrentAttribution();
+    const firstTouch = readFirstTouchAttribution();
+
+    if (!firstTouch) {
+      return current;
+    }
+
+    return {
+      utmSource: firstTouch.utmSource || current.utmSource,
+      utmMedium: firstTouch.utmMedium || current.utmMedium,
+      utmCampaign: firstTouch.utmCampaign || current.utmCampaign,
+      utmTerm: firstTouch.utmTerm || current.utmTerm,
+      utmContent: firstTouch.utmContent || current.utmContent,
+      referralCode: firstTouch.referralCode || current.referralCode,
+      referrer: firstTouch.referrer || current.referrer,
+      landingPath: firstTouch.landingPath || current.landingPath,
+    };
+  };
 
   const buildContactMessage = () => {
     const lines = [
@@ -116,7 +220,8 @@ const handleSubmit = async (e: React.FormEvent) => {
     currency,
     selectedServices,
     serviceLabel,
-    captchaToken
+    captchaToken,
+    ...getAttributionData(),
   };
 
   try {
@@ -132,6 +237,11 @@ const handleSubmit = async (e: React.FormEvent) => {
     if (!data.ok) {
       setServiceError(data.error || "Something went wrong");
       return;
+    }
+
+    if (data.whatsappSent === false) {
+      // Non-blocking operational signal for lead-alert delivery issues.
+      console.warn('Lead created, but WhatsApp notification was not delivered.');
     }
 
     // 5. Success UI

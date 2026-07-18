@@ -37,6 +37,8 @@ const GEMINI_CACHE_MAX_MESSAGE_CHARS = Number(process.env.GEMINI_CACHE_MAX_MESSA
 const GEMINI_USER_RATE_LIMIT_WINDOW_MS = Number(process.env.GEMINI_USER_RATE_LIMIT_WINDOW_MS || 300000);
 const GEMINI_USER_RATE_LIMIT_MAX_REQUESTS = Number(process.env.GEMINI_USER_RATE_LIMIT_MAX_REQUESTS || 20);
 const GEMINI_USER_DAILY_LIMIT = Number(process.env.GEMINI_USER_DAILY_LIMIT || 200);
+const GEMINI_TOPIC_CLASSIFIER_ENABLED = process.env.GEMINI_TOPIC_CLASSIFIER_ENABLED !== 'false';
+const GEMINI_TOPIC_CLASSIFIER_TIMEOUT_MS = Number(process.env.GEMINI_TOPIC_CLASSIFIER_TIMEOUT_MS || 8000);
 const CAPTCHA_ENFORCED = process.env.CAPTCHA_ENFORCED === 'true';
 const CAPTCHA_PROVIDER = (process.env.CAPTCHA_PROVIDER || 'none').toLowerCase();
 const CAPTCHA_SECRET_KEY = process.env.CAPTCHA_SECRET_KEY || '';
@@ -60,6 +62,62 @@ const CORE_KNOWLEDGE_DOCS = [
     fileName: 'Investor_project_5_-_commerical_information.txt',
   },
 ];
+
+const DOMAIN_SCOPE = 'DXB Edge only covers verified Dubai and UAE real estate investor intelligence, market performance, pricing, yields, strategy, calculators, infrastructure, and related sovereign-growth context.';
+const ALLOWED_TOPICS = [
+  'uae',
+  'dubai',
+  'real estate',
+  'property',
+  'investment',
+  'investor',
+  'market',
+  'yield',
+  'roi',
+  'mortgage',
+  'off plan',
+  'off-plan',
+  'tourism',
+  'migration',
+  'emigration',
+  'macro',
+  'macroeconomic',
+  'gdp',
+  'fdi',
+  'd33',
+  '2040',
+  'calculator',
+  'pricing',
+  'rental',
+  'supply',
+  'commercial',
+  'residential',
+  'office',
+  'logistics',
+  'luxury',
+  'dld',
+  'rera',
+  'difc',
+  'jvc',
+  'jlt',
+  'business bay',
+  'downtown',
+  'marina',
+  'jbr',
+  'palm jumeirah',
+  'creek harbour',
+  'creek harbor',
+];
+const REFUSAL_MESSAGE = 'I can only answer questions related to UAE investment, real estate, migration, tourism, or DXB Edge insights.';
+const TOPIC_CATEGORIES = new Set([
+  'uae_investment',
+  'uae_real_estate',
+  'uae_migration',
+  'uae_tourism',
+  'uae_geopolitics',
+  'dxb_edge_content',
+  'unrelated',
+]);
 
 const KNOWLEDGE_DIR = path.resolve(process.cwd(), 'knowledge');
 const SUPPORTED_KNOWLEDGE_EXTENSIONS = new Set(['.txt', '.md']);
@@ -216,23 +274,58 @@ function getRelevantContext(question, maxChunks = 6) {
     }
   }
 
-  if (scored.length === 0) {
-    const fallback = KNOWLEDGE_INDEX
-      .slice(0, 2)
-      .flatMap((doc) => doc.chunks.slice(0, 2))
-      .map((chunk) => ({
-        source: chunk.source,
-        text: chunk.text,
-      }));
-
-    return fallback;
-  }
-
   const topByScore = scored
     .sort((a, b) => b.score - a.score)
     .slice(0, maxChunks);
 
   return topByScore;
+}
+
+function isAllowedQuery(question) {
+  const normalizedQuestion = normalizeText(question);
+  return ALLOWED_TOPICS.some((topic) => normalizedQuestion.includes(topic));
+}
+
+function sanitizeGeminiResponse(responseText) {
+  const normalized = responseText.toLowerCase();
+  const hasSourceCitation = normalized.includes('source:');
+  const speculativeMarkers = ['i think', 'probably', 'maybe', 'likely', 'it seems', 'appears'];
+
+  if (speculativeMarkers.some((marker) => normalized.includes(marker))) {
+    return REFUSAL_MESSAGE;
+  }
+
+  if ((normalized.includes('million') || normalized.includes('billion') || normalized.includes('trillion')) && !hasSourceCitation) {
+    return 'I cannot provide that figure without a reliable source.';
+  }
+
+  return responseText;
+}
+
+async function classifyTopic(userQuery, ai) {
+  const classifierPrompt = `Classify the following question into one of these categories:\n\n- uae_investment\n- uae_real_estate\n- uae_migration\n- uae_tourism\n- uae_geopolitics\n- dxb_edge_content\n- unrelated\n\nReturn ONLY the category name.\n\nQuestion: "${userQuery}"`;
+
+  try {
+    const result = await withTimeout(
+      () => ai.models.generateContent({
+        model: 'gemini-3-flash-preview',
+        contents: classifierPrompt,
+        config: {
+          systemInstruction: 'You are a strict classifier. Output only one category.',
+        },
+      }),
+      GEMINI_TOPIC_CLASSIFIER_TIMEOUT_MS
+    );
+
+    const rawCategory = (result.text || '').trim().toLowerCase().replace(/[^a-z_]/g, '');
+    if (TOPIC_CATEGORIES.has(rawCategory)) {
+      return rawCategory;
+    }
+    return 'unrelated';
+  } catch (error) {
+    console.warn('Topic classifier failed, defaulting to unrelated.', error);
+    return 'unrelated';
+  }
 }
 
 function getKnowledgeSummary() {
@@ -571,6 +664,29 @@ app.post('/api/gemini', async (req, res) => {
       return;
     }
 
+    const ai = new GoogleGenAI({ apiKey });
+    if (!isAllowedQuery(message)) {
+      res.json({ text: REFUSAL_MESSAGE, cached: false });
+      return;
+    }
+
+    if (GEMINI_TOPIC_CLASSIFIER_ENABLED) {
+      const category = await classifyTopic(message, ai);
+      if (category === 'unrelated') {
+        res.json({ text: REFUSAL_MESSAGE, cached: false });
+        return;
+      }
+    }
+
+    const contextChunks = getRelevantContext(message, GEMINI_CONTEXT_MAX_CHUNKS);
+    if (contextChunks.length === 0) {
+      res.json({
+        text: REFUSAL_MESSAGE,
+        cached: false,
+      });
+      return;
+    }
+
     const cacheEligible = shouldUseGeminiCache(message);
     const cacheKey = cacheEligible ? buildGeminiCacheKey(message) : null;
     if (cacheEligible && cacheKey) {
@@ -581,8 +697,6 @@ app.post('/api/gemini', async (req, res) => {
       }
     }
 
-    const ai = new GoogleGenAI({ apiKey });
-    const contextChunks = getRelevantContext(message, GEMINI_CONTEXT_MAX_CHUNKS);
     const contextBlock = contextChunks
       .map((chunk, index) => `[Source: ${chunk.source}]\n${chunk.text}`)
       .join('\n\n');
@@ -594,26 +708,111 @@ app.post('/api/gemini', async (req, res) => {
 - If a detail is not present in context, say it is not available in the verified knowledge base.
 - Add [Source: ...] citations using only source names from the retrieved context.`,
         config: {
-          systemInstruction: `You are the DxB Edge Insight AI.
-MISSION: Transform SME knowledge and strategy into high-density educational guidance.
-      PRIMARY KNOWLEDGE: ${CANONICAL_SOURCE_LABELS.join(', ')}.
-TONE: Professional, unbiased, guide-not-salesperson.
+              systemInstruction: `SYSTEM ROLE — DXB EDGE INSIGHTS AI ADVISOR
+    You are the official AI Advisor for DXB Edge Insights, a neutral, analytical platform focused on UAE strategy, investment, real estate, migration/emigration, tourism, macroeconomics, and global geopolitical events only when directly relevant to UAE markets or DXB Edge content.
 
-FORMATTING RULES:
-1. STRICT: DO NOT use italics (* or _ symbols for emphasis).
-2. STRICT: DO NOT use markdown headers like ### or ##. Use UPPERCASE BOLD text for headers.
-3. STRICT: DO NOT use markdown symbols (*, **, ###) in visible text. Use simple bolding for emphasis on figures.
-4. BULLETS: Use only the simple dot symbol • for lists.
-5. DATA FIRST: Bold statistics and major figures (e.g., AED 32T).
-6. CITATION: Place [Source: Source Name] at the end of relevant paragraphs using source names present in the retrieved context.
-7. TABLES: Use standard markdown table syntax for comparisons, which the UI will render into a premium table.
-8. STYLE: Responses must be clean, executive, and high-density.`,
+    Your mission: Provide factual, verifiable, domain-specific insights that support DXB Edge's strategic, economic, and real-estate-focused content.
+
+    1. Allowed Topics (You May Answer)
+    You may answer questions only if they fall within one or more of these domains:
+    - UAE investment strategy
+    - UAE real estate markets
+    - Dubai property trends
+    - Migration/emigration to the UAE
+    - Tourism to Dubai and the wider UAE
+    - UAE macroeconomic trends
+    - Global geopolitical events only when relevant to UAE markets, investment flows, or regional stability
+    - Comparisons with other high-value global real estate markets (London, Singapore, Hong Kong, New York, etc.)
+    - DXB Edge Insights content, pages, tools, or analysis
+
+    If a question is not clearly within these domains, you must politely refuse.
+
+    2. Refusal Policy (Mandatory)
+    If a user asks anything outside the allowed domains, you must respond with a short, polite refusal:
+    "I can only answer questions related to UAE investment, real estate, migration, tourism, or DXB Edge insights."
+
+    You must refuse:
+    - science trivia
+    - conspiracy theories
+    - political opinions
+    - personal advice
+    - entertainment
+    - mathematics
+    - general knowledge
+    - unrelated global events
+    - anything speculative or sensational
+
+    You must not attempt to answer or redirect with unrelated content.
+
+    3. Data Quality Rules (Anti-Hallucination)
+    You must:
+    - Use only verifiable, reliable, non-hallucinated information
+    - Prefer reputable sources: UAE Government, Dubai Statistics Center, DLD, DED, IMF, World Bank, UN, OECD, reputable financial media
+    - You may use non-DXB Edge data only when it is directly relevant to the allowed topics and comes from verifiable, reputable sources
+    - Avoid invented statistics, fabricated numbers, or unverified claims
+    - If unsure, say: "I don't have reliable data for that."
+    - If the retrieved knowledge context is empty or insufficient, refuse with the short policy response instead of using general world knowledge.
+
+    You must never:
+    - invent data
+    - fabricate sources
+    - guess numbers
+    - present speculation as fact
+
+    4. Geopolitics Safety Rules
+    If discussing geopolitics:
+    - focus strictly on market impact, investment implications, or economic effects
+    - avoid political opinions
+    - avoid criticising any government or leader
+    - avoid advocacy or judgement
+
+    You must maintain neutrality at all times.
+
+    5. Tone Requirements
+    Your tone must always be:
+    - neutral
+    - analytical
+    - professional
+    - concise
+    - non-political
+    - aligned with DXB Edge's advisory style
+
+    Avoid:
+    - sensationalism
+    - emotional language
+    - casual humour
+    - dramatic phrasing
+
+    6. Behaviour Rules
+    - Never claim to be a human.
+    - Never claim to represent a government or authority.
+    - Never provide personal, medical, legal, or political advice.
+    - Never deviate from DXB Edge's domain.
+    - Never answer unrelated questions even if the user insists.
+    - Never answer if the question does not match the verified DXB Edge domain scope, even if you know the answer from outside knowledge.
+
+    7. Output Format
+    When answering:
+    - Provide structured, clear, concise analysis
+    - Use bullet points where helpful
+    - Cite reputable sources when referencing data
+    - Avoid long essays unless the user explicitly requests depth
+
+    8. Core Identity
+    You are the DXB Edge Insights AI Advisor, not a general-purpose assistant.
+
+    Your purpose is to support users with UAE-focused strategic, economic, and real-estate insights, and nothing else.
+
+    DOMAIN LIMITS: If a user asks about a topic outside the allowed domains, refuse. If a topic is inside the allowed domains but the retrieved context does not contain enough detail, only answer if the information is verifiable and directly relevant; otherwise say you don't have reliable data for that.
+
+    PRIMARY KNOWLEDGE: ${CANONICAL_SOURCE_LABELS.join(', ')}.
+    SOURCE CONTROL: Use retrieved context first, then only verifiable, relevant external information that fits the allowed topics. Do not add external facts, assumptions, or generic filler.`,
         },
       }),
       GEMINI_TIMEOUT_MS
     );
 
-    const outputText = response.text || 'Communication timeout. Please re-verify strategic intent.';
+    const outputText = sanitizeGeminiResponse(response.text || 'Communication timeout. Please re-verify strategic intent.');
     if (cacheEligible && cacheKey) {
       setCachedGeminiResponse(cacheKey, outputText);
     }

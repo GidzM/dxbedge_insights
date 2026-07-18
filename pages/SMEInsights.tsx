@@ -130,7 +130,7 @@ const ComparativeBars = ({
   );
 };
 
-const CityComparatorExperience: React.FC = () => {
+const CityComparatorExperience: React.FC<{ formatBudgetLabel: (amountUsd: number) => string }> = ({ formatBudgetLabel }) => {
   const [monthlyBudget, setMonthlyBudget] = useState(3200);
   const [investmentObjective, setInvestmentObjective] = useState<'balanced' | 'income' | 'growth' | 'defensive'>('balanced');
   const [riskTolerance, setRiskTolerance] = useState<'low' | 'medium' | 'high'>('medium');
@@ -246,7 +246,7 @@ const CityComparatorExperience: React.FC = () => {
 
           <label className="space-y-2 block">
             <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-grey/80">
-              Monthly Living Budget ({`$${monthlyBudget.toLocaleString()}`})
+              Monthly Living Budget ({formatBudgetLabel(monthlyBudget)})
             </span>
             <input
               type="range"
@@ -308,46 +308,76 @@ const CityComparatorExperience: React.FC = () => {
 };
 
 const parseGrowthData = (text: string) => {
-  const targets = [
-    "AED 917 billion", "20%", "6-8%", "8-12%", "15-25%", "$400–$650", 
-    "7.0–7.3%", "8-10%", "80%", "75-80%", "90-day", "5-20%", "182,500"
-  ];
-  
-  let result: React.ReactNode = text;
-  targets.forEach(target => {
-    if (typeof result === 'string' && result.includes(target)) {
-      const parts = result.split(target);
-      result = (
-        <>
-          {parts[0]}
-          <span className="text-brand-gold font-bold">{target}</span>
-          {parts[1]}
-        </>
-      );
+  const highlightRegex = /(?:AED|USD|EUR|GBP|SAR|INR|CNY)\s?[\d,.]+(?:\s?(?:[BMKT]|billion|trillion|million))?|[$€£]\s?[\d,.]+(?:\s?(?:[BMKT]|billion|trillion|million))?(?:\s?[+])?|[\d,.]+(?:\s?[-–]\s?[\d,.]+)?%|\d{1,3}(?:,\d{3})+/g;
+  const nodes: React.ReactNode[] = [];
+  let lastIndex = 0;
+
+  for (const match of text.matchAll(highlightRegex)) {
+    const start = match.index ?? 0;
+    const value = match[0];
+
+    if (start > lastIndex) {
+      nodes.push(text.slice(lastIndex, start));
     }
-  });
-  return result;
+
+    nodes.push(
+      <span key={`${start}-${value}`} className="text-brand-gold font-bold">
+        {value}
+      </span>
+    );
+
+    lastIndex = start + value.length;
+  }
+
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex));
+  }
+
+  return nodes.length > 0 ? nodes : text;
 };
 
 const SMEInsights: React.FC = () => {
-  const { formatFromAED, formatRangeFromAED } = useCurrency();
+  const { formatFromAED, formatRangeFromAED, convertAmount, currency } = useCurrency();
   const aedPerUsd = 1 / 0.2723;
   const formatFromUSD = (amountUsd: number, options?: Intl.NumberFormatOptions) =>
     formatFromAED(amountUsd * aedPerUsd, options);
   const formatRangeFromUSD = (minUsd: number, maxUsd: number, options?: Intl.NumberFormatOptions) =>
     formatRangeFromAED(minUsd * aedPerUsd, maxUsd * aedPerUsd, options);
+  const formatBillionsFromAED = (amountAED: number) => {
+    const amountInSelectedCurrency = convertAmount(amountAED, 'AED', currency) / 1_000_000_000;
+    const fractionDigits = Number.isInteger(amountInSelectedCurrency) ? 0 : 1;
+
+    return `${new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency,
+      minimumFractionDigits: fractionDigits,
+      maximumFractionDigits: 1,
+    }).format(amountInSelectedCurrency)} billion`;
+  };
+  const formatBudgetLabel = (amountUsd: number) => formatFromUSD(amountUsd, { maximumFractionDigits: 0 });
+  const dubaiPrimeRange = formatRangeFromUSD(900, 1350, { maximumFractionDigits: 0 });
+  const londonPrimeRange = `${formatRangeFromUSD(1700, 3000, { maximumFractionDigits: 0 })}+`;
+  const newYorkPrimeRange = `${formatRangeFromUSD(1500, 2500, { maximumFractionDigits: 0 })}+`;
+  const hongKongPrime = `${formatFromUSD(5000, { maximumFractionDigits: 0 })}+`;
+  const monthlyDubai = formatFromUSD(2514, { maximumFractionDigits: 0 });
+  const monthlyHongKong = formatFromUSD(2718, { maximumFractionDigits: 0 });
+  const monthlySingapore = formatFromUSD(3201, { maximumFractionDigits: 0 });
+  const monthlyLondon = formatFromUSD(3851, { maximumFractionDigits: 0 });
+  const monthlyNewYork = formatFromUSD(4203, { maximumFractionDigits: 0 });
+  const familyDubai = formatFromUSD(5509, { maximumFractionDigits: 0 });
+  const familySingapore = formatFromUSD(6971, { maximumFractionDigits: 0 });
 
   const transactions917B = formatFromAED(917000000000, { maximumFractionDigits: 0 });
   const income10k = formatFromAED(10000, { maximumFractionDigits: 0 });
   const income15k = formatFromAED(15000, { maximumFractionDigits: 0 });
-  const dubaiEntryRange = formatRangeFromUSD(400, 650, { maximumFractionDigits: 0 });
+  const dubaiEntryRange = formatRangeFromUSD(900, 1350, { maximumFractionDigits: 0 });
   const londonRange = `${formatRangeFromUSD(1700, 3000, { maximumFractionDigits: 0 })}+`;
   const newYorkRange = `${formatRangeFromUSD(1500, 2500, { maximumFractionDigits: 0 })}+`;
-  const hongKongCore = `${formatFromUSD(2200, { maximumFractionDigits: 0 })}+`;
-  const ultraPrimeDubaiRange = formatRangeFromUSD(1200, 2500, { maximumFractionDigits: 0 });
-  const commercialDubaiRange = formatRangeFromUSD(350, 700, { maximumFractionDigits: 0 });
+  const hongKongCore = `${formatFromUSD(5000, { maximumFractionDigits: 0 })}+`;
+  const ultraPrimeDubaiRange = formatRangeFromUSD(2000, 4500, { maximumFractionDigits: 0 });
+  const commercialDubaiRange = formatRangeFromUSD(900, 1600, { maximumFractionDigits: 0 });
 
-  const [activeTab, setActiveTab] = useState<'performance' | 'mechanics' | 'commercial' | 'comparative'>('performance');
+  const [activeTab, setActiveTab] = useState<'performance' | 'mechanics' | 'commercial' | 'infrastructure' | 'comparative'>('performance');
   const [activeDrawer, setActiveDrawer] = useState<DrawerContent | null>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -405,6 +435,7 @@ const SMEInsights: React.FC = () => {
     { id: 'performance', label: 'Market Performance' },
     { id: 'mechanics', label: 'Investor Mechanics' },
     { id: 'commercial', label: 'Commercial & Industrial' },
+    { id: 'infrastructure', label: 'Infrastructure Catalysts' },
     { id: 'comparative', label: 'Global Comparative' }
   ];
 
@@ -420,7 +451,7 @@ const SMEInsights: React.FC = () => {
           `Dubai Entry: ${dubaiEntryRange} per sq. ft.`,
           `Vs. London: ${londonRange} per sq. ft.`,
           `Vs. New York: ${newYorkRange} per sq. ft.`,
-          "Zero annual property or capital gains tax advantage."
+          'Prime stock still trades at a c.35-60% discount to leading global wealth hubs.'
         ],
         drawerContent: {
           id: 'global-value-detail',
@@ -431,10 +462,10 @@ const SMEInsights: React.FC = () => {
               <VerbatimText text="Dubai continues to trade at a meaningful discount to global gateway cities on a price-per-square-foot basis, while offering developed-market infrastructure and institutional demand depth." />
               <SectionHeader title="Global Price Positioning (per sq. ft.)" />
               <GrowthBullets items={[
-                `Dubai prime residential: ${dubaiEntryRange}, versus London/New York often ${newYorkRange}–${londonRange} and Hong Kong above ${hongKongCore} in core zones.`,
-                `Ultra-prime Dubai (Palm/Jumeirah Bay): c.${ultraPrimeDubaiRange}, still below Monaco, Mayfair, and Billionaires’ Row benchmarks.`,
-                `Commercial office pricing in Dubai (c.${commercialDubaiRange}) remains significantly below London/New York/Singapore ranges.`,
-                "Capital efficiency remains high: similar capital can secure materially more area in Dubai than in mature Western hubs."
+                `Dubai prime residential now sits around ${dubaiEntryRange}, while comparable prime stock in London and New York typically ranges from ${newYorkRange} to ${londonRange}, with Hong Kong core districts above ${hongKongCore}.`,
+                `Prime commercial office in Dubai is now around ${commercialDubaiRange}, with trophy DIFC and Downtown assets above ${formatFromAED(5000, { maximumFractionDigits: 0 })} per sq. ft. amid severe Grade A supply constraints.`,
+                `Ultra-luxury residential in Palm Jumeirah, Emirates Hills, and Jumeirah Bay now trades around ${ultraPrimeDubaiRange}, still below Monaco, Hong Kong Peak, and prime Manhattan benchmarks.`,
+                'Dubai remains one of the most competitively priced global gateway cities for investors despite strong capital appreciation since 2022.'
               ]} />
               <SectionHeader title="Investor Implications" />
               <GrowthBullets items={[
@@ -452,29 +483,30 @@ const SMEInsights: React.FC = () => {
         title: 'Market Performance Records',
         image: 'https://images.unsplash.com/photo-1651467606797-e1c660cf3fda?auto=format&fit=crop&q=80',
         points: [
-          `${transactions917B} total transactions in 2024 (20% YoY increase).`,
-          "Transitioning to a 'Mature Market Cycle'.",
-          "High proportion of cash buyers reducing leverage risk.",
-          "Sovereign support via D33 & 2040 Urban Plan."
+          `H1 2024 sales-only market reached ${formatBillionsFromAED(233000000000)} across 80,800 transactions.`,
+          `H1 2025 set a new first-half record at ${formatBillionsFromAED(326000000000)} and 102,000 transactions.`,
+          `H1 2026 remained resilient at ${formatBillionsFromAED(286400000000)} and 86,005 transactions.`,
+          'H1 2026 ranked second only to 2025, showing moderation rather than collapse.'
         ],
         drawerContent: {
           id: 'records-detail',
           category: 'Expert Insight // Performance Metrics',
-          title: 'Transaction & Resilience Data',
+          title: 'Sales-Only H1 Performance',
           body: (
             <div className="space-y-8">
-              <VerbatimText text={`Dubai recorded ${transactions917B} in total real estate transactions, with growth anchored by off-plan absorption, luxury demand, and broad end-user participation rather than purely leveraged speculation.`} />
-              <SectionHeader title="Resilience Drivers" />
+              <VerbatimText text="Sales-only comparison (excluding mortgages and gifts)." />
+              <SectionHeader title="H1 Sales Records" />
               <GrowthBullets items={[
-                "High cash-buyer share reduces refinancing stress and supports price stability through rate cycles.",
-                "Government-backed roadmaps (D33, Dubai 2040) provide unusually strong policy visibility for infrastructure and economic growth.",
-                "Transaction depth across primary and secondary segments improves market liquidity and exit optionality.",
-                "Dubai yield leadership versus mature markets supports continued cross-border capital inflows."
+                `H1 2024: Sales Value ${formatBillionsFromAED(233000000000)}; Sales Transactions 80,800.`,
+                `H1 2025: Sales Value ${formatBillionsFromAED(326000000000)}; Sales Transactions 102,000.`,
+                `H1 2026: Sales Value ${formatBillionsFromAED(286400000000)}; Sales Transactions 86,005.`,
+                'The 2025 first half remains the highest-value and highest-volume H1 ever recorded in Dubai.'
               ]} />
-              <SectionHeader title="Cycle Context" />
+              <SectionHeader title="Key Takeaway" />
               <GrowthBullets items={[
-                "Current phase is better characterized as market maturation/normalization than a structural downturn.",
-                "Expected supply growth appears more phased than abrupt, reducing near-term shock risk in core demand corridors."
+                "H1 2026 became the second-strongest H1 on record, with transaction values staying close to the 2025 peak despite regional geopolitical tensions.",
+                "The market saw moderation rather than a collapse, with residential demand remaining resilient through the uncertainty.",
+                "The pullback was driven largely by fewer large land and building transactions, while off-plan residential sales continued to outperform the ready market."
               ]} />
             </div>
           )
@@ -815,7 +847,7 @@ const SMEInsights: React.FC = () => {
   image: 'https://images.unsplash.com/photo-1501183638710-841dd1904471?auto=format&fit=crop&q=80&w=2000',
   points: [
     "Off-plan: lower upfront capital, structured payment plans.",
-    "Ready: immediate rental income (6–9% yields).",
+    "Ready: immediate rental income (4–9% yields).",
     "Off-plan: higher long-term appreciation potential.",
     "Ready: stronger negotiation leverage in 2026."
   ],
@@ -851,7 +883,7 @@ const SMEInsights: React.FC = () => {
         <SectionHeader title="Ready Property (Secondary Market)" />
         <GrowthBullets items={[
           "Investment Objective: Income generation with lower risk exposure",
-          "Immediate rental income (6–9% yields).",
+          "Immediate rental income (4–9% yields).",
           "No construction or delivery risk.",
           "High negotiation leverage in buyer-favourable conditions.",
           "Potential to acquire from motivated sellers."
@@ -1003,7 +1035,10 @@ const SMEInsights: React.FC = () => {
           "Fit-out periods and incentives."
         ]
         // NO Drawer content here
-      },
+      }
+
+    ],
+    infrastructure: [
       {
   id: 'metro-expansion',
   category: 'Infrastructure Growth',
@@ -1018,7 +1053,7 @@ const SMEInsights: React.FC = () => {
   ],
   drawerContent: {
     id: 'metro-expansion-detail',
-    category: 'Expert Insight // Commercial & Industrial',
+    category: 'Expert Insight // Infrastructure Catalysts',
     title: 'Emerging Growth Corridors (2026–2030)',
     body: (
       <div className="space-y-8">
@@ -1086,58 +1121,61 @@ const SMEInsights: React.FC = () => {
         image: 'https://images.unsplash.com/photo-1612873649383-edf91f1cf7fe?auto=format&fit=crop&q=80',
         points: [
           'World Bank macro comparison: Dubai/UAE vs global gateway markets.',
-          'GDP growth (2024): Dubai/UAE 3.99%, Singapore 4.39%, US 2.79%.',
-          'FDI inflows (2024): Dubai/UAE 8.26% of GDP, with higher financial-hub concentrations in HK/SG.',
-          'Visualized as ranked bars for quick market momentum read-through.'
+          'GDP Growth (2025): UAE 6.2%, Singapore 4.8%, United States 2.0%.',
+          'GDP Growth (2026 Forecast): UAE 5.0–5.2%, Singapore 1.7–2.0%, United States 2.4%.',
+          'Dubai remains a global greenfield FDI leader, with the UAE sustaining one of the world’s strongest FDI-to-GDP profiles while Singapore leads among financial centres and the US attracts the largest absolute inflows.'
         ],
         drawerContent: {
           id: 'macro-comparison-detail',
-          category: 'Comparative // World Bank',
+          category: 'Comparative // Macro 2025-2026',
           title: 'Cross-Market Macro Momentum Dashboard',
           body: (
             <div className="space-y-8">
-              <VerbatimText text="This comparative panel benchmarks Dubai/UAE against London/UK, New York/US, Hong Kong, and Singapore using latest public World Bank datapoints currently available in the app." />
+              <VerbatimText text="As of 17 July 2026, this dashboard reflects the latest official 2025 macro data alongside the most relevant 2026 in-year growth and investment signals for the UAE, Singapore, and the United States." />
 
               <ComparativeBars
-                title="GDP Growth (Annual %)"
+                title="GDP Growth (2025 Latest Official)"
                 unit="%"
-                freshnessLabel="World Bank • 2024"
+                freshnessLabel="Official Data • 2025"
                 items={[
-                  { label: 'Dubai/UAE', value: 3.99, display: '3.99% (2024)', highlight: true },
-                  { label: 'Singapore', value: 4.39, display: '4.39% (2024)' },
-                  { label: 'United States', value: 2.79, display: '2.79% (2024)' },
-                  { label: 'Hong Kong', value: 2.50, display: '2.50% (2024)' },
-                  { label: 'United Kingdom', value: 1.13, display: '1.13% (2024)' },
+                  { label: 'Dubai/UAE', value: 6.2, display: '6.2% (2025)', highlight: true },
+                  { label: 'Singapore', value: 4.8, display: '4.8% (2025)' },
+                  { label: 'United States', value: 2.0, display: '2.0% (2025)' },
                 ]}
               />
 
               <ComparativeBars
-                title="FDI Net Inflows (% of GDP)"
+                title="FDI Inflows (% of GDP, 2025)"
                 unit="%"
-                freshnessLabel="World Bank • 2024"
+                freshnessLabel="Latest Official • 2025"
                 items={[
-                  { label: 'Dubai/UAE', value: 8.26, display: '8.26% (2024)', highlight: true },
-                  { label: 'Hong Kong', value: 30.92, display: '30.92% (2024)' },
-                  { label: 'Singapore', value: 27.76, display: '27.76% (2024)' },
-                  { label: 'United States', value: 1.03, display: '1.03% (2024)' },
-                  { label: 'United Kingdom', value: 0, display: '-0.35% (2024)' },
+                  { label: 'Dubai/UAE', value: 8.5, display: '8–9% of GDP', highlight: true },
+                  { label: 'Singapore', value: 22.5, display: '20–25% of GDP' },
+                  { label: 'United States', value: 1.75, display: '1.5–2.0% of GDP' },
                 ]}
               />
 
               <ComparativeBars
-                title="International Tourism Arrivals (Latest Common Year)"
-                unit="M"
-                freshnessLabel="World Bank • 2020"
+                title="GDP Growth (2026 Forecast)"
+                unit="%"
+                freshnessLabel="Latest Estimates • 2026"
                 items={[
-                  { label: 'Dubai/UAE', value: 8.08, display: '8.08M (2020)', highlight: true },
-                  { label: 'United States', value: 45.04, display: '45.04M (2020)' },
-                  { label: 'United Kingdom', value: 11.10, display: '11.10M (2020)' },
-                  { label: 'Hong Kong', value: 3.57, display: '3.57M (2020)' },
-                  { label: 'Singapore', value: 2.74, display: '2.74M (2020)' },
+                  { label: 'Dubai/UAE', value: 5.1, display: '5.0–5.2% (2026 forecast)', highlight: true },
+                  { label: 'United States', value: 2.4, display: '2.4% (2026 forecast)' },
+                  { label: 'Singapore', value: 1.85, display: '1.7–2.0% (2026 forecast)' },
                 ]}
               />
 
-              <SourceNote sources={["World Bank API (NY.GDP.MKTP.KD.ZG, BX.KLT.DINV.WD.GD.ZS, ST.INT.ARVL)"]} />
+              <SectionHeader title="2026 FDI Momentum" />
+              <GrowthBullets
+                items={[
+                  'Official 2026 full-year FDI-to-GDP ratios are not yet published, so current comparisons remain directional rather than final.',
+                  'The UAE continues to record strong momentum across financial services, AI, data centres, logistics, advanced manufacturing, and real estate.',
+                  'Dubai remains one of the world’s leading cities for greenfield FDI project announcements, reinforcing its role as the Middle East’s premier investment hub.'
+                ]}
+              />
+
+              <SourceNote sources={["Official published 2025 macro data and latest available 2026 estimates (as of 17 Jul 2026)"]} />
             </div>
           )
         }
@@ -1159,17 +1197,17 @@ const SMEInsights: React.FC = () => {
           title: 'Global Price-to-Yield Positioning',
           body: (
             <div className="space-y-8">
-              <VerbatimText text="This panel compares residential pricing and income profile using existing in-platform DXB Edge Expert benchmarks and global-city references already used in the strategy notes." />
+              <VerbatimText text="This panel compares residential pricing and income profile using the updated July 2026 DXB Edge benchmark set alongside global gateway reference markets." />
 
               <ComparativeBars
-                title="Prime Residential Pricing (USD / sq. ft.)"
+                title="Prime Residential Pricing (per sq. ft.)"
                 unit=""
-                freshnessLabel="SME Benchmark Set"
+                freshnessLabel="DXB Edge • Jul 2026"
                 items={[
-                  { label: 'Dubai', value: 650, display: '$400–$650', highlight: true },
-                  { label: 'London', value: 3000, display: '$1,700–$3,000+' },
-                  { label: 'New York', value: 2500, display: '$1,500–$2,500+' },
-                  { label: 'Hong Kong', value: 2200, display: '$2,200+ (core zones)' },
+                  { label: 'Dubai', value: 1350, display: dubaiPrimeRange, highlight: true },
+                  { label: 'London', value: 3000, display: londonPrimeRange },
+                  { label: 'New York', value: 2500, display: newYorkPrimeRange },
+                  { label: 'Hong Kong', value: 5000, display: `${hongKongPrime} (core zones)` },
                 ]}
               />
 
@@ -1184,7 +1222,7 @@ const SMEInsights: React.FC = () => {
                 ]}
               />
 
-              <SourceNote sources={["Global Value Gap Benchmark Set"]} />
+              <SourceNote sources={["DXB Edge Global Value Gap benchmark set (Jul 2026)"]} />
             </div>
           )
         }
@@ -1192,11 +1230,11 @@ const SMEInsights: React.FC = () => {
       {
         id: 'living-cost-snapshot',
         category: 'Relocation Economics',
-        title: 'Living Cost Snapshot (USD)',
+        title: 'Living Cost Snapshot',
         image: 'https://images.unsplash.com/photo-1615747476205-991a14cd2358?auto=format&fit=crop&q=80',
         points: [
           'Livingcost snapshot comparison added for Dubai, Singapore, Hong Kong, London, and New York.',
-          'Total monthly cost (with rent): Dubai $2,514 vs Singapore $3,201 and New York $4,203.',
+          `Total monthly cost (with rent): Dubai ${monthlyDubai} vs Singapore ${monthlySingapore} and New York ${monthlyNewYork}.`,
           'Supports relocation and affordability framing for investors and end users.',
           'Presented as visual bars to keep comparison scannable.'
         ],
@@ -1209,25 +1247,25 @@ const SMEInsights: React.FC = () => {
               <VerbatimText text="This panel adds fixed living-cost snapshots to complement pricing/yield and macro data, helping compare affordability and relocation friction across major markets." />
 
               <ComparativeBars
-                title="Monthly Cost of Living — Total With Rent (USD)"
+                title="Monthly Cost of Living — Total With Rent"
                 unit=""
                 freshnessLabel="Livingcost • Oct 2025"
                 items={[
-                  { label: 'Dubai', value: 2514, display: '$2,514', highlight: true },
-                  { label: 'Hong Kong', value: 2718, display: '$2,718' },
-                  { label: 'Singapore', value: 3201, display: '$3,201' },
-                  { label: 'London', value: 3851, display: '$3,851' },
-                  { label: 'New York', value: 4203, display: '$4,203' },
+                  { label: 'Dubai', value: 2514, display: monthlyDubai, highlight: true },
+                  { label: 'Hong Kong', value: 2718, display: monthlyHongKong },
+                  { label: 'Singapore', value: 3201, display: monthlySingapore },
+                  { label: 'London', value: 3851, display: monthlyLondon },
+                  { label: 'New York', value: 4203, display: monthlyNewYork },
                 ]}
               />
 
               <ComparativeBars
-                title="Household Cost Snapshot — Family of Four (USD)"
+                title="Household Cost Snapshot — Family of Four"
                 unit=""
                 freshnessLabel="Livingcost • Oct 2025"
                 items={[
-                  { label: 'Dubai', value: 5509, display: '$5,509', highlight: true },
-                  { label: 'Singapore', value: 6971, display: '$6,971' },
+                  { label: 'Dubai', value: 5509, display: familyDubai, highlight: true },
+                  { label: 'Singapore', value: 6971, display: familySingapore },
                 ]}
               />
 
@@ -1274,7 +1312,7 @@ const SMEInsights: React.FC = () => {
             <div className="space-y-8">
               <VerbatimText text="This comparator models a practical decision flow: set your investment objective and constraints, then review a ranked shortlist across the five target global markets." />
 
-              <CityComparatorExperience />
+              <CityComparatorExperience formatBudgetLabel={formatBudgetLabel} />
 
               <SectionHeader title="Data Inputs Used" />
               <GrowthBullets
@@ -1297,10 +1335,22 @@ const SMEInsights: React.FC = () => {
   return (
     <>
       <SEO
-        title="DXB Edge Expert Insights | Dubai Real Estate Intelligence"
-        description="Strategic Dubai real estate intelligence for investors across market performance, investor mechanics, commercial opportunities, and global comparative analysis."
+        title="DXB Edge Expert Insights | Dubai Real Estate Research, Yields & Strategy"
+        description="Research-led Dubai real estate intelligence for investors comparing yields, pricing, infrastructure catalysts, macro signals, and decision tools before engaging further."
         path="/expert-insights"
         type="website"
+        schemaType="CollectionPage"
+        image="/media/dxb-edge-default.jpg"
+        imageAlt="DXB Edge expert insights on Dubai real estate"
+        keywords={[
+          'Dubai real estate insights',
+          'Dubai property research',
+          'Dubai yields',
+          'Dubai market performance',
+          'Dubai infrastructure catalysts',
+          'Dubai real estate macro trends',
+          'investor research Dubai',
+        ]}
       />
     <div className="flex flex-col min-h-screen bg-soft-grey">
       <header className="px-10 lg:px-16 pt-14 pb-6 border-b border-slate-200 bg-white">
@@ -1326,7 +1376,7 @@ const SMEInsights: React.FC = () => {
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
-                    onClick={() => setActiveTab(tab.id as 'performance' | 'mechanics' | 'commercial' | 'comparative')}
+                    onClick={() => setActiveTab(tab.id as 'performance' | 'mechanics' | 'commercial' | 'infrastructure' | 'comparative')}
                     className={`px-4 py-2.5 text-[10px] lg:text-[11px] font-bold uppercase tracking-[0.16em] transition-all whitespace-nowrap rounded-md border ${
                       activeTab === tab.id
                         ? 'bg-brand-navy text-white border-brand-navy shadow-sm'

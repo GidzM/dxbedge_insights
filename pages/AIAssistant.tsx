@@ -364,9 +364,22 @@ const AIAssistant: React.FC = () => {
   return (
     <>
     <SEO
-  title="DXB Edge – AI Investment Assistant"
-  description="AI-powered investment assistant for Dubai real estate, providing strategic insights and guidance."
+  title="DXB Edge AI Assistant | Dubai Real Estate Investor Q&A"
+  description="AI-powered Dubai real estate assistant for investor questions, market screening, and source-aware strategic guidance backed by DXB Edge intelligence."
+  path="/ai-assistant"
   type="website"
+  schemaType="SoftwareApplication"
+  image="/media/dxb-edge-default.jpg"
+  imageAlt="DXB Edge AI assistant for Dubai real estate investors"
+  keywords={[
+    'Dubai real estate AI',
+    'Dubai investor assistant',
+    'property market chatbot',
+    'Dubai investment Q&A',
+    'real estate intelligence',
+    'Dubai property advice',
+    'Dubai property research assistant',
+  ]}
 />
 
     <div className="h-screen flex flex-col bg-brand-navy overflow-hidden font-sans">

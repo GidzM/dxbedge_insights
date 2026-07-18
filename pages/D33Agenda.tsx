@@ -46,15 +46,32 @@ const GrowthBullets = ({ items }: { items: string[] }) => (
 );
 
 const parseGrowthData = (text: string) => {
-  // Targeting specific Power Facts: AED 32 Trillion, AED 25.6 Trillion, AED 650 Billion, AED 100 Billion, AED 1 Trillion
-  // Matches both Title Case and lowercase variations found in verbatim text
-  const parts = text.split(/(AED\s32\s[Tt]rillions?|AED\s25\.6\s[Tt]rillions?|AED\s650\s[Bb]illions?|AED\s100\s[Bb]illions?|AED\s1\s[Tt]rillions?|AED\s14\.2\s[Tt]rillions?|[\d.]+%|400\scities|80%)/g);
-  return parts.map((part, i) => {
-    if (/(AED\s32\s[Tt]rillions?|AED\s25\.6\s[Tt]rillions?|AED\s650\s[Bb]illions?|AED\s100\s[Bb]illions?|AED\s1\s[Tt]rillions?|AED\s14\.2\s[Tt]rillions?|[\d.]+%|400\scities|80%)/.test(part)) {
-  return <span key={i} className="text-brand-gold font-bold">{part}</span>;
+  const highlightRegex = /(?:AED|USD|EUR|GBP|SAR|INR|CNY)\s?[\d,.]+(?:\s?(?:[BMKT]|billion|trillion|million))?|[$€£]\s?[\d,.]+(?:\s?(?:[BMKT]|billion|trillion|million))?(?:\s?[+])?|[\d,.]+(?:\s?[-–]\s?[\d,.]+)?%|\d{1,3}(?:,\d{3})+|\d+\s?cities/g;
+  const nodes: React.ReactNode[] = [];
+  let lastIndex = 0;
+
+  for (const match of text.matchAll(highlightRegex)) {
+    const start = match.index ?? 0;
+    const value = match[0];
+
+    if (start > lastIndex) {
+      nodes.push(text.slice(lastIndex, start));
     }
-    return part;
-  });
+
+    nodes.push(
+      <span key={`${start}-${value}`} className="text-brand-gold font-bold">
+        {value}
+      </span>
+    );
+
+    lastIndex = start + value.length;
+  }
+
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex));
+  }
+
+  return nodes.length > 0 ? nodes : text;
 };
 
 const D33Agenda: React.FC = () => {
@@ -96,10 +113,22 @@ const D33Agenda: React.FC = () => {
   return (
   <>
         <SEO
-        title="D33 Economic Agenda – Strategic Outlook"
-        description="Analysis of the Dubai D33 Economic Agenda"
+        title="Dubai D33 Economic Agenda | Growth Strategy, Trade Expansion & Property Impact"
+        description="Investor-focused analysis of Dubai's D33 Economic Agenda, highlighting trade expansion, investment inflows, sovereign capital, and the real estate demand it supports."
+        path="/d33-agenda"
         image="/media/dxb-edge-default.jpg"
         type="article"
+        schemaType="Article"
+        imageAlt="Dubai D33 economic agenda strategic outlook"
+        keywords={[
+          'Dubai D33',
+          'D33 agenda',
+          'Dubai growth strategy',
+          'Dubai trade expansion',
+          'Dubai economic agenda',
+          'Dubai real estate demand',
+          'Dubai investment inflows',
+        ]}
         jsonLd
       />
   
