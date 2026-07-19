@@ -172,8 +172,10 @@ export default async function handler(req, res) {
     let whatsappSent = false;
     let whatsappResponsePayload = null;
     let whatsappStatus = 'skipped';
+    // Support legacy env naming to reduce deployment misconfiguration risk.
+    const whatsappAccessToken = process.env.WHATSAPP_ACCESS_TOKEN || process.env.WHATSAPP_API_KEY;
     const hasWhatsAppConfig = Boolean(
-      process.env.WHATSAPP_ACCESS_TOKEN &&
+      whatsappAccessToken &&
       process.env.WHATSAPP_PHONE_NUMBER_ID &&
       process.env.WHATSAPP_RECIPIENT_NUMBER
     );
@@ -185,7 +187,7 @@ export default async function handler(req, res) {
           {
             method: "POST",
             headers: {
-              Authorization: `Bearer ${process.env.WHATSAPP_ACCESS_TOKEN}`,
+              Authorization: `Bearer ${whatsappAccessToken}`,
               "Content-Type": "application/json"
             },
             body: JSON.stringify({
