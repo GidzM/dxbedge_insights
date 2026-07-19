@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 const NAV_ITEMS = [
   { name: 'Home', path: '/' },
+  { name: 'About Us', path: '/about-us' },
   { name: 'Expert Insights', path: '/expert-insights' },
   {
     name: 'Strategic Outlook',

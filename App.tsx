@@ -1,9 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import DataTicker from './components/DataTicker';
 import MarketOverview from './pages/MarketOverview';
+import Geopolitics2026 from './pages/GeoPolitics2026.tsx';
+import AboutUs from './pages/AboutUs';
 import Dubai2040 from './pages/Dubai2040';
 import D33Agenda from './pages/D33Agenda';
 import CombinedStrategy from './pages/CombinedStrategy';
@@ -143,6 +145,8 @@ const AppShell: React.FC = () => {
           <div className="flex-1">
             <Routes>
               <Route path="/" element={<MarketOverview openModal={openModal} />} />
+              <Route path="/about-us" element={<AboutUs />} />
+              <Route path="/analysis/geopolitics-2026" element={<Geopolitics2026 />} />
               <Route path="/expert-insights" element={<SMEInsights />} />
               <Route path="/combined" element={<CombinedStrategy />} />
               <Route path="/dubai-2040" element={<Dubai2040 />} />
@@ -218,11 +222,14 @@ const AppShell: React.FC = () => {
                         <div>
                             <h4 className="text-[11px] font-black text-brand-gold uppercase tracking-[0.15em] mb-8">THE PLATFORM</h4>
                             <ul className="text-[12px] space-y-4 font-medium text-white/60">
-                                <li><a href="/" className="hover:text-brand-gold transition-colors">Home/Market Overview</a></li>
-                                <li><a href="#/expert-insights" className="hover:text-brand-gold transition-colors">Expert Insights</a></li>
-                                <li><a href="#/combined" className="hover:text-brand-gold transition-colors">Strategic Outlook</a></li>
-                                <li><a href="#/dubai-2040" className="hover:text-brand-gold transition-colors">2040 Vision</a></li>
-                                <li><a href="#/d33-agenda" className="hover:text-brand-gold transition-colors">D33 Growth</a></li>
+                                <li><Link to="/" className="hover:text-brand-gold transition-colors">Home/Market Overview</Link></li>
+                                <li><Link to="/about-us" className="hover:text-brand-gold transition-colors">About Us / Our Story</Link></li>
+                                <li><Link to="/expert-insights" className="hover:text-brand-gold transition-colors">Expert Insights</Link></li>
+                                <li><Link to="/combined" className="hover:text-brand-gold transition-colors">Strategic Outlook</Link></li>
+                                <li><Link to="/dubai-2040" className="hover:text-brand-gold transition-colors">2040 Vision</Link></li>
+                                <li><Link to="/d33-agenda" className="hover:text-brand-gold transition-colors">D33 Growth</Link></li>
+                              <li><Link to="/calculators" className="hover:text-brand-gold transition-colors">Calculators</Link></li>
+                              <li><Link to="/ai-assistant" className="hover:text-brand-gold transition-colors">AI Assistant</Link></li>
                             </ul>
                         </div>
                         <div>

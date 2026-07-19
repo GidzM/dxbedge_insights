@@ -68,6 +68,13 @@ return (
               <br />
               Human strategy with AI precision.
             </p>
+            <button
+              type="button"
+              onClick={() => navigate('/about-us')}
+              className="mt-6 inline-block px-6 py-2.5 border border-brand-gold text-brand-gold text-[11px] font-bold tracking-[0.18em] uppercase hover:bg-brand-gold hover:text-brand-navy transition-all duration-300"
+            >
+              About Us / Our Story
+            </button>
           </div>
         </div>
       </section>
@@ -91,6 +98,32 @@ return (
           Grounding Dubai's property investment landscape in verified sovereign data. Analysing economic resilience and structural forces shaping long-term performance.
         </p>
       </header>
+
+      <section className="mb-14 rounded-sm border border-brand-gold/50 bg-brand-navy p-6 md:p-8">
+        <div className="text-[10px] uppercase tracking-[0.3em] text-brand-gold/80 mb-3">
+          Current Conflict Watch
+        </div>
+
+        <h2 className="text-2xl font-serif italic text-brand-gold mb-3">
+          Regional Tensions & Market Resilience
+        </h2>
+
+        <p className="text-white/90 text-sm md:text-base leading-relaxed max-w-5xl">
+          The current geopolitical tensions in the Gulf region are exerting two opposing forces on Dubai's real estate market.
+        </p>
+
+        <button
+          type="button"
+          onClick={() => navigate('/analysis/geopolitics-2026')}
+          className="mt-5 inline-block px-5 py-2 border border-brand-gold text-brand-gold text-xs tracking-wider uppercase hover:bg-brand-gold hover:text-brand-navy transition-all duration-200"
+        >
+          Read Full Analysis
+        </button>
+
+        <p className="text-white/70 text-xs mt-3">
+          Verified intelligence update.
+        </p>
+      </section>
 
       {/* Professional 2x2 Grid Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
