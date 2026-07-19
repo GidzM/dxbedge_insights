@@ -105,6 +105,51 @@
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
+        .hover-scrollbar {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .hover-scrollbar::-webkit-scrollbar {
+            height: 0;
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .hover-scrollbar:hover,
+            .hover-scrollbar:focus-within {
+                scrollbar-width: thin;
+                scrollbar-color: rgba(201, 168, 106, 0.85) rgba(10, 25, 47, 0.08);
+            }
+            .hover-scrollbar:hover::-webkit-scrollbar,
+            .hover-scrollbar:focus-within::-webkit-scrollbar {
+                height: 10px;
+            }
+            .hover-scrollbar:hover::-webkit-scrollbar-track,
+            .hover-scrollbar:focus-within::-webkit-scrollbar-track {
+                background: rgba(10, 25, 47, 0.08);
+            }
+            .hover-scrollbar:hover::-webkit-scrollbar-thumb,
+            .hover-scrollbar:focus-within::-webkit-scrollbar-thumb {
+                background: linear-gradient(180deg, rgba(201, 168, 106, 0.92), rgba(10, 25, 47, 0.55));
+                border-radius: 999px;
+                border: 2px solid rgba(10, 25, 47, 0.08);
+            }
+        }
+        @media (hover: none), (pointer: coarse) {
+            .hover-scrollbar {
+                scrollbar-width: thin;
+                scrollbar-color: rgba(201, 168, 106, 0.85) rgba(10, 25, 47, 0.08);
+            }
+            .hover-scrollbar::-webkit-scrollbar {
+                height: 8px;
+            }
+            .hover-scrollbar::-webkit-scrollbar-track {
+                background: rgba(10, 25, 47, 0.08);
+            }
+            .hover-scrollbar::-webkit-scrollbar-thumb {
+                background: linear-gradient(180deg, rgba(201, 168, 106, 0.92), rgba(10, 25, 47, 0.55));
+                border-radius: 999px;
+                border: 2px solid rgba(10, 25, 47, 0.08);
+            }
+        }
         /* Custom animation utility if tailwind config isn't enough for the specific hover behavior */
         .marquee-container:hover .marquee-content {
             animation-play-state: paused;

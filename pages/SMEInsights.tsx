@@ -377,7 +377,7 @@ const SMEInsights: React.FC = () => {
   const ultraPrimeDubaiRange = formatRangeFromUSD(2000, 4500, { maximumFractionDigits: 0 });
   const commercialDubaiRange = formatRangeFromUSD(900, 1600, { maximumFractionDigits: 0 });
 
-  const [activeTab, setActiveTab] = useState<'performance' | 'mechanics' | 'commercial' | 'infrastructure' | 'comparative'>('performance');
+  const [activeTab, setActiveTab] = useState<'performance' | 'mechanics' | 'commercial' | 'infrastructure' | 'global' | 'comparative'>('performance');
   const [activeDrawer, setActiveDrawer] = useState<DrawerContent | null>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -436,6 +436,7 @@ const SMEInsights: React.FC = () => {
     { id: 'mechanics', label: 'Investor Mechanics' },
     { id: 'commercial', label: 'Commercial & Industrial' },
     { id: 'infrastructure', label: 'Infrastructure Catalysts' },
+    { id: 'global', label: 'Global Investors' },
     { id: 'comparative', label: 'Global Comparative' }
   ];
 
@@ -1040,78 +1041,282 @@ const SMEInsights: React.FC = () => {
     ],
     infrastructure: [
       {
-  id: 'metro-expansion',
-  category: 'Infrastructure Growth',
-  title: 'Metro & Rail Expansion (2026–2030)',
-  isPremium: true,
-  image: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&q=80',
-  points: [
-    "Blue Line: Creek Harbour → International City → Academic City.",
-    "Gold Line: Business Bay → Dubailand → JGE.",
-    "10–25% price premium near metro stations.",
-    "Infrastructure-led appreciation historically up to 16%."
-  ],
-  drawerContent: {
-    id: 'metro-expansion-detail',
-    category: 'Expert Insight // Infrastructure Catalysts',
-    title: 'Emerging Growth Corridors (2026–2030)',
-    body: (
-      <div className="space-y-8">
+        id: 'metro-expansion',
+        category: 'Infrastructure Growth',
+        title: 'Metro & Rail Expansion (2026–2030)',
+        isPremium: true,
+        image: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&q=80',
+        points: [
+          'Blue Line: Creek Harbour → International City → Academic City.',
+          'Gold Line: Business Bay → Dubailand → JGE.',
+          '10–25% price premium near metro stations.',
+          'Infrastructure-led appreciation historically up to 16%.'
+        ],
+        drawerContent: {
+          id: 'metro-expansion-detail',
+          category: 'Expert Insight // Infrastructure Catalysts',
+          title: 'Emerging Growth Corridors (2026–2030)',
+          body: (
+            <div className="space-y-8">
+              <VerbatimText text="Dubai’s next phase of real estate growth is closely aligned with its expanding metro and rail infrastructure. Transit-oriented development remains a core pillar of urban planning, unlocking new residential corridors and supporting long-term population growth." />
 
-        <VerbatimText text="Dubai’s next phase of real estate growth is closely aligned with its expanding metro and rail infrastructure. Transit-oriented development remains a core pillar of urban planning, unlocking new residential corridors and supporting long-term population growth." />
+              <SectionHeader title="Blue Line (Completion Target: 2029)" />
+              <GrowthBullets items={[
+                'The Blue Line represents a significant east–north connectivity upgrade, linking several high-potential residential districts.',
+                'Key connections include: Dubai Creek Harbour, International City, Academic City.',
+                'Unlocks substantial value in currently under-connected areas.',
+                'Transforms areas into viable end-user and rental markets.'
+              ]} />
 
-        <SectionHeader title="Blue Line (Completion Target: 2029)" />
-        <GrowthBullets items={[
-          "The Blue Line represents a significant east–north connectivity upgrade, linking several high-potential residential districts.",
-          "Key connections include: Dubai Creek Harbour, International City, Academic City.",
-          "Unlocks substantial value in currently under-connected areas.",
-          "Transforms areas into viable end-user and rental markets."
-        ]} />
+              <SectionHeader title="Gold Line (Announced 2026)" />
+              <GrowthBullets items={[
+                'Enhances central-to-inland connectivity, directly linking key residential and lifestyle destinations.',
+                'Connects Business Bay, Dubailand, Jumeirah Golf Estates.',
+                'Integrates economic hubs with large-scale suburban communities.',
+                'Supports future population absorption.'
+              ]} />
 
-        <SectionHeader title="Gold Line (Announced 2026)" />
-        <GrowthBullets items={[
-          "Enhances central-to-inland connectivity, directly linking key residential and lifestyle destinations.",
-          "Connects Business Bay, Dubailand, Jumeirah Golf Estates.",
-          "Integrates economic hubs with large-scale suburban communities.",
-          "Supports future population absorption."
-        ]} />
+              <SectionHeader title="Wider Infrastructure Integration" />
+              <GrowthBullets items={[
+                'Enhanced connectivity to Al Maktoum International Airport.',
+                'Infrastructure support for Palm Jebel Ali.',
+                'Expansion into outer suburban zones for large-scale development.'
+              ]} />
 
-        <SectionHeader title="Wider Infrastructure Integration" />
-        <GrowthBullets items={[
-          "Enhanced connectivity to Al Maktoum International Airport.",
-          "Infrastructure support for Palm Jebel Ali.",
-          "Expansion into outer suburban zones for large-scale development."
-        ]} />
+              <SectionHeader title="Impact on Real Estate" />
+              <GrowthBullets items={[
+                'Metro proximity drives 10–25% price premiums.',
+                'Transit-oriented communities see up to 16% capital uplift post-delivery.',
+                'Improved accessibility strengthens rental demand.',
+                'Connectivity increases liquidity and long-term viability.'
+              ]} />
 
-        <SectionHeader title="Impact on Real Estate" />
-        <GrowthBullets items={[
-          "Metro proximity drives 10–25% price premiums.",
-          "Transit-oriented communities see up to 16% capital uplift post-delivery.",
-          "Improved accessibility strengthens rental demand.",
-          "Connectivity increases liquidity and long-term viability."
-        ]} />
+              <SectionHeader title="Investor Considerations" />
+              <GrowthBullets items={[
+                'The expansion of Dubai’s metro and rail network is not merely a transportation upgrade—it is a forward-looking demand map for real estate.'
+              ]} />
 
-        
-        <SectionHeader title="Investor Considerations" />
-        <GrowthBullets items={[
-          "The expansion of Dubai’s metro and rail network is not merely a transportation upgrade—it is a forward-looking demand map for real estate."
-        ]} />
+              <SectionHeader title="Investor Framework" />
+              <GrowthBullets items={[
+                'Pre-infrastructure: lower entry pricing, higher upside, higher execution risk.',
+                'Construction phase: gradual appreciation as certainty increases.',
+                'Post-completion: stabilised demand, stronger rental performance.'
+              ]} />
 
-        <SectionHeader title="Investor Framework" />
-        <GrowthBullets items={[
-          "Pre-infrastructure: lower entry pricing, higher upside, higher execution risk.",
-          "Construction phase: gradual appreciation as certainty increases.",
-          "Post-completion: stabilised demand, stronger rental performance."
-        ]} />
+              <SectionHeader title="Strategic Takeaway" />
+              <VerbatimText text="Dubai’s 2026–2030 infrastructure pipeline will define the next real estate cycle. The strongest opportunities lie along planned metro corridors, especially in supply-constrained, master-planned communities positioned for population decentralisation." />
+            </div>
+          )
+        }
+      },
+      {
+        id: 'road-network-expansion',
+        category: 'Road Infrastructure',
+        title: 'Road Networks Driving Accessibility',
+        image: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&q=80',
+        points: [
+          'Hessa Street, Emirates Road, and Sheikh Mohammed bin Zayed Road continue to receive major upgrades.',
+          'The Latifa bint Hamdan Corridor adds seven bridges, eight tunnels, and major east-west connectivity.',
+          'Roads and transport investment has reached approximately AED 175 billion since 2005.',
+          'Accessibility improvements support stronger rental demand and long-term capital appreciation.'
+        ],
+        drawerContent: {
+          id: 'road-network-expansion-detail',
+          category: 'Expert Insight // Infrastructure Catalysts',
+          title: 'Expanding Road Networks and Long-Term Property Demand',
+          body: (
+            <div className="space-y-8">
+              <VerbatimText text="One of Dubai's greatest strengths as a real estate investment destination is its commitment to delivering infrastructure ahead of demand. Rather than responding to congestion after it occurs, Dubai plans and builds new transport corridors, highways and interchanges years in advance to support population growth, new communities and economic expansion." />
 
-        <SectionHeader title="Strategic Takeaway" />
-        <VerbatimText text="Dubai’s 2026–2030 infrastructure pipeline will define the next real estate cycle. The strongest opportunities lie along planned metro corridors, especially in supply-constrained, master-planned communities positioned for population decentralisation." />
+              <SectionHeader title="Core Road Projects" />
+              <GrowthBullets items={[
+                'Hessa Street is undergoing one of Dubai\'s largest road redevelopment projects, with new bridges, road widening, grade-separated intersections, a new tunnel, dedicated cycling infrastructure, and improved pedestrian facilities.',
+                'The Latifa bint Hamdan Corridor will connect Sheikh Zayed Road, Al Khail Road, Al Meydan Street, Sheikh Mohammed bin Zayed Road, Sheikh Zayed Bin Hamdan Al Nahyan Street, and Emirates Road.',
+                'The corridor includes seven major bridges, eight tunnels, capacity for approximately 16,000 vehicles per hour, and improved access between residential districts and business centres.',
+                'Al Asayel Street and Oud Metha Road are also being upgraded through redesigned intersections, more than 14 kilometres of new roads, bridges, and a road tunnel.'
+              ]} />
 
-      </div>
-    )
-  }
-}
+              <SectionHeader title="Strategic Investor Relevance" />
+              <GrowthBullets items={[
+                'Communities benefiting from road upgrades include Dubai Hills Estate, JVC, JVT, Dubai Sports City, Motor City, Dubai Science Park, Dubai South, Dubai Silicon Oasis, Academic City, and Dubailand.',
+                'Improved accessibility enhances connectivity, shortens commuting times, attracts businesses and residents, and supports both rental demand and capital appreciation.',
+                'Dubai\'s proactive approach reduces long-term development risk because roads and transport links are typically delivered alongside new developments rather than after occupancy pressure builds.'
+              ]} />
 
+              <SectionHeader title="Long-Term Takeaway" />
+              <VerbatimText text="Infrastructure is one of the strongest long-term drivers of real estate performance. Communities with excellent transport links, efficient road networks and convenient access to employment centres consistently attract greater demand from both homeowners and tenants." />
+            </div>
+          )
+        }
+      },
+      {
+        id: 'business-hub-expansion',
+        category: 'Economic Infrastructure',
+        title: 'Business & Financial Hub Expansion',
+        image: 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&q=80',
+        points: [
+          'DIFC expansion is expected to support more than 42,000 companies and a workforce exceeding 125,000 professionals.',
+          'Dubai continues attracting global banks, hedge funds, tech firms, and multinational headquarters.',
+          'Business growth feeds demand for premium residential property near core commercial districts.',
+          'Employment creation is a key infrastructure-to-property transmission mechanism.'
+        ],
+        drawerContent: {
+          id: 'business-hub-expansion-detail',
+          category: 'Expert Insight // Infrastructure Catalysts',
+          title: 'Corporate Expansion as a Property Demand Engine',
+          body: (
+            <div className="space-y-8">
+              <VerbatimText text="Dubai continues to position itself as one of the world's easiest cities in which to establish and grow a business. Numerous free zones, streamlined company formation, competitive taxation, logistics infrastructure, international banking services and a highly skilled workforce continue to attract multinational corporations." />
+
+              <SectionHeader title="DIFC and Commercial Growth" />
+              <GrowthBullets items={[
+                'DIFC is expected to significantly increase office capacity, accommodate more than 42,000 companies, support a workforce exceeding 125,000 professionals, and create additional demand for nearby residential communities.',
+                'Locations such as Downtown Dubai, Business Bay, Za\'abeel and Dubai Creek Harbour may continue to benefit as employment within DIFC grows.',
+                'Corporate expansion has also accelerated within Dubai Internet City, Expo City and Dubai South, reinforcing demand for strategically located residential and mixed-use property.'
+              ]} />
+
+              <SectionHeader title="Global Firms Choosing Dubai" />
+              <GrowthBullets items={[
+                'The document highlights sustained growth in financial services, technology, artificial intelligence, healthcare, logistics and professional services.',
+                'Global financial institutions and asset managers expanding in Dubai include firms such as Citadel, Millennium Management, Point72, Balyasny, Schonfeld, Verition and Arrowpoint.',
+                'Major international banks with regional presence include Goldman Sachs, JPMorgan, Morgan Stanley, UBS, HSBC and Standard Chartered.'
+              ]} />
+
+              <SectionHeader title="Property Investor Implication" />
+              <VerbatimText text="For property investors, the continued arrival of global businesses is one of the strongest indicators of long-term residential demand, employment growth and economic stability." />
+            </div>
+          )
+        }
+      },
+      {
+        id: 'social-tourism-infrastructure',
+        category: 'Lifestyle Infrastructure',
+        title: 'Education, Healthcare & Tourism Support',
+        image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&q=80',
+        points: [
+          'More than 220 private schools and a deep hospital network reinforce long-term family relocation demand.',
+          'Expo City, Dubai South, airport expansion, and tourism infrastructure add employment and residential demand.',
+          'Healthcare and education quality strengthen the resilience of family-oriented communities.',
+          'Lifestyle infrastructure supports both occupancy and long-duration tenancy.'
+        ],
+        drawerContent: {
+          id: 'social-tourism-infrastructure-detail',
+          category: 'Expert Insight // Infrastructure Catalysts',
+          title: 'Social Infrastructure and the Quality-of-Life Premium',
+          body: (
+            <div className="space-y-8">
+              <VerbatimText text="Healthcare, education, tourism and urban liveability are not soft extras in Dubai's growth model. They are core components of the city's ability to attract professionals, families, employers and long-term capital." />
+
+              <SectionHeader title="Education and Healthcare Depth" />
+              <GrowthBullets items={[
+                'Dubai is home to more than 220 private schools offering British, IB, American, Indian, French, German, Japanese and other international programmes.',
+                'Family communities centred around strong educational access include Dubai Hills Estate, Arabian Ranches, Emirates Hills, Nad Al Sheba, Jumeirah, Al Barsha, Dubai Creek Harbour, Mohammed Bin Rashid City, and Dubai South.',
+                'The healthcare ecosystem continues to expand through hospitals, specialist medical centres, research facilities, healthcare free zones and internationally recognised operators such as King\'s College Hospital London Dubai, American Hospital Dubai, Mediclinic, Saudi German Hospital, Al Zahra, and Aster.'
+              ]} />
+
+              <SectionHeader title="Tourism and Airport Expansion" />
+              <GrowthBullets items={[
+                'Expo City Dubai has evolved into a major mixed-use business district combining corporate headquarters, residential communities, innovation centres, educational institutions and exhibition facilities.',
+                'Dubai South continues expanding around Al Maktoum International Airport with new residential communities, schools, healthcare, retail and commercial space.',
+                'The long-term expansion of Al Maktoum International Airport is one of Dubai\'s largest infrastructure projects and is expected to materially increase passenger and cargo capacity.',
+                'Tourism investment continues through luxury hotels, beachfront developments, entertainment districts, theme parks, cultural attractions, waterfront destinations and international events.'
+              ]} />
+
+              <SectionHeader title="Why It Matters" />
+              <VerbatimText text="Access to outstanding schools, premium hospitals, transport infrastructure and lifestyle amenities influences where professionals and families choose to live. For investors, these systems support stronger rental occupancy, better community resilience and sustained long-term demand." />
+            </div>
+          )
+        }
+      }
+
+    ],
+    global: [
+      {
+        id: 'non-resident-buying',
+        category: 'Global Investor Access',
+        title: 'Non-Resident Buying Pathways',
+        image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80',
+        points: [
+          'Foreign buyers can purchase ready and off-plan property in designated freehold areas.',
+          'Ready property offers immediate ownership transfer and rental income potential.',
+          'Non-resident mortgages are typically available up to 60% LTV on a first property.',
+          'Refinancing and equity release can support portfolio expansion.'
+        ],
+        drawerContent: {
+          id: 'non-resident-buying-detail',
+          category: 'Expert Insight // Global Investors',
+          title: 'How Non-Residents Can Invest in Dubai Real Estate',
+          body: (
+            <div className="space-y-8">
+              <VerbatimText text="Dubai has established itself as one of the world's most attractive real estate investment destinations, offering tax-efficient ownership, a transparent regulatory framework, and strong rental demand. International investors can purchase both ready and off-plan properties in designated freehold areas, making Dubai accessible to buyers from around the world." />
+
+              <SectionHeader title="Ready Property vs Off-Plan" />
+              <GrowthBullets items={[
+                'Ready properties appeal to investors seeking immediate rental income, established market value with comparable sales data, and lower execution risk because the asset is already completed.',
+                'The ready-property process typically includes selecting a property, signing Form F, paying the deposit, arranging financing if required, obtaining the developer NOC, and completing transfer at Dubai Land Department.',
+                'Off-plan property gives investors lower entry pricing, flexible payment plans, potential capital appreciation during construction, and access to newly launched communities and premium developments.',
+                'Typical off-plan purchases include reservation, booking payment plus 4% DLD fee, SPA signing, construction-linked payments, and handover on completion, with some projects also offering post-handover plans.'
+              ]} />
+
+              <SectionHeader title="Financing and Refinancing" />
+              <GrowthBullets items={[
+                'Non-resident investors are generally eligible for mortgages from selected UAE banks, with first-property financing commonly up to 60% LTV and second-property LTV often between 50% and 60%.',
+                'Banks assess passport and ID documents, income, employment or business ownership, bank statements, liabilities, credit history and property valuation.',
+                'Refinancing can help investors secure lower rates, reduce monthly payments, release equity, improve cash flow, or support additional acquisitions.'
+              ]} />
+
+              <SectionHeader title="Investor Rationale" />
+              <VerbatimText text="Dubai continues to attract global investors because it offers 100% freehold ownership in designated areas, no annual property tax, no capital gains tax on property sales, strong rental demand, international connectivity, and multiple residency pathways linked to qualifying real estate investments under prevailing regulations." />
+            </div>
+          )
+        }
+      },
+      {
+        id: 'global-capital-flow',
+        category: 'Institutional Capital',
+        title: 'Why Global Capital Keeps Flowing',
+        image: 'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&q=80',
+        points: [
+          'Dubai is increasingly viewed as a global real estate investment market, not just a luxury property destination.',
+          'Institutional attention is driven by population growth, business relocation, rental income potential, and infrastructure.',
+          'Global capital sources include sovereign wealth, private equity, family offices, pension-linked investors, and developers.',
+          'Residential, logistics, hospitality, and commercial sectors all attract capital.'
+        ],
+        drawerContent: {
+          id: 'global-capital-flow-detail',
+          category: 'Expert Insight // Global Investors',
+          title: 'Global Capital and Institutional Investing in Dubai Real Estate',
+          body: (
+            <div className="space-y-8">
+              <VerbatimText text="Dubai real estate has evolved from a predominantly developer-led and private investor market into an increasingly recognised global real estate investment destination. Over the last decade, and particularly in recent years, Dubai has attracted sovereign wealth funds, global private equity firms, real estate investment managers, family offices, pension-linked institutional investors, international developers and high-net-worth individuals." />
+
+              <SectionHeader title="Why Institutions Are Looking at Dubai" />
+              <GrowthBullets items={[
+                'Institutional investors focus on long-term population trends, economic growth, infrastructure investment, rental income potential, regulatory quality, liquidity, development quality and portfolio diversification.',
+                'Dubai has become attractive because it combines emerging-market growth with developed-world infrastructure.',
+                'The strongest drivers identified in the source are population growth, business expansion, infrastructure investment and international connectivity.'
+              ]} />
+
+              <SectionHeader title="Capital Sources and Players" />
+              <GrowthBullets items={[
+                'The document references major global investment names such as Blackstone and Hines as examples of the type of institutional capital increasingly evaluating Dubai.',
+                'Sovereign and government-linked capital includes institutions such as Investment Corporation of Dubai, Mubadala and Dubai Holding.',
+                'Dubai has also attracted international developers, branded residence partners and an expanding family-office and private-wealth ecosystem via DIFC.'
+              ]} />
+
+              <SectionHeader title="Sector-Level Demand" />
+              <GrowthBullets items={[
+                'Residential interest is rising in build-to-rent, premium communities, serviced apartments, student accommodation and workforce housing.',
+                'Logistics remains attractive due to Jebel Ali Port, JAFZA, Dubai South, airport expansion and e-commerce growth.',
+                'Hospitality and commercial property are supported by tourism growth, branded residences, corporate relocation, DIFC expansion and financial-sector development.'
+              ]} />
+
+              <SectionHeader title="Conclusion" />
+              <VerbatimText text="The growing presence of global institutional capital is a significant milestone for Dubai's real estate market. Dubai has moved beyond being viewed solely as a luxury property destination and is increasingly recognised as a global real estate investment market supported by strong economic growth, international businesses, infrastructure expansion and population growth." />
+            </div>
+          )
+        }
+      },
     ],
     comparative: [
       {
@@ -1371,12 +1576,12 @@ const SMEInsights: React.FC = () => {
               <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-navy/70">Insight Sections</p>
               <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-slate-grey/60 whitespace-nowrap">Swipe Tabs →</p>
             </div>
-            <div className="overflow-x-auto custom-scrollbar custom-scrollbar-prominent">
+            <div className="overflow-x-auto hover-scrollbar">
               <div className="inline-flex min-w-full w-max gap-2 p-2 border border-slate-200 bg-soft-grey/70 rounded-lg">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
-                    onClick={() => setActiveTab(tab.id as 'performance' | 'mechanics' | 'commercial' | 'infrastructure' | 'comparative')}
+                    onClick={() => setActiveTab(tab.id as 'performance' | 'mechanics' | 'commercial' | 'infrastructure' | 'global' | 'comparative')}
                     className={`px-4 py-2.5 text-[10px] lg:text-[11px] font-bold uppercase tracking-[0.16em] transition-all whitespace-nowrap rounded-md border ${
                       activeTab === tab.id
                         ? 'bg-brand-navy text-white border-brand-navy shadow-sm'
