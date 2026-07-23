@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Card from '../components/Card';
 import { useCurrency } from '../components/CurrencyContext';
 import SEO from '@/components/SEO';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 interface DrawerContent {
   id: string;
@@ -160,6 +162,15 @@ const CombinedStrategy: React.FC = () => {
               <span className="text-[10px] font-bold uppercase tracking-[0.6em] text-white/40">Sovereign Strategic Intelligence Stream</span>
           </div>
       </div>
+
+      <Breadcrumbs
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Insights', href: '/insights' },
+          { label: 'Strategic Outlook', href: '/insights/strategic-outlook' },
+        ]}
+        className="mb-8"
+      />
 
       <header className="mb-16 border-l border-brand-gold pl-10">
         <h1 className="text-5xl font-serif font-bold text-brand-navy mb-6 italic">Strategic Outlook</h1>
@@ -678,6 +689,28 @@ const CombinedStrategy: React.FC = () => {
           </>
         )}
       </div>
+
+      <section className="mt-16 rounded-3xl border border-white/80 bg-white p-8 shadow-[0_20px_60px_rgba(10,25,47,0.06)]">
+        <div className="text-[10px] font-bold uppercase tracking-[0.28em] text-brand-gold">Related Pillars</div>
+        <div className="mt-6 grid gap-8 lg:grid-cols-2">
+          <article>
+            <h3 className="text-xl font-serif italic text-brand-navy">Related Pillars</h3>
+            <ul className="mt-4 space-y-3 text-sm text-slate-grey">
+              <li><Link to="/market" className="hover:text-brand-gold">Dubai Property Market</Link></li>
+              <li><Link to="/strategy" className="hover:text-brand-gold">Investment Strategy</Link></li>
+              <li><Link to="/uk-investors" className="hover:text-brand-gold">UK Investors</Link></li>
+            </ul>
+          </article>
+          <article>
+            <h3 className="text-xl font-serif italic text-brand-navy">Related Deep Dives (Coming Soon)</h3>
+            <ul className="mt-4 space-y-3 text-sm text-slate-grey">
+              <li><Link to="/deep-dives/dubai-supply-pipeline" className="hover:text-brand-gold">Dubai Supply Pipeline</Link></li>
+              <li><Link to="/deep-dives/dubai-price-trends" className="hover:text-brand-gold">Dubai Price Trends</Link></li>
+              <li><Link to="/deep-dives/dubai-property-cycle-explained" className="hover:text-brand-gold">Dubai Market Cycle Explained</Link></li>
+            </ul>
+          </article>
+        </div>
+      </section>
 
       <button
         type="button"

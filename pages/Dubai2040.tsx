@@ -4,6 +4,7 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Card from '../components/Card';
 import SEO from '@/components/SEO';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 interface DrawerContent {
   id: string;
@@ -320,6 +321,16 @@ const Dubai2040: React.FC = () => {
         jsonLd
       />
     <div className="max-w-[92rem] mx-auto py-16 px-6 md:px-8 lg:px-10 animate-fadeIn pb-32">
+      <Breadcrumbs
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Insights', href: '/insights' },
+          { label: 'Strategic Outlook', href: '/insights/strategic-outlook' },
+          { label: 'Dubai 2040 Vision', href: '/insights/strategic-outlook/dubai-2040' },
+        ]}
+        className="mb-8"
+      />
+
       {/* Header Section */}
       <header className="mb-16 border-l-4 border-brand-gold pl-10">
         <h1 className="text-5xl lg:text-6xl font-serif font-bold text-brand-navy mb-6 italic tracking-tight">Dubai 2040 Urban Master Plan</h1>

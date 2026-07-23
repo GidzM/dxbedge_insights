@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import { useCurrency } from '../components/CurrencyContext';
 import SEO from '@/components/SEO';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 interface DrawerContent {
   id: string;
@@ -133,6 +134,16 @@ const D33Agenda: React.FC = () => {
       />
   
     <div className="max-w-7xl mx-auto py-16 px-10 lg:px-16 animate-fadeIn pb-32">
+      <Breadcrumbs
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Insights', href: '/insights' },
+          { label: 'Strategic Outlook', href: '/insights/strategic-outlook' },
+          { label: 'D33 Growth', href: '/insights/strategic-outlook/d33-agenda' },
+        ]}
+        className="mb-8"
+      />
+
       <div className="w-full h-[300px] bg-brand-navy overflow-hidden mb-16 relative rounded-2xl border border-white/5">
         <img 
           src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=2000" 

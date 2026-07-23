@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Card from '../components/Card';
 import { useCurrency } from '../components/CurrencyContext';
 import SEO from '@/components/SEO';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 interface DrawerContent {
   id: string;
@@ -1560,6 +1562,15 @@ const SMEInsights: React.FC = () => {
     <div className="flex flex-col min-h-screen bg-soft-grey">
       <header className="px-10 lg:px-16 pt-14 pb-6 border-b border-slate-200 bg-white">
         <div className="max-w-7xl mx-auto">
+          <Breadcrumbs
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Insights', href: '/insights' },
+              { label: 'Expert Insights', href: '/insights/expert-insights' },
+            ]}
+            className="mb-5"
+          />
+
           <div className="border-l border-brand-gold pl-8">
             <h1 className="text-4xl lg:text-5xl font-bold text-brand-navy mb-3">Expert Insights</h1>
             <p className="text-sm lg:text-base text-slate-grey/80 max-w-3xl leading-relaxed">
@@ -1608,6 +1619,28 @@ const SMEInsights: React.FC = () => {
             />
           ))}
         </div>
+
+        <section className="mt-12 max-w-7xl mx-auto rounded-3xl border border-white/80 bg-white p-8 shadow-[0_20px_60px_rgba(10,25,47,0.06)]">
+          <div className="text-[10px] font-bold uppercase tracking-[0.28em] text-brand-gold">Related Pillars</div>
+          <div className="mt-6 grid gap-8 lg:grid-cols-2">
+            <article>
+              <h3 className="text-xl font-serif italic text-brand-navy">Related Pillars</h3>
+              <ul className="mt-4 space-y-3 text-sm text-slate-grey">
+                <li><Link to="/market" className="hover:text-brand-gold">Dubai Property Market</Link></li>
+                <li><Link to="/strategy" className="hover:text-brand-gold">Investment Strategy</Link></li>
+                <li><Link to="/uk-investors" className="hover:text-brand-gold">UK Investors</Link></li>
+              </ul>
+            </article>
+            <article>
+              <h3 className="text-xl font-serif italic text-brand-navy">Related Deep Dives (Coming Soon)</h3>
+              <ul className="mt-4 space-y-3 text-sm text-slate-grey">
+                <li><Link to="/deep-dives/dubai-property-cycle-explained" className="hover:text-brand-gold">Dubai Property Cycle Explained</Link></li>
+                <li><Link to="/deep-dives/dubai-rental-market-trends" className="hover:text-brand-gold">Dubai Rental Market Trends</Link></li>
+                <li><Link to="/deep-dives/off-plan-vs-ready" className="hover:text-brand-gold">Off-Plan vs Ready</Link></li>
+              </ul>
+            </article>
+          </div>
+        </section>
       </div>
 
       <button
