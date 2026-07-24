@@ -17,6 +17,8 @@ const NAV_ITEMS = [
     name: 'Insights Hub',
     path: '/insights',
     children: [
+      { name: 'Deep Dives', path: '/deep-dives' },
+      { name: 'Communities', path: '/communities' },
       { name: 'Expert Insights', path: '/insights/expert-insights' },
       {
         name: 'Strategic Outlook',

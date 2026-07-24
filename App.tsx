@@ -14,6 +14,8 @@ import Dubai2040 from './pages/Dubai2040';
 import D33Agenda from './pages/D33Agenda';
 import CombinedStrategy from './pages/CombinedStrategy';
 import SMEInsights from './pages/SMEInsights';
+import DeepDivesIndex from './pages/deep-dives';
+import CommunitiesIndex from './pages/communities';
 import Calculators from './pages/Calculators';
 import AIAssistant from './pages/AIAssistant';
 import ComingSoon from './pages/ComingSoon';
@@ -160,11 +162,26 @@ const AppShell: React.FC = () => {
               <Route path="/insights/strategic-outlook" element={<CombinedStrategy />} />
               <Route path="/insights/strategic-outlook/dubai-2040" element={<Dubai2040 />} />
               <Route path="/insights/strategic-outlook/d33-agenda" element={<D33Agenda />} />
+              <Route path="/deep-dives" element={<DeepDivesIndex />} />
+              <Route path="/communities" element={<CommunitiesIndex />} />
               <Route path="/expert-insights" element={<Navigate to="/insights/expert-insights" replace />} />
               <Route path="/combined" element={<Navigate to="/insights/strategic-outlook" replace />} />
               <Route path="/dubai-2040" element={<Navigate to="/insights/strategic-outlook/dubai-2040" replace />} />
               <Route path="/d33-agenda" element={<Navigate to="/insights/strategic-outlook/d33-agenda" replace />} />
               <Route path="/calculators" element={<Calculators openModal={openModal} />} />
+              <Route
+                path="/contact"
+                element={
+                  <ComingSoon
+                    title="Contact"
+                    description="Contact routing is being finalised. Use the advisory channels below if you want an immediate investor-focused response."
+                    openModal={openModal}
+                    ctaType="Investment Strategist"
+                    backPath="/"
+                    backLabel="Back to Home"
+                  />
+                }
+              />
               <Route path="/ai-assistant" element={<AIAssistant />} />
               <Route
                 path="/market/dubai-rental-market-trends/"
@@ -284,15 +301,132 @@ const AppShell: React.FC = () => {
                 }
               />
               <Route
-                path="/communities"
+                path="/communities/dubai-marina"
                 element={
                   <ComingSoon
-                    title="Communities & Areas"
-                    description="A full communities pillar is being prepared, including district-level analysis for core and emerging Dubai locations."
+                    title="Dubai Marina"
+                    description="A community deep dive is coming soon, covering pricing behaviour, tenant profile, supply depth and long-term investment implications."
                     openModal={openModal}
                     ctaType="Strategic Advisory"
-                    backPath="/insights"
-                    backLabel="Back to Insights Hub"
+                    backPath="/communities"
+                    backLabel="Back to Communities"
+                  />
+                }
+              />
+              <Route
+                path="/communities/downtown-dubai"
+                element={
+                  <ComingSoon
+                    title="Downtown Dubai"
+                    description="A community deep dive is coming soon, including demand resilience, rental performance and long-term value signals."
+                    openModal={openModal}
+                    ctaType="Strategic Advisory"
+                    backPath="/communities"
+                    backLabel="Back to Communities"
+                  />
+                }
+              />
+              <Route
+                path="/communities/business-bay"
+                element={
+                  <ComingSoon
+                    title="Business Bay"
+                    description="A full Business Bay analysis is in preparation, focused on stock quality, pricing variation and tenant demand depth."
+                    openModal={openModal}
+                    ctaType="Strategic Advisory"
+                    backPath="/communities"
+                    backLabel="Back to Communities"
+                  />
+                }
+              />
+              <Route
+                path="/communities/jvc"
+                element={
+                  <ComingSoon
+                    title="Jumeirah Village Circle (JVC)"
+                    description="A detailed JVC guide is coming soon, including building-level variation, supply pressure and yield behaviour."
+                    openModal={openModal}
+                    ctaType="Strategic Advisory"
+                    backPath="/communities"
+                    backLabel="Back to Communities"
+                  />
+                }
+              />
+              <Route
+                path="/communities/dubai-hills"
+                element={
+                  <ComingSoon
+                    title="Dubai Hills Estate"
+                    description="A Dubai Hills deep dive is in development, covering demand profile, pricing support and long-term stability indicators."
+                    openModal={openModal}
+                    ctaType="Strategic Advisory"
+                    backPath="/communities"
+                    backLabel="Back to Communities"
+                  />
+                }
+              />
+              <Route
+                path="/communities/palm-jumeirah"
+                element={
+                  <ComingSoon
+                    title="Palm Jumeirah"
+                    description="A full Palm Jumeirah guide is coming soon, focusing on prime pricing, rental profile and market cycle sensitivity."
+                    openModal={openModal}
+                    ctaType="Strategic Advisory"
+                    backPath="/communities"
+                    backLabel="Back to Communities"
+                  />
+                }
+              />
+              <Route
+                path="/communities/dubai-south"
+                element={
+                  <ComingSoon
+                    title="Dubai South"
+                    description="A growth-corridor deep dive is coming soon, including infrastructure catalysts, supply rollout and long-term upside drivers."
+                    openModal={openModal}
+                    ctaType="Strategic Advisory"
+                    backPath="/communities"
+                    backLabel="Back to Communities"
+                  />
+                }
+              />
+              <Route
+                path="/communities/meydan"
+                element={
+                  <ComingSoon
+                    title="Meydan"
+                    description="A Meydan community analysis is in preparation, including launch behaviour, demand quality and pricing evolution."
+                    openModal={openModal}
+                    ctaType="Strategic Advisory"
+                    backPath="/communities"
+                    backLabel="Back to Communities"
+                  />
+                }
+              />
+              <Route
+                path="/communities/arjan"
+                element={
+                  <ComingSoon
+                    title="Arjan"
+                    description="A structured Arjan deep dive is coming soon, covering affordability dynamics, tenant demand and future supply context."
+                    openModal={openModal}
+                    ctaType="Strategic Advisory"
+                    backPath="/communities"
+                    backLabel="Back to Communities"
+                  />
+                }
+              />
+              <Route
+                path="/communities/town-square"
+                element={
+                  <ComingSoon
+                    title="Town Square"
+                    description="A full Town Square guide is coming soon, with community-level pricing, rental depth and risk-adjusted investor takeaways."
+                    openModal={openModal}
+                    ctaType="Strategic Advisory"
+                    backPath="/communities"
+                    backLabel="Back to Communities"
                   />
                 }
               />
@@ -591,6 +725,8 @@ const AppShell: React.FC = () => {
                                 <li><Link to="/strategy" className="hover:text-brand-gold transition-colors">Dubai Investment Strategy</Link></li>
                                 <li><Link to="/uk-investors" className="hover:text-brand-gold transition-colors">UK Investors</Link></li>
                                 <li><Link to="/insights" className="hover:text-brand-gold transition-colors">Insights Hub</Link></li>
+                                <li><Link to="/deep-dives" className="hover:text-brand-gold transition-colors">Deep Dives</Link></li>
+                                <li><Link to="/communities" className="hover:text-brand-gold transition-colors">Communities</Link></li>
                                 <li><Link to="/insights/expert-insights" className="hover:text-brand-gold transition-colors">Expert Insights</Link></li>
                                 <li><Link to="/insights/strategic-outlook" className="hover:text-brand-gold transition-colors">Strategic Outlook</Link></li>
                                 <li><Link to="/insights/strategic-outlook/dubai-2040" className="hover:text-brand-gold transition-colors">2040 Vision</Link></li>

@@ -58,6 +58,18 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://insights.dxbedge.com/deep-dives</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://insights.dxbedge.com/communities</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Utility and supporting pages -->
   <url>
     <loc>https://insights.dxbedge.com/analysis/geopolitics-2026</loc>

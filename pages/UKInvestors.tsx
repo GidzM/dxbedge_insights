@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import SEO from '@/components/SEO';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import InternalLinks from '@/components/InternalLinks';
+import HeroBanner from '@/components/HeroBanner';
 
 type LeadCaptureType = 'Expert' | 'Investment Strategist' | 'Strategic Advisory' | 'Developer' | 'Mortgage Advisor' | 'Services';
 
@@ -226,44 +227,17 @@ const UKInvestors: React.FC<UKInvestorsProps> = ({ openModal }) => {
       />
 
       <div className="bg-[radial-gradient(circle_at_top,_rgba(201,168,106,0.16),_transparent_38%),linear-gradient(180deg,_#f8f9fa_0%,_#ffffff_42%,_#f7f4ee_100%)]">
-        <section className="relative overflow-hidden border-b border-brand-gold/20 bg-brand-navy text-white">
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute -left-20 top-12 h-72 w-72 rounded-full bg-brand-gold blur-3xl" />
-            <div className="absolute right-0 top-1/3 h-64 w-64 rounded-full bg-blue-300/20 blur-3xl" />
-          </div>
+        <div className="mx-auto max-w-7xl px-10 pt-16 lg:px-16 lg:pt-20">
+          <HeroBanner
+            title="Dubai Property for UK Investors"
+            subtitle="Structured guidance for UK investors entering Dubai, covering tax, financing, currency dynamics and off-plan positioning."
+            background="#f7faff"
+            image="https://images.unsplash.com/photo-1655309893829-407c54619f1f?auto=format&fit=crop&q=80&w=2000"
+            cta={{ label: 'Request UK Investor Guide', href: '/reports/uk-investors' }}
+          />
+        </div>
 
-          <div className="relative mx-auto max-w-7xl px-10 py-20 lg:px-16 lg:py-24">
-            <div className="max-w-4xl">
-              <div className="mb-4 inline-flex items-center border border-brand-gold/30 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.3em] text-brand-gold">
-                UK Investors
-              </div>
-              <h1 className="max-w-5xl text-4xl font-serif italic text-white sm:text-5xl lg:text-6xl">
-                Practical guidance for UK investors entering Dubai property with confidence.
-              </h1>
-              <p className="mt-6 max-w-3xl text-sm leading-relaxed text-white/80 md:text-base">
-                The UK is one of the largest investor cohorts in Dubai. Buyers are typically drawn by tax efficiency, rental yield potential, lifestyle factors, relocation pathways and currency timing opportunities.
-              </p>
-              <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-                <button
-                  type="button"
-                  onClick={() => openModal('Investment Strategist')}
-                  className="inline-flex items-center justify-center border border-brand-gold bg-brand-gold px-6 py-3 text-[11px] font-bold uppercase tracking-[0.24em] text-brand-navy transition-all duration-300 hover:bg-transparent hover:text-brand-gold"
-                >
-                  Speak to an Investment Consultant
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveDrawer(currencyDrawer)}
-                  className="inline-flex items-center justify-center border border-white/20 px-6 py-3 text-[11px] font-bold uppercase tracking-[0.24em] text-white transition-all duration-300 hover:border-brand-gold hover:text-brand-gold"
-                >
-                  View FX Examples
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <div className="mx-auto max-w-7xl px-10 py-16 lg:px-16 lg:py-20">
+        <div className="mx-auto max-w-7xl px-10 pt-8 pb-16 lg:px-16 lg:pt-8 lg:pb-20">
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },

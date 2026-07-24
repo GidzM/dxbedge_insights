@@ -17,7 +17,7 @@ const Card: React.FC<CardProps> = ({ title, category, points, image, isPremium, 
   const isCompact = density === 'compact';
 
   return (
-    <div className={`group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col border border-slate-100 ${stretch ? 'h-full' : 'h-auto self-start'}`}>
+    <div className={`group overflow-hidden rounded-xl border border-sand-neutral bg-skyline-grey shadow-[0_8px_24px_rgba(0,0,0,0.05)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(0,0,0,0.08)] flex flex-col ${stretch ? 'h-full' : 'h-auto self-start'}`}>
       <div className={`relative overflow-hidden ${isCompact ? 'h-36' : 'h-48'}`}>
         <img src={image} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/80 to-transparent" />
@@ -32,7 +32,7 @@ const Card: React.FC<CardProps> = ({ title, category, points, image, isPremium, 
         </div>
       </div>
       
-      <div className={`${isCompact ? 'p-5' : 'p-8'} flex-1 flex flex-col`}>
+      <div className={`${isCompact ? 'p-5' : 'p-6'} flex-1 flex flex-col`}>
         <div className={`${isCompact ? 'space-y-3 mb-5' : 'space-y-4 mb-8'} flex-1`}>
           {points.map((point, idx) => (
             <div key={idx} className="flex gap-3 items-start">
@@ -46,7 +46,7 @@ const Card: React.FC<CardProps> = ({ title, category, points, image, isPremium, 
         {onMore && (
           <button 
             onClick={onMore}
-            className="w-full py-3 border border-brand-navy/10 text-brand-navy text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-brand-navy hover:text-white transition-all duration-300 rounded-lg"
+            className="cta-secondary mt-6 w-full text-sm"
           >
             View Full Analysis
           </button>

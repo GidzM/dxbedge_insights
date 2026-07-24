@@ -1,0 +1,5 @@
+/*
+  Global stylesheet entrypoint.
+  Core design-system styles are currently defined in index.html alongside Tailwind CDN config.
+  Keep this file for future global overrides and to satisfy build-time stylesheet resolution.
+*/

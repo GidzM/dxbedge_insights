@@ -1,0 +1,181 @@
+⭐ DXB Edge Insights — Brand Starter Kit
+A complete, production‑ready design system for your platform.
+
+🎨 1. Colour Palette (DXB Edge Identity)
+Primary Colours
+DXB Blue — #003E7F  
+Authority, trust, research, stability.
+
+DXB Midnight — #001F3F  
+Used for headings, hero CTAs, and premium accents.
+
+Secondary Colours
+Skyline Grey — #F4F6F9  
+Backgrounds, hero banners, section dividers.
+
+Sand Neutral — #E8E6E1  
+Soft backgrounds, cards, subtle highlights.
+
+Accent Colours
+Gulf Gold — #C9A86A  
+Sparingly used for highlights, icons, and premium touches.
+
+Emerald — #0F8C6E  
+Used for positive indicators (growth, yield, stability).
+
+Semantic Colours
+Success — #0F8C6E
+
+Warning — #E6A100
+
+Error — #D64545
+
+🔤 2. Typography System
+Primary Font
+Inter (clean, modern, research‑friendly)
+
+Secondary Font
+Merriweather (optional for long‑form insights)
+
+Heading Scale
+Level	Size	Weight	Usage
+H1	2.8rem	700	Pillar page titles, hero banners
+H2	2rem	600	Section headers
+H3	1.5rem	600	Sub‑sections
+H4	1.25rem	500	Minor headers
+Body	1rem	400	Standard text
+Small	0.875rem	400	Breadcrumbs, metadata
+
+
+Rules
+H1 must be visually dominant
+
+H2 must clearly separate sections
+
+H3 must be used inside drawers and cards
+
+Body text must have 1.6 line height
+
+No more than two fonts on the entire platform
+
+📐 3. Spacing System (Vertical Rhythm)
+Use a consistent spacing scale:
+
+Code
+4px
+8px
+12px
+16px
+24px
+32px
+48px
+64px
+Rules
+Section spacing: 48px
+
+Paragraph spacing: 16px
+
+Hero banner padding: 64px top/bottom
+
+Card padding: 24px
+
+Drawer padding: 24px
+
+CTA margin‑top: 24px
+
+This creates a clean, breathable layout.
+
+🔘 4. CTA Styling
+Primary CTA
+css
+background: #003E7F;
+color: white;
+padding: 0.75rem 1.5rem;
+border-radius: 8px;
+font-weight: 600;
+Hover
+css
+background: #001F3F;
+Secondary CTA
+css
+background: transparent;
+border: 2px solid #003E7F;
+color: #003E7F;
+padding: 0.75rem 1.5rem;
+border-radius: 8px;
+font-weight: 600;
+Hover
+css
+background: #003E7F;
+color: white;
+🧱 5. Component Styling Rules
+Hero Banner
+Soft gradient or Skyline Grey background
+
+Optional skyline silhouette
+
+H1 + subtitle + CTA
+
+64px padding
+
+Max width: 800px for text block
+
+Cards
+Background: #F4F6F9
+
+Border radius: 12px
+
+Padding: 24px
+
+Shadow: subtle (rgba(0,0,0,0.05))
+
+H3 title + short summary + CTA
+
+Drawers
+Background: white
+
+Border: 1px solid #E8E6E1
+
+Padding: 24px
+
+H3 inside
+
+Smooth open/close animation
+
+Breadcrumbs
+Font size: 0.875rem
+
+Colour: #6B7280
+
+Separator: /
+
+Margin-bottom: 24px
+
+🏙 6. Logo Direction (DXB Edge Identity)
+
+TO FOLLOW
+
+🧭 7. Layout System
+Max width
+Code
+1200px container
+Grid
+Code
+12-column responsive grid
+Breakpoints
+1280px
+
+1024px
+
+768px
+
+640px
+
+Rules
+Hero banners full‑width
+
+Pillar content centered
+
+Cards in 2‑column layout on desktop
+
+Drawers full‑width inside content area

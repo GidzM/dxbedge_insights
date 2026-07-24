@@ -13,11 +13,11 @@ interface BreadcrumbsProps {
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className = '' }) => {
   return (
-    <nav aria-label="Breadcrumb" className={className}>
+    <nav aria-label="Breadcrumb" className={`brand-breadcrumbs ${className}`}>
       <ol
         itemScope
         itemType="https://schema.org/BreadcrumbList"
-        className="flex flex-wrap items-center gap-y-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-grey"
+        className="flex flex-wrap items-center gap-y-2 text-sm font-medium text-slate-500"
       >
         {items.map((item, index) => (
           <li
@@ -27,7 +27,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className = '' }) => {
             itemType="https://schema.org/ListItem"
             className="inline-flex items-center"
           >
-            <Link to={item.href} itemProp="item" className="transition-colors hover:text-brand-gold">
+            <Link to={item.href} itemProp="item" className="transition-colors hover:text-brand-blue">
               <span itemProp="name">{item.label}</span>
             </Link>
             <meta itemProp="position" content={String(index + 1)} />
